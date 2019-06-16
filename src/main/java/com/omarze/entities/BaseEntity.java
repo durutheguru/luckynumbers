@@ -1,6 +1,7 @@
 package com.omarze.entities;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.omarze.util.LocalDateTimeConverter;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
@@ -14,6 +15,7 @@ import java.time.LocalDateTime;
  */
 @MappedSuperclass
 @EntityListeners(AuditingEntityListener.class)
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class BaseEntity {
 
     @Id

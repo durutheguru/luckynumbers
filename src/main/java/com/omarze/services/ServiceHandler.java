@@ -1,12 +1,14 @@
 package com.omarze.services;
 
 
+import com.omarze.exception.ServiceException;
+
 /**
  * created by julian
  */
-public interface ServiceHandler<T> {
+public interface ServiceHandler<T, C extends Components> {
 
-    T run();
+    T runWith(C components) throws ServiceException;
 
 }
 

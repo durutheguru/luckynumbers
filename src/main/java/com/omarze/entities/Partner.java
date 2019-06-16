@@ -2,6 +2,8 @@ package com.omarze.entities;
 
 
 import com.omarze.Constants;
+import com.omarze.api.annotation.DTO;
+import com.omarze.dto.PartnerDTO;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -16,6 +18,7 @@ import java.util.List;
  * created by julian
  */
 @Entity
+@DTO(PartnerDTO.class)
 public class Partner extends BaseEntity {
 
 

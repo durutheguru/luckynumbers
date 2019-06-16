@@ -2,7 +2,7 @@ package com.omarze.config;
 
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.omarze.util.DTOModelMapper;
+import com.omarze.api.DTOModelMapper;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;

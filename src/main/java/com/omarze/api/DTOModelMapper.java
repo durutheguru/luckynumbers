@@ -1,11 +1,12 @@
-package com.omarze.util;
+package com.omarze.api;
 
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.omarze.util.annotation.DTO;
+
+import com.omarze.api.annotation.DTO;
 import org.modelmapper.ModelMapper;
+
 import org.springframework.core.MethodParameter;
-import org.springframework.core.annotation.AnnotationUtils;
 import org.springframework.http.HttpInputMessage;
 import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
@@ -20,7 +21,6 @@ import javax.persistence.EntityManager;
 import javax.persistence.Id;
 import javax.validation.constraints.NotNull;
 import java.io.IOException;
-import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
 import java.lang.reflect.Type;
 import java.util.Collections;
@@ -45,7 +45,7 @@ public class DTOModelMapper extends RequestResponseBodyMethodProcessor {
 
     @Override
     public boolean supportsParameter(MethodParameter parameter) {
-        return parameter.hasParameterAnnotation(DTO.class);
+        return parameter.getParameterType().getAnnotation(DTO.class) != null;
     }
 
 
@@ -59,6 +59,7 @@ public class DTOModelMapper extends RequestResponseBodyMethodProcessor {
     public Object resolveArgument(MethodParameter parameter, ModelAndViewContainer mavContainer, NativeWebRequest webRequest, WebDataBinderFactory binderFactory) throws Exception {
         Object dto = super.resolveArgument(parameter, mavContainer, webRequest, binderFactory);
         Object id = getEntityId(dto);
+
         if (id == null) {
             return modelMapper.map(dto, parameter.getParameterType());
         }
@@ -73,11 +74,10 @@ public class DTOModelMapper extends RequestResponseBodyMethodProcessor {
     @Override
     protected Object readWithMessageConverters(HttpInputMessage inputMessage, MethodParameter parameter, Type targetType)
             throws IOException, HttpMediaTypeNotSupportedException, HttpMessageNotReadableException {
-        for (Annotation ann : parameter.getParameterAnnotations()) {
-            DTO dtoType = AnnotationUtils.getAnnotation(ann, DTO.class);
-            if (dtoType != null) {
-                return super.readWithMessageConverters(inputMessage, parameter, dtoType.value());
-            }
+
+        DTO dtoType = parameter.getParameterType().getAnnotation(DTO.class);
+        if (dtoType != null) {
+            return super.readWithMessageConverters(inputMessage, parameter, dtoType.value());
         }
 
         throw new RuntimeException();
@@ -85,7 +85,7 @@ public class DTOModelMapper extends RequestResponseBodyMethodProcessor {
 
 
     private Object getEntityId(@NotNull Object dto) {
-        for (Field field : dto.getClass().getDeclaredFields()) {
+        for (Field field : dto.getClass().getFields()) {
             if (field.getAnnotation(Id.class) != null) {
                 try {
                     field.setAccessible(true);
@@ -96,6 +96,7 @@ public class DTOModelMapper extends RequestResponseBodyMethodProcessor {
                 }
             }
         }
+
         return null;
     }
 
