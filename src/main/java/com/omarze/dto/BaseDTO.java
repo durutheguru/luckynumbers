@@ -14,10 +14,8 @@ public class BaseDTO {
     @Id
     public Long id;
 
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy hh:mm:ss")
     public LocalDateTime timeAdded;
 
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy hh:mm:ss")
     public LocalDateTime timeUpdated;
 
 

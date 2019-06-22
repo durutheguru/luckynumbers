@@ -6,7 +6,7 @@ package com.omarze.api;
  */
 public enum Status {
 
-    SUCCESS,
+    DONE,
 
     ERROR;
 

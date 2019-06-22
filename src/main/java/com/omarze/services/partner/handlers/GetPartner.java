@@ -3,25 +3,28 @@ package com.omarze.services.partner.handlers;
 
 import com.omarze.entities.Partner;
 import com.omarze.exception.ServiceException;
+import com.omarze.persistence.PartnerRepository;
 import com.omarze.services.ServiceHandler;
-import com.omarze.services.partner.PartnerComponents;
 
 /**
  * created by julian
  */
-public class GetPartner implements ServiceHandler<Partner, PartnerComponents> {
+public class GetPartner implements ServiceHandler<Partner> {
 
     private final Long id;
 
+    private final PartnerRepository partnerRepository;
 
-    public GetPartner(Long id) {
+
+    public GetPartner(Long id, PartnerRepository partnerRepository) {
         this.id = id;
+        this.partnerRepository = partnerRepository;
     }
 
 
     @Override
-    public Partner runWith(PartnerComponents components) throws ServiceException {
-        return components.partnerRepository.getOne(id);
+    public Partner run() throws ServiceException {
+        return partnerRepository.getOne(id);
     }
 
 

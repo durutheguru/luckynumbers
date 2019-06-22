@@ -8,6 +8,7 @@ import com.omarze.api.annotation.DTO;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.MethodParameter;
+import org.springframework.data.domain.Page;
 import org.springframework.http.MediaType;
 import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.http.converter.json.MappingJacksonValue;
@@ -15,6 +16,8 @@ import org.springframework.http.server.ServerHttpRequest;
 import org.springframework.http.server.ServerHttpResponse;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.servlet.mvc.method.annotation.AbstractMappingJacksonResponseBodyAdvice;
+
+
 
 
 /**
@@ -34,7 +37,7 @@ public class DTOResponseBodyControllerAdvice extends AbstractMappingJacksonRespo
 
 
     public boolean supports(MethodParameter returnType, Class<? extends HttpMessageConverter<?>> converterType) {
-        return super.supports(returnType, converterType) && returnType.getMethod().getReturnType().getAnnotation(DTO.class) != null;
+        return super.supports(returnType, converterType);
     }
 
 
@@ -45,13 +48,12 @@ public class DTOResponseBodyControllerAdvice extends AbstractMappingJacksonRespo
 
 
         DTO dto = methodParameter.getMethod().getReturnType().getAnnotation(DTO.class);
-        if (dto == null) {
-            return;
-        }
 
         Object responseValue = mappingJacksonValue.getValue();
-        mappingJacksonValue.setValue(ApiResponseHandler.handleControllerResponse(responseValue, dto.value(), modelMapper));
+        mappingJacksonValue.setValue(ApiResponseHandler.handleControllerResponse(responseValue, dto, modelMapper));
     }
+
+
 
 
 }

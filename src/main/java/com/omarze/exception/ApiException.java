@@ -4,7 +4,9 @@ package com.omarze.exception;
 /**
  * created by julian
  */
-public class ApiException extends Exception {
+public class ApiException extends ServiceException {
+
+    private final static Integer CODE = 1000001;
 
 
     public ApiException() {
@@ -26,6 +28,10 @@ public class ApiException extends Exception {
         super(cause);
     }
 
+    @Override
+    public Integer generateCode() {
+        return CODE;
+    }
 
 
 }

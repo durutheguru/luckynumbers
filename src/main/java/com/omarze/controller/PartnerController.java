@@ -2,80 +2,55 @@ package com.omarze.controller;
 
 
 import com.omarze.entities.Partner;
-import com.omarze.exception.ApiException;
 import com.omarze.exception.ServiceException;
-import com.omarze.services.partner.PartnerComponents;
+import com.omarze.services.partner.PartnerService;
 
-import com.omarze.services.partner.handlers.AddPartner;
-import com.omarze.services.partner.handlers.GetPartner;
-import com.omarze.services.partner.handlers.GetPartners;
-import com.omarze.services.partner.handlers.UpdatePartner;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Sort;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 /**
  * created by julian
  */
 @RestController
-@RequestMapping("/partner")
+@RequestMapping("/api/v1/partners")
 public class PartnerController {
 
 
-    private PartnerComponents partnerComponents;
+    private PartnerService partnerService;
 
 
     @Autowired
-    public PartnerController(PartnerComponents partnerComponents) {
-        this.partnerComponents = partnerComponents;
+    public PartnerController(PartnerService partnerService) {
+        this.partnerService = partnerService;
     }
 
 
     @PostMapping
-    public Partner savePartner(Partner partner) throws ApiException {
-        try {
-            return new AddPartner(partner).runWith(partnerComponents);
-        }
-        catch (ServiceException e) {
-            throw new ApiException(e);
-        }
+    @ResponseStatus(code = HttpStatus.CREATED)
+    public Partner savePartner(Partner partner) throws ServiceException {
+        return partnerService.savePartner(partner);
     }
 
 
     @PutMapping
-    public Partner updatePartner(Partner partner) throws ApiException {
-        try {
-            return new UpdatePartner(partner).runWith(partnerComponents);
-        }
-        catch (ServiceException e) {
-            throw new ApiException(e);
-        }
+    public Partner updatePartner(Partner partner) throws ServiceException {
+        return partnerService.updatePartner(partner);
     }
 
 
     @GetMapping
     public Page<Partner> getPartners(
-            @RequestParam("offset") Integer offset, @RequestParam("limit") Integer limit
-    ) throws ApiException {
-        try {
-            return new GetPartners(PageRequest.of(offset, limit, new Sort(Sort.Direction.DESC, "id"))).runWith(partnerComponents);
-        }
-        catch (ServiceException e) {
-            throw new ApiException(e);
-        }
+            @RequestParam(name = "offset", defaultValue = "0") Integer offset, @RequestParam(name = "limit", defaultValue = "10") Integer limit
+    ) throws ServiceException {
+        return partnerService.getPartners(offset, limit);
     }
 
 
     @GetMapping("/{id}")
-    public Partner getPartner(@PathVariable Long id) throws ApiException {
-        try {
-            return new GetPartner(id).runWith(partnerComponents);
-        }
-        catch (ServiceException e) {
-            throw new ApiException(e);
-        }
+    public Partner getPartner(@PathVariable Long id) throws ServiceException {
+        return partnerService.getPartner(id);
     }
 
 

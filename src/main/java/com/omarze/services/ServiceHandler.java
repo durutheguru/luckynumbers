@@ -6,9 +6,9 @@ import com.omarze.exception.ServiceException;
 /**
  * created by julian
  */
-public interface ServiceHandler<T, C extends Components> {
+public interface ServiceHandler<T> {
 
-    T runWith(C components) throws ServiceException;
+    T run() throws ServiceException;
 
 }
 

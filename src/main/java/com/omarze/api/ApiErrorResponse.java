@@ -2,6 +2,8 @@ package com.omarze.api;
 
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.omarze.exception.ServiceException;
 
 import java.time.LocalDateTime;
 
@@ -10,34 +12,42 @@ import java.time.LocalDateTime;
  */
 public class ApiErrorResponse extends ApiResponse<String> {
 
+    public Integer code;
+
+    @JsonIgnore
+    private Exception exception;
+
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy hh:mm:ss")
     public LocalDateTime timeStamp;
 
 
     public ApiErrorResponse() {
         super(Status.ERROR, null);
-        initTimeStamp();
+        initialize();
     }
 
     public ApiErrorResponse(String message) {
         super(Status.ERROR, message);
-        initTimeStamp();
+        initialize();
     }
 
 
     public ApiErrorResponse(String message, String data) {
         super(Status.ERROR, message, data);
-        initTimeStamp();
+        initialize();
     }
 
 
-    public ApiErrorResponse(Exception e) {
-        super(Status.ERROR, ApiBodySanitizer.sanitizeMessage(e));
-        initTimeStamp();
+    public ApiErrorResponse(Exception exception) {
+        super(Status.ERROR, ApiBodySanitizer.sanitizeMessage(exception));
+        this.exception = exception;
+        initialize();
     }
 
 
-    private void initTimeStamp() {
+    private void initialize() {
+        this.code = exception != null && exception instanceof ServiceException ?
+                ((ServiceException)exception).getCode() : 0;
         timeStamp = LocalDateTime.now();
     }
 
