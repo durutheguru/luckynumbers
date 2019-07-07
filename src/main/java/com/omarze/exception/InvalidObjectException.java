@@ -4,16 +4,16 @@ package com.omarze.exception;
 /**
  * created by julian
  */
-public class InvalidEntityException extends ServiceException {
+public class InvalidObjectException extends ServiceException {
 
     public final static Integer CODE = 1000002;
 
-    public InvalidEntityException(String message) {
+    public InvalidObjectException(String message) {
         super(message);
     }
 
 
-    public InvalidEntityException(String message, Throwable cause) {
+    public InvalidObjectException(String message, Throwable cause) {
         super(message, cause);
     }
 

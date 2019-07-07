@@ -1,6 +1,9 @@
 package com.omarze.entities;
 
 
+import com.omarze.api.annotation.DTO;
+import com.omarze.dto.LotteryUserDTO;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.validation.constraints.Size;
@@ -9,7 +12,8 @@ import javax.validation.constraints.Size;
  * created by julian
  */
 @Entity
-public class LotteryUser extends User {
+@DTO(LotteryUserDTO.class)
+public class LotteryUser extends ApplicationUser {
 
     @Column(nullable = false)
     private boolean signedUpWithFacebook = false;

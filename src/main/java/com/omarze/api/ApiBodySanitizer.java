@@ -12,7 +12,7 @@ public class ApiBodySanitizer {
     public static String sanitizeMessage(Exception e) {
         String message = e.getMessage();
 
-        if (containsJavaLanguage(message)) {
+        if (message == null || containsJavaLanguage(message)) {
             return DEFAULT_ERROR_MESSAGE;
         }
 

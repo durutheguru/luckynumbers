@@ -29,14 +29,14 @@ public class AddPartner implements ServiceHandler<Partner> {
     public Partner run() throws ServiceException {
 
         if (!validNewPartner()) {
-            throw new InvalidEntityException("Unable to create partner");
+            throw new InvalidObjectException("Unable to create partner");
         }
 
         return partnerRepository.save(partner);
     }
 
 
-    private boolean validNewPartner() throws InvalidEntityException, PartnerProcessingException {
+    private boolean validNewPartner() throws InvalidObjectException, PartnerProcessingException {
         ValidatorUtil.validate(partner);
         return !partnerExists();
     }

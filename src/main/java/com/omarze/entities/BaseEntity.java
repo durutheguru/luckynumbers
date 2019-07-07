@@ -23,7 +23,7 @@ public class BaseEntity {
     private Long id;
 
     @CreatedDate
-    @Column(nullable = false)
+    @Column(nullable = false, updatable = false)
     @Convert(converter = LocalDateTimeConverter.class)
     private LocalDateTime timeAdded;
 

@@ -1,11 +1,11 @@
 package com.omarze.controller;
 
 
+import com.omarze.Constants;
 import com.omarze.entities.Partner;
 import com.omarze.exception.ServiceException;
 import com.omarze.services.partner.PartnerService;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -14,14 +14,14 @@ import org.springframework.web.bind.annotation.*;
  * created by julian
  */
 @RestController
-@RequestMapping("/api/v1/partners")
+@RequestMapping(Constants.API_V1_BASE + "/partners")
 public class PartnerController {
 
 
     private PartnerService partnerService;
 
 
-    @Autowired
+//    @Autowired
     public PartnerController(PartnerService partnerService) {
         this.partnerService = partnerService;
     }

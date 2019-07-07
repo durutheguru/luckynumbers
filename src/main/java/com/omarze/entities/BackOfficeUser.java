@@ -7,6 +7,6 @@ import javax.persistence.Entity;
  * created by julian
  */
 @Entity
-public class BackOfficeUser extends User {
+public class BackOfficeUser extends ApplicationUser {
 
 }

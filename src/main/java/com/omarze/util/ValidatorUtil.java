@@ -1,7 +1,7 @@
 package com.omarze.util;
 
 
-import com.omarze.exception.InvalidEntityException;
+import com.omarze.exception.InvalidObjectException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -29,10 +29,10 @@ public class ValidatorUtil {
     }
 
 
-    public static <T> void validate(T item) throws InvalidEntityException {
+    public static <T> void validate(T item) throws InvalidObjectException {
         Set<ConstraintViolation<T>> violations = getConstraintViolations(item);
         if (!violations.isEmpty()){
-            throw new InvalidEntityException(violations.iterator().next().getMessage());
+            throw new InvalidObjectException(violations.iterator().next().getMessage());
         }
     }
 

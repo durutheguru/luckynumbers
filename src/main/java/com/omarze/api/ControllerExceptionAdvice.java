@@ -26,7 +26,7 @@ public class ControllerExceptionAdvice {
     @ExceptionHandler({Exception.class})
     public ResponseEntity<ApiErrorResponse> handleAllExceptions(Exception e) {
 
-        logger.error(e.getMessage(), e);
+        logger.error("Controller Exception: " + e.getMessage(), e);
 
         return new ResponseEntity<>(
                 new ApiErrorResponse(e), HttpStatus.INTERNAL_SERVER_ERROR

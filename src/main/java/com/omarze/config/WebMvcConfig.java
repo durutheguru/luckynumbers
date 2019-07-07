@@ -2,6 +2,7 @@ package com.omarze.config;
 
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import com.omarze.api.DTOModelMapper;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,6 +38,7 @@ public class WebMvcConfig implements WebMvcConfigurer {
     public void addArgumentResolvers(List<HandlerMethodArgumentResolver> resolvers) {
         ObjectMapper objectMapper = Jackson2ObjectMapperBuilder.json()
                 .applicationContext(applicationContext)
+                .modulesToInstall(new JavaTimeModule())
                 .build();
 
         resolvers.add(new DTOModelMapper(objectMapper, modelMapper, entityManager));

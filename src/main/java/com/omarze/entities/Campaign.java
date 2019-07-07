@@ -1,6 +1,8 @@
 package com.omarze.entities;
 
 
+import com.omarze.api.annotation.DTO;
+import com.omarze.dto.CampaignDTO;
 import org.springframework.data.jpa.convert.threeten.Jsr310JpaConverters;
 
 import javax.persistence.*;
@@ -14,6 +16,7 @@ import java.util.List;
  * created by julian
  */
 @Entity
+@DTO(CampaignDTO.class)
 public class Campaign extends BaseEntity {
 
     @NotEmpty(message = "Campaign Name is required")
@@ -36,12 +39,12 @@ public class Campaign extends BaseEntity {
     private Partner partner;
 
     @Column(nullable = false)
-    @NotEmpty(message = "Campaign requires a valid Start Date")
+    @NotNull(message = "Campaign requires a valid Start Date")
     @Convert(converter = Jsr310JpaConverters.LocalDateConverter.class)
     private LocalDate startDate;
 
     @Column(nullable = false)
-    @NotEmpty(message = "Campaign requires a valid End Date")
+    @NotNull(message = "Campaign requires a valid End Date")
     @Convert(converter = Jsr310JpaConverters.LocalDateConverter.class)
     private LocalDate endDate;
 
@@ -61,8 +64,14 @@ public class Campaign extends BaseEntity {
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false, length = 30)
-    @NotEmpty(message = "Campaign Type cannot be empty")
+    @NotNull(message = "Campaign Type cannot be empty")
     private CampaignType campaignType;
+
+    @Column(nullable = false)
+    private boolean enabled = false;
+
+    @Column(nullable = false)
+    private boolean active = false;
 
 
     public String getName() {
@@ -162,6 +171,33 @@ public class Campaign extends BaseEntity {
     public Campaign setCampaignType(CampaignType campaignType) {
         this.campaignType = campaignType;
         return this;
+    }
+
+    public boolean isApproved() {
+        return requestStatus == RequestStatus.APPROVED;
+    }
+
+    public boolean isEnabled() {
+        return enabled;
+    }
+
+    public Campaign setEnabled(boolean enabled) {
+        this.enabled = enabled;
+        return this;
+    }
+
+    public boolean isActive() {
+        return active;
+    }
+
+    public Campaign setActive(boolean active) {
+        this.active = active;
+        return this;
+    }
+
+
+    public boolean canBeApproved() {
+        return (requestStatus != null && requestStatus == RequestStatus.PENDING) && !enabled;
     }
 
 

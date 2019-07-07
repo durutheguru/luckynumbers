@@ -6,10 +6,18 @@ package com.omarze.entities;
  */
 public enum StageDescriptor {
 
-    FIRST,
+    FIRST(1),
 
-    SECOND,
+    SECOND(2),
 
-    THIRD
+    THIRD(3);
+
+
+    private int value;
+
+    StageDescriptor(int value) {
+        this.value = value;
+    }
+
 
 }

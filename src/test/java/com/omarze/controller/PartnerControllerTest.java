@@ -3,15 +3,17 @@ package com.omarze.controller;
 
 import com.google.common.base.Strings;
 import com.jayway.jsonpath.JsonPath;
-import com.omarze.dto.PartnerDTO;
-import com.omarze.exception.InvalidEntityException;
+import com.omarze.Constants;
+import com.omarze.data.PartnerDataService;
+import com.omarze.exception.InvalidObjectException;
 import com.omarze.exception.PartnerAlreadyExistsException;
 import com.omarze.util.JSONUtil;
+import com.omarze.dto.PartnerDTO;
 import org.json.JSONObject;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
-import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.result.MockMvcResultHandlers;
 
@@ -25,15 +27,23 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 /**
  * created by julian
  */
+@WithMockUser
 public class PartnerControllerTest extends BaseControllerTest {
 
+
+    private PartnerDataService partnerDataService;
+
+
     @Autowired
-    private MockMvc mockMvc;
+    public PartnerControllerTest setPartnerDataService(PartnerDataService partnerDataService) {
+        this.partnerDataService = partnerDataService;
+        return this;
+    }
 
 
     @Test
     public void testSavingPartner() throws Exception {
-        PartnerDTO partnerDTO = newPartner();
+        PartnerDTO partnerDTO = partnerDataService.newPartnerDTO();
         savePartner(partnerDTO);
     }
 
@@ -41,7 +51,7 @@ public class PartnerControllerTest extends BaseControllerTest {
     @Test
     public void testSavingAlreadyExistingPartner() throws Exception {
 
-        PartnerDTO partnerDTO = newPartner();
+        PartnerDTO partnerDTO = partnerDataService.newPartnerDTO();
         savePartner(partnerDTO);
 
         mockMvc.perform(
@@ -57,7 +67,7 @@ public class PartnerControllerTest extends BaseControllerTest {
     @Test
     public void testUpdatingPartner() throws Exception {
 
-        PartnerDTO partnerDTO = newPartner();
+        PartnerDTO partnerDTO = partnerDataService.newPartnerDTO();
 
         String savedPartnerResponse = mockMvc.perform(
                 post("/api/v1/partners")
@@ -70,7 +80,7 @@ public class PartnerControllerTest extends BaseControllerTest {
 
         mockMvc.perform(
                 put("/api/v1/partners")
-                .content(new JSONObject((LinkedHashMap)JsonPath.read(savedPartnerResponse, "$.data")).toString())
+                .content(new JSONObject((LinkedHashMap)JsonPath.read(savedPartnerResponse, Constants.PAYLOAD_JSON_PATH)).toString())
                 .contentType(MediaType.APPLICATION_JSON)
         ).andDo(MockMvcResultHandlers.print())
                 .andExpect(status().isOk());
@@ -80,7 +90,7 @@ public class PartnerControllerTest extends BaseControllerTest {
     @Test
     public void testUpdatingPartnerWithNoID() throws Exception {
 
-        PartnerDTO partnerDTO = newPartner();
+        PartnerDTO partnerDTO = partnerDataService.newPartnerDTO();
 
         mockMvc.perform(
                 put("/api/v1/partners")
@@ -94,7 +104,7 @@ public class PartnerControllerTest extends BaseControllerTest {
 
     @Test
     public void testSavingPartnerWithLongNameCauses5xxError() throws Exception {
-        PartnerDTO partnerDTO = newPartner();
+        PartnerDTO partnerDTO = partnerDataService.newPartnerDTO();
 
         partnerDTO.name = Strings.repeat("Long Arse Name", 100);
 
@@ -104,7 +114,7 @@ public class PartnerControllerTest extends BaseControllerTest {
                 .contentType(MediaType.APPLICATION_JSON)
         ).andDo(MockMvcResultHandlers.print())
                 .andExpect(status().is5xxServerError())
-                .andExpect(jsonPath("$.code").value(InvalidEntityException.CODE));
+                .andExpect(jsonPath("$.code").value(InvalidObjectException.CODE));
     }
 
 
@@ -117,15 +127,5 @@ public class PartnerControllerTest extends BaseControllerTest {
                 .andExpect(status().is2xxSuccessful());
     }
 
-
-    private PartnerDTO newPartner() {
-        PartnerDTO partnerDTO = new PartnerDTO();
-
-        partnerDTO.name = faker.name().fullName();
-        partnerDTO.description = faker.company().name();
-        partnerDTO.website = "http://partner.com";
-
-        return partnerDTO;
-    }
 
 }
