@@ -12,12 +12,19 @@ public class Constants {
     public final static String PAYLOAD_JSON_PATH = "$.data";
 
 
+    public final static Long MILLIS_IN_DAY = 86_400_000l;
+
+
+    public final static Integer MINUTES_IN_DAY = 1440;
+
+
+
     public final class Users {
 
         public final static String LOTTERY_USER = "Lottery User";
 
 
-        public final static String BACKOFFICE_USER = "BackOffice User";
+        public final static String BACK_OFFICE_USER = "BackOffice User";
 
 
         public final static String PARTNER_USER = "Partner User";
@@ -49,6 +56,7 @@ public class Constants {
         public final static String WEBSITE = "^((https?|ftp|smtp):\\/\\/)?(www.)?[a-z0-9]+\\.[a-z]+(\\/[a-zA-Z0-9#]+\\/?)*$";
 
     }
+
 
 
 }

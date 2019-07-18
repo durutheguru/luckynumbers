@@ -2,6 +2,7 @@ package com.omarze.services.campaign.handlers;
 
 
 import com.omarze.entities.Campaign;
+import com.omarze.entities.CampaignStatus;
 import com.omarze.entities.RequestStatus;
 import com.omarze.exception.ServiceException;
 import com.omarze.persistence.CampaignRepository;
@@ -27,7 +28,10 @@ public class AddCampaign implements ServiceHandler<Campaign> {
     @Override
     public Campaign run() throws ServiceException {
         ValidatorUtil.validate(campaign);
+
         campaign.setRequestStatus(RequestStatus.PENDING);
+        campaign.setCampaignStatus(CampaignStatus.AWAITING_APPROVAL);
+
         return campaignRepository.save(campaign);
     }
 

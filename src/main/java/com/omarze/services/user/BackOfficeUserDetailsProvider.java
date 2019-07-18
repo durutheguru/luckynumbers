@@ -45,7 +45,7 @@ public class BackOfficeUserDetailsProvider implements UserDetailsProvider<BackOf
 
     @Override
     public String name() {
-        return Constants.Users.BACKOFFICE_USER;
+        return Constants.Users.BACK_OFFICE_USER;
     }
 
 

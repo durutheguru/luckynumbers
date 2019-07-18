@@ -3,10 +3,12 @@ package com.omarze.services.campaign.handlers;
 
 import com.omarze.dto.CampaignApprovalDTO;
 import com.omarze.entities.Campaign;
+import com.omarze.entities.CampaignStatus;
 import com.omarze.entities.RequestStatus;
 import com.omarze.exception.EntityNotFoundException;
 import com.omarze.exception.InvalidUpdateException;
 import com.omarze.exception.ServiceException;
+import com.omarze.model.ApprovalAction;
 import com.omarze.persistence.CampaignRepository;
 import com.omarze.services.ServiceHandler;
 
@@ -34,12 +36,11 @@ public class ApproveCampaign implements ServiceHandler<Campaign> {
     public Campaign run() throws ServiceException {
         campaign = getCampaignEntity();
 
-        validateCampaignState();
-        campaign.setRequestStatus(RequestStatus.fromApproval(campaignApproval.getApprovalAction()));
+        ApprovalAction action = campaignApproval.getApprovalAction();
 
-        if (campaign.isApproved()) {
-            campaign.setEnabled(true);
-        }
+        validateCampaignState();
+        campaign.setRequestStatus(RequestStatus.fromApproval(action));
+        campaign.setCampaignStatus(CampaignStatus.fromApproval(action));
 
         return campaignRepository.save(campaign);
     }

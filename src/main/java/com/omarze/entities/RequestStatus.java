@@ -16,12 +16,7 @@ public enum RequestStatus {
 
 
     public static RequestStatus fromApproval(ApprovalAction action) {
-        if (action == ApprovalAction.APPROVED) {
-            return APPROVED;
-        }
-        else {
-            return DISAPPROVED;
-        }
+        return action == ApprovalAction.APPROVED ? APPROVED : DISAPPROVED;
     }
 
 

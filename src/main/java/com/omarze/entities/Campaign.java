@@ -48,11 +48,8 @@ public class Campaign extends BaseEntity {
     @Convert(converter = Jsr310JpaConverters.LocalDateConverter.class)
     private LocalDate endDate;
 
-    @ElementCollection
-    @JoinTable(name = "CampaignStageDescriptors", joinColumns = @JoinColumn(name = "id"))
-    @Column(name = "StageDescriptors", nullable = false)
-    @Enumerated(EnumType.STRING)
-    private List<StageDescriptor> stageDescriptors;
+    @OneToMany(mappedBy = "campaign", cascade = {CascadeType.ALL})
+    private List<StageDescription> stageDescriptions;
 
     @Column(nullable = false)
     @NotNull(message = "Number of expected Winners cannot be empty")
@@ -67,11 +64,9 @@ public class Campaign extends BaseEntity {
     @NotNull(message = "Campaign Type cannot be empty")
     private CampaignType campaignType;
 
-    @Column(nullable = false)
-    private boolean enabled = false;
-
-    @Column(nullable = false)
-    private boolean active = false;
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false, length = 30)
+    private CampaignStatus campaignStatus;
 
 
     public String getName() {
@@ -137,12 +132,12 @@ public class Campaign extends BaseEntity {
         return this;
     }
 
-    public List<StageDescriptor> getStageDescriptors() {
-        return stageDescriptors;
+    public List<StageDescription> getStageDescriptions() {
+        return stageDescriptions;
     }
 
-    public Campaign setStageDescriptors(List<StageDescriptor> stageDescriptors) {
-        this.stageDescriptors = stageDescriptors;
+    public Campaign setStageDescriptions(List<StageDescription> stageDescriptions) {
+        this.stageDescriptions = stageDescriptions;
         return this;
     }
 
@@ -177,27 +172,18 @@ public class Campaign extends BaseEntity {
         return requestStatus == RequestStatus.APPROVED;
     }
 
-    public boolean isEnabled() {
-        return enabled;
-    }
-
-    public Campaign setEnabled(boolean enabled) {
-        this.enabled = enabled;
-        return this;
-    }
-
-    public boolean isActive() {
-        return active;
-    }
-
-    public Campaign setActive(boolean active) {
-        this.active = active;
-        return this;
-    }
-
 
     public boolean canBeApproved() {
-        return (requestStatus != null && requestStatus == RequestStatus.PENDING) && !enabled;
+        return requestStatus == RequestStatus.PENDING && campaignStatus == CampaignStatus.AWAITING_APPROVAL;
+    }
+
+    public CampaignStatus getCampaignStatus() {
+        return campaignStatus;
+    }
+
+    public Campaign setCampaignStatus(CampaignStatus campaignStatus) {
+        this.campaignStatus = campaignStatus;
+        return this;
     }
 
 

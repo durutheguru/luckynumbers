@@ -2,6 +2,7 @@ package com.omarze.service.campaign;
 
 
 import com.omarze.dto.CampaignApprovalDTO;
+import com.omarze.entities.CampaignStatus;
 import com.omarze.entities.RequestStatus;
 import com.omarze.model.ApprovalAction;
 import org.junit.Assert;
@@ -19,7 +20,7 @@ public class DisapproveCampaignActionTest extends CampaignActionTest {
         campaign = campaignService.campaignAction(approvalDTO);
 
         Assert.assertEquals(campaign.getRequestStatus(), RequestStatus.DISAPPROVED);
-        Assert.assertFalse(campaign.isEnabled());
+        Assert.assertEquals(campaign.getCampaignStatus(), CampaignStatus.DISAPPROVED);
     }
 
 

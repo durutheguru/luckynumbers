@@ -2,10 +2,7 @@ package com.omarze.data;
 
 
 import com.omarze.dto.LotteryUserCampaignDTO;
-import com.omarze.entities.Campaign;
-import com.omarze.entities.LotteryUser;
-import com.omarze.entities.LotteryUserCampaign;
-import com.omarze.entities.LotteryUserCampaignStatus;
+import com.omarze.entities.*;
 import com.omarze.persistence.LotteryUserCampaignRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Value;
@@ -37,7 +34,7 @@ public class LotteryUserCampaignDataService {
 
     public LotteryUserCampaign newUserCampaign() {
         Campaign campaign = campaignDataService.saveCampaign(
-                new Campaign().setActive(true)
+                new Campaign().setCampaignStatus(CampaignStatus.ACTIVE)
         );
         LotteryUser lotteryUser = lotteryUserDataService.saveLotteryUser();
 

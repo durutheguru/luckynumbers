@@ -3,7 +3,7 @@ package com.omarze.dto;
 
 import com.omarze.entities.CampaignType;
 import com.omarze.entities.RequestStatus;
-import com.omarze.entities.StageDescriptor;
+import com.omarze.entities.Stage;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -27,7 +27,7 @@ public class CampaignDTO extends BaseDTO {
 
     private LocalDate endDate;
 
-    private List<StageDescriptor> stageDescriptors;
+    private List<Stage> stages;
 
     private Integer expectedWinnerCount;
 
@@ -99,12 +99,12 @@ public class CampaignDTO extends BaseDTO {
         return this;
     }
 
-    public List<StageDescriptor> getStageDescriptors() {
-        return stageDescriptors;
+    public List<Stage> getStages() {
+        return stages;
     }
 
-    public CampaignDTO setStageDescriptors(List<StageDescriptor> stageDescriptors) {
-        this.stageDescriptors = stageDescriptors;
+    public CampaignDTO setStages(List<Stage> stages) {
+        this.stages = stages;
         return this;
     }
 

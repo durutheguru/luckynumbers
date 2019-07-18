@@ -7,11 +7,13 @@ import com.omarze.entities.*;
 import com.omarze.persistence.CampaignRepository;
 import com.omarze.util.ObjectUtil;
 import org.modelmapper.ModelMapper;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * created by julian
@@ -56,7 +58,7 @@ public class CampaignDataService {
         campaign.setEndDate(LocalDate.now().plusDays(5));
         campaign.setExpectedWinnerCount(1);
         campaign.setCampaignType(CampaignType.SINGLE);
-        campaign.setStageDescriptors(Arrays.asList(StageDescriptor.FIRST, StageDescriptor.SECOND));
+        campaign.setStageDescriptions(campaignStageDescriptions());
         campaign.setPartner(partner);
         campaign.setRequestStatus(RequestStatus.PENDING);
 
@@ -78,11 +80,33 @@ public class CampaignDataService {
     }
 
 
+    public List<Campaign> saveCampaigns(List<Campaign> campaignExamples) {
+        return campaignExamples
+                .stream()
+                .map(this::saveCampaign)
+                .collect(Collectors.toList());
+    }
+
+
     public CampaignDTO saveCampaignDTO() {
         Campaign campaign = saveCampaign();
         return modelMapper.map(campaign, CampaignDTO.class);
     }
 
+
+    private List<StageDescription> campaignStageDescriptions() {
+        return Arrays.asList(
+                new StageDescription()
+                .setStage(Stage.FIRST)
+                .setWinnersCount(faker.random().nextInt(5) + 1)
+                .setEvaluationTime(LocalDateTime.now()),
+
+                new StageDescription()
+                .setStage(Stage.SECOND)
+                .setWinnersCount(faker.random().nextInt(5) + 1)
+                        .setEvaluationTime(LocalDateTime.now())
+        );
+    }
 
 
 }
