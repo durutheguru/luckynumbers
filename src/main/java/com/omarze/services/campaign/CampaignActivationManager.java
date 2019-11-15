@@ -35,11 +35,6 @@ public class CampaignActivationManager {
         Assert.notNull(campaign, "Campaign Parameter should not be null");
 
 
-
-
-
-        LotteryUserCampaign userCampaign = new LotteryUserCampaign();
-
     }
 
 

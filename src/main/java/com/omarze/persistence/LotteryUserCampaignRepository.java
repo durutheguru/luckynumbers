@@ -12,6 +12,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
 import java.util.Optional;
 
 /**
@@ -31,8 +32,23 @@ public interface LotteryUserCampaignRepository extends JpaRepository<LotteryUser
 
 
     @Modifying
-    @Query("UPDATE LotteryUserCampaign l SET l.campaignStatus = :campaignStatus WHERE l.campaignId = :campaignId")
+    @Query("UPDATE LotteryUserCampaign l SET l.campaignStatus = :campaignStatus WHERE l.campaign.id = :campaignId")
     void updateUserCampaignsToStatus(@Param("campaignId") Long campaignId, @Param("campaignStatus") LotteryUserCampaignStatus campaignStatus);
+
+
+    @Modifying
+    @Query("UPDATE LotteryUserCampaign l SET l.campaignStatus = :campaignStatus WHERE l.campaign.id = :campaignId AND l.campaignStatus <> 'LOSER'")
+    void updateParticipatingUserCampaignsToStatus(@Param("campaignId") Long campaignId, @Param("campaignStatus") LotteryUserCampaignStatus campaignStatus);
+
+
+    @Modifying
+    @Query("UPDATE LotteryUserCampaign l SET l.campaignStatus = :campaignStatus WHERE l.campaign.id = :campaignId AND l.userNumber IN :luckyNumbers")
+    void updateUserCampaignsToStatus(@Param("campaignId") Long campaignId, @Param("luckyNumbers") List<String> luckyNumbers, @Param("campaignStatus") LotteryUserCampaignStatus campaignStatus);
+
+
+    @Modifying
+    @Query("UPDATE LotteryUserCampaign l SET l.campaignStatus = 'LOSER' WHERE l.campaign.id = :campaignId AND l.campaignStatus = 'EVALUATING'")
+    void updateUserCampaignLosers(@Param("campaignId") Long campaignId);
 
 
 }

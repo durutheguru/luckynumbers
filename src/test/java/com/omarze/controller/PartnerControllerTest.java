@@ -4,7 +4,7 @@ package com.omarze.controller;
 import com.google.common.base.Strings;
 import com.jayway.jsonpath.JsonPath;
 import com.omarze.Constants;
-import com.omarze.data.PartnerDataService;
+import com.omarze.data.partner.PartnerDataService;
 import com.omarze.exception.InvalidObjectException;
 import com.omarze.exception.PartnerAlreadyExistsException;
 import com.omarze.util.JSONUtil;

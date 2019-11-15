@@ -13,7 +13,7 @@ public enum Stage {
     THIRD(3);
 
 
-    private int value;
+    public final int value;
 
     Stage(int value) {
         this.value = value;

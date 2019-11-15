@@ -1,4 +1,4 @@
-package com.omarze.data;
+package com.omarze.data.partner;
 
 
 import com.github.javafaker.Faker;

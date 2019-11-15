@@ -2,7 +2,7 @@ package com.omarze.controller;
 
 
 import com.omarze.Constants;
-import com.omarze.data.LotteryUserCampaignDataService;
+import com.omarze.data.lotteryuser.LotteryUserCampaignDataService;
 import com.omarze.dto.CampaignDTO;
 import com.omarze.dto.LotteryUserCampaignDTO;
 import com.omarze.dto.LotteryUserDTO;

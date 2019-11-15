@@ -6,6 +6,7 @@ package com.omarze;
  */
 public class Constants {
 
+
     public final static String API_V1_BASE = "/api/v1";
 
 

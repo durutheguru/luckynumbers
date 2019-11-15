@@ -30,9 +30,20 @@ public class StageDescription extends BaseEntity {
     private LocalDateTime evaluationTime;
 
 
+    @OneToOne
+    private SubCampaign subCampaign;
+
+
     @ManyToOne
     @JoinColumn(nullable = false)
     private Campaign campaign;
+
+
+    public StageDescription() {}
+
+    public StageDescription (Stage stage) {
+        this.stage = stage;
+    }
 
 
     public Stage getStage() {
@@ -67,6 +78,15 @@ public class StageDescription extends BaseEntity {
         return this;
     }
 
+    public SubCampaign getSubCampaign() {
+        return subCampaign;
+    }
+
+    public StageDescription setSubCampaign(SubCampaign subCampaign) {
+        this.subCampaign = subCampaign;
+        return this;
+    }
+
     public LocalDateTime getEvaluationTime() {
         return evaluationTime;
     }
@@ -74,6 +94,10 @@ public class StageDescription extends BaseEntity {
     public StageDescription setEvaluationTime(LocalDateTime evaluationTime) {
         this.evaluationTime = evaluationTime;
         return this;
+    }
+
+    public boolean hasWinnings() {
+        return campaign.isFinalStage(stage) || subCampaign != null;
     }
 
 

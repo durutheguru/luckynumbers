@@ -79,7 +79,7 @@ public class Evaluation extends AbstractServiceHandler<CampaignStageEvaluationRe
     @Override
     protected CampaignStageEvaluationResult execute() throws ServiceException {
 
-        userCampaignRepository.updateUserCampaignsToStatus(campaignId, LotteryUserCampaignStatus.EVALUATING);
+        userCampaignRepository.updateParticipatingUserCampaignsToStatus(campaignId, LotteryUserCampaignStatus.EVALUATING);
 
         generateLuckyIndices();
 

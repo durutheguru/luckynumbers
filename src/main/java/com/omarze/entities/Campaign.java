@@ -10,7 +10,10 @@ import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
 
 /**
  * created by julian
@@ -30,9 +33,6 @@ public class Campaign extends BaseEntity {
 
     @OneToMany(mappedBy = "campaign", cascade = {CascadeType.ALL})
     private List<CampaignImage> campaignImages;
-
-    @OneToMany(mappedBy = "campaign", cascade = {CascadeType.ALL})
-    private List<SubCampaign> subCampaigns;
 
     @ManyToOne
     @JoinColumn(nullable = false)
@@ -96,15 +96,6 @@ public class Campaign extends BaseEntity {
         return this;
     }
 
-    public List<SubCampaign> getSubCampaigns() {
-        return subCampaigns;
-    }
-
-    public Campaign setSubCampaigns(List<SubCampaign> subCampaigns) {
-        this.subCampaigns = subCampaigns;
-        return this;
-    }
-
     public Partner getPartner() {
         return partner;
     }
@@ -138,6 +129,15 @@ public class Campaign extends BaseEntity {
 
     public Campaign setStageDescriptions(List<StageDescription> stageDescriptions) {
         this.stageDescriptions = stageDescriptions;
+        return this;
+    }
+
+    public Campaign addStageDescription(StageDescription stageDescription) {
+        if (this.stageDescriptions == null) {
+            stageDescriptions = new ArrayList<>();
+        }
+
+        stageDescriptions.add(stageDescription);
         return this;
     }
 
@@ -184,6 +184,37 @@ public class Campaign extends BaseEntity {
     public Campaign setCampaignStatus(CampaignStatus campaignStatus) {
         this.campaignStatus = campaignStatus;
         return this;
+    }
+
+
+    public Stage getFinalStage() throws IllegalStateException {
+        if (stageDescriptions == null) {
+            throw new IllegalStateException("Cannot evaluate Final stage without Stage Descriptions");
+        }
+
+        List<Stage> stages = stageDescriptions
+                .stream().map(StageDescription::getStage)
+                .collect(Collectors.toList());
+
+        stages.sort(Enum::compareTo);
+
+        return stages.get(stages.size() - 1);
+    }
+
+
+    public boolean isFinalStage(Stage stage) throws IllegalStateException {
+        return stage == getFinalStage();
+    }
+
+
+    public Optional<StageDescription> getDescriptionForStage(Stage stage) {
+        for (StageDescription description : stageDescriptions) {
+            if (description.getStage() == stage) {
+                return Optional.of(description);
+            }
+        }
+
+        return Optional.empty();
     }
 
 

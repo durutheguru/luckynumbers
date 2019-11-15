@@ -1,11 +1,11 @@
-package com.omarze.data;
+package com.omarze.data.lotteryuser;
 
 
+import com.omarze.data.campaign.CampaignDataService;
 import com.omarze.dto.LotteryUserCampaignDTO;
 import com.omarze.entities.*;
 import com.omarze.persistence.LotteryUserCampaignRepository;
 import org.modelmapper.ModelMapper;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 /**

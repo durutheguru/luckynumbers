@@ -1,7 +1,8 @@
-package com.omarze.data;
+package com.omarze.data.campaign;
 
 
 import com.github.javafaker.Faker;
+import com.omarze.data.partner.PartnerDataService;
 import com.omarze.dto.CampaignDTO;
 import com.omarze.entities.*;
 import com.omarze.persistence.CampaignRepository;
@@ -94,7 +95,7 @@ public class CampaignDataService {
     }
 
 
-    private List<StageDescription> campaignStageDescriptions() {
+    public List<StageDescription> campaignStageDescriptions() {
         return Arrays.asList(
                 new StageDescription()
                 .setStage(Stage.FIRST)

@@ -2,7 +2,7 @@ package com.omarze.controller;
 
 
 import com.omarze.Constants;
-import com.omarze.data.CampaignDataService;
+import com.omarze.data.campaign.CampaignDataService;
 import com.omarze.dto.CampaignDTO;
 import com.omarze.util.JSONUtil;
 import org.junit.Test;

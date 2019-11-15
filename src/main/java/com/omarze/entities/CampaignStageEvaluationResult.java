@@ -53,4 +53,9 @@ public class CampaignStageEvaluationResult extends BaseEntity {
     }
 
 
+    public boolean isFinalStage() {
+        return campaign.isFinalStage(stage);
+    }
+
+
 }

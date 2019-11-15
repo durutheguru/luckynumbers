@@ -1,7 +1,7 @@
 package com.omarze.service.campaign;
 
 
-import com.omarze.data.LotteryUserCampaignDataService;
+import com.omarze.data.lotteryuser.LotteryUserCampaignDataService;
 import com.omarze.entities.LotteryUserCampaign;
 import com.omarze.service.BaseServiceIntegrationTest;
 import com.omarze.services.campaign.NumberGenerator;

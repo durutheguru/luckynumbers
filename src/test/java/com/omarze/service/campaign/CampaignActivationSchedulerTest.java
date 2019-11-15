@@ -1,7 +1,7 @@
 package com.omarze.service.campaign;
 
 
-import com.omarze.data.CampaignDataService;
+import com.omarze.data.campaign.CampaignDataService;
 import com.omarze.entities.Campaign;
 import com.omarze.entities.CampaignStatus;
 import com.omarze.persistence.CampaignRepository;
@@ -18,7 +18,7 @@ import java.util.List;
 /**
  * created by julian
  */
-public class CampaignActivationManagerTest extends BaseServiceIntegrationTest {
+public class CampaignActivationSchedulerTest extends BaseServiceIntegrationTest {
 
 
     private CampaignActivationScheduler campaignActivationScheduler;
@@ -31,21 +31,21 @@ public class CampaignActivationManagerTest extends BaseServiceIntegrationTest {
 
 
     @Autowired
-    public CampaignActivationManagerTest setCampaignDataService(CampaignDataService campaignDataService) {
+    public CampaignActivationSchedulerTest setCampaignDataService(CampaignDataService campaignDataService) {
         this.campaignDataService = campaignDataService;
         return this;
     }
 
 
     @Autowired
-    public CampaignActivationManagerTest setCampaignActivationScheduler(CampaignActivationScheduler campaignActivationScheduler) {
+    public CampaignActivationSchedulerTest setCampaignActivationScheduler(CampaignActivationScheduler campaignActivationScheduler) {
         this.campaignActivationScheduler = campaignActivationScheduler;
         return this;
     }
 
 
     @Autowired
-    public CampaignActivationManagerTest setCampaignRepository(CampaignRepository campaignRepository) {
+    public CampaignActivationSchedulerTest setCampaignRepository(CampaignRepository campaignRepository) {
         this.campaignRepository = campaignRepository;
         return this;
     }
@@ -80,14 +80,17 @@ public class CampaignActivationManagerTest extends BaseServiceIntegrationTest {
         List<Campaign> campaigns = Arrays.asList(
                 new Campaign()
                         .setCampaignStatus(CampaignStatus.APPROVED)
+                        .setStageDescriptions(campaignDataService.campaignStageDescriptions())
                         .setStartDate(LocalDate.now().minusDays(5)),
 
                 new Campaign()
                         .setCampaignStatus(CampaignStatus.APPROVED)
+                        .setStageDescriptions(campaignDataService.campaignStageDescriptions())
                         .setStartDate(LocalDate.now()),
 
                 new Campaign()
                         .setCampaignStatus(CampaignStatus.APPROVED)
+                        .setStageDescriptions(campaignDataService.campaignStageDescriptions())
                         .setStartDate(LocalDate.now().plusDays(5))
         );
 

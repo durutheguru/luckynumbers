@@ -22,6 +22,7 @@ public class LotteryUserController {
 
     private LotteryUserService lotteryUserService;
 
+
     @Autowired
     public LotteryUserController setLotteryUserService(LotteryUserService lotteryUserService) {
         this.lotteryUserService = lotteryUserService;

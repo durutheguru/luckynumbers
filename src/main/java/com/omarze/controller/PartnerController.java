@@ -21,7 +21,6 @@ public class PartnerController {
     private PartnerService partnerService;
 
 
-//    @Autowired
     public PartnerController(PartnerService partnerService) {
         this.partnerService = partnerService;
     }

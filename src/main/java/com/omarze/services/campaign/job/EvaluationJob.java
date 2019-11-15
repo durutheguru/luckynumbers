@@ -1,18 +1,19 @@
 package com.omarze.services.campaign.job;
 
 
-import com.omarze.entities.Campaign;
 import com.omarze.entities.CampaignStageEvaluationResult;
 import com.omarze.entities.Stage;
 import com.omarze.exception.ServiceException;
 import com.omarze.persistence.CampaignRepository;
 import com.omarze.persistence.LotteryUserCampaignRepository;
+import com.omarze.services.campaign.EvaluationResultProcessor;
 import org.quartz.JobDataMap;
 import org.quartz.JobExecutionContext;
 import org.quartz.JobExecutionException;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.quartz.QuartzJobBean;
 import org.springframework.stereotype.Component;
+
+import java.util.List;
 
 
 /**
@@ -33,22 +34,17 @@ public class EvaluationJob extends QuartzJobBean {
     public final static String CAMPAIGN_ID = "CAMPAIGN_ID";
 
 
-    private LotteryUserCampaignRepository userCampaignRepository;
+    private final LotteryUserCampaignRepository userCampaignRepository;
 
-    private CampaignRepository campaignRepository;
+    private final CampaignRepository campaignRepository;
+
+    private final List<EvaluationResultProcessor> resultProcessors;
 
 
-    @Autowired
-    public EvaluationJob setUserCampaignRepository(LotteryUserCampaignRepository userCampaignRepository) {
+    public EvaluationJob(LotteryUserCampaignRepository userCampaignRepository, CampaignRepository campaignRepository, List<EvaluationResultProcessor> resultProcessors) {
         this.userCampaignRepository = userCampaignRepository;
-        return this;
-    }
-
-
-    @Autowired
-    public EvaluationJob setCampaignRepository(CampaignRepository campaignRepository) {
         this.campaignRepository = campaignRepository;
-        return this;
+        this.resultProcessors = resultProcessors;
     }
 
 
@@ -66,7 +62,7 @@ public class EvaluationJob extends QuartzJobBean {
                     .setCampaignRepository(campaignRepository)
                     .run();
 
-            
+            EvaluationResultProcessor.process(resultProcessors, evaluationResult);
         }
         catch (ServiceException e) {
             throw new JobExecutionException(e);
@@ -75,3 +71,4 @@ public class EvaluationJob extends QuartzJobBean {
 
 
 }
+

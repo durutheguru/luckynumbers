@@ -1,7 +1,7 @@
 package com.omarze.service.campaign;
 
 
-import com.omarze.data.CampaignDataService;
+import com.omarze.data.campaign.CampaignDataService;
 import com.omarze.dto.CampaignApprovalDTO;
 import com.omarze.entities.Campaign;
 import com.omarze.model.ApprovalAction;
