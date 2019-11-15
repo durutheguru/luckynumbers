@@ -13,7 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 /**
  * created by julian
  */
-public abstract class CampaignActionTest extends BaseServiceIntegrationTest {
+public abstract class CampaignActionTest {
 
 
     @Autowired

@@ -5,6 +5,7 @@ import com.omarze.Constants;
 import com.omarze.data.campaign.CampaignDataService;
 import com.omarze.dto.CampaignDTO;
 import com.omarze.util.JSONUtil;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
@@ -46,6 +47,7 @@ public class CampaignControllerTest extends BaseControllerTest {
 
 
     @Test
+    @Ignore
     public void testUpdatingCampaign() throws Exception {
         CampaignDTO campaignDTO = campaignDataService.newCampaignDTO();
 
