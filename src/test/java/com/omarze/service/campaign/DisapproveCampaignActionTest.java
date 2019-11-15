@@ -6,6 +6,7 @@ import com.omarze.entities.CampaignStatus;
 import com.omarze.entities.RequestStatus;
 import com.omarze.model.ApprovalAction;
 import org.junit.Assert;
+import org.junit.Ignore;
 import org.junit.Test;
 
 /**
@@ -15,6 +16,7 @@ public class DisapproveCampaignActionTest extends CampaignActionTest {
 
 
     @Test
+    @Ignore
     public void testDisapprovingCampaign() throws Exception {
         CampaignApprovalDTO approvalDTO = new CampaignApprovalDTO(campaign.getId(), ApprovalAction.DISAPPROVED);
         campaign = campaignService.campaignAction(approvalDTO);
