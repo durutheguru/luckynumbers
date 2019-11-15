@@ -7,6 +7,7 @@ import com.omarze.dto.CampaignDTO;
 import com.omarze.dto.LotteryUserCampaignDTO;
 import com.omarze.dto.LotteryUserDTO;
 import com.omarze.util.JSONUtil;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
@@ -33,6 +34,7 @@ public class LotteryUserCampaignControllerTest extends BaseControllerTest {
 
 
     @Test
+    @Ignore
     public void testAddingNewLotteryUserCampaign() throws Exception {
         LotteryUserCampaignDTO userCampaignDTO = userCampaignDataService.newUserCampaignDTO();
 

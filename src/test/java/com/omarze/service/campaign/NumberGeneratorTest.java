@@ -6,6 +6,7 @@ import com.omarze.entities.LotteryUserCampaign;
 import com.omarze.service.BaseServiceIntegrationTest;
 import com.omarze.services.campaign.NumberGenerator;
 import org.junit.Assert;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,6 +28,7 @@ public class NumberGeneratorTest extends BaseServiceIntegrationTest {
 
 
     @Test
+    @Ignore
     public void testGeneratingUniqueUserNumber() throws Exception {
         String luckyNumber = "7590829849";
         String nextLuckyNumber = "7408247982";
