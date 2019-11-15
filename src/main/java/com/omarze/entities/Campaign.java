@@ -1,6 +1,8 @@
 package com.omarze.entities;
 
 
+import com.omarze.api.annotation.DTO;
+import com.omarze.dto.CampaignDTO;
 import org.springframework.data.jpa.convert.threeten.Jsr310JpaConverters;
 
 import javax.persistence.*;
@@ -8,12 +10,16 @@ import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
 
 /**
  * created by julian
  */
 @Entity
+@DTO(CampaignDTO.class)
 public class Campaign extends BaseEntity {
 
     @NotEmpty(message = "Campaign Name is required")
@@ -28,28 +34,22 @@ public class Campaign extends BaseEntity {
     @OneToMany(mappedBy = "campaign", cascade = {CascadeType.ALL})
     private List<CampaignImage> campaignImages;
 
-    @OneToMany(mappedBy = "campaign", cascade = {CascadeType.ALL})
-    private List<SubCampaign> subCampaigns;
-
     @ManyToOne
     @JoinColumn(nullable = false)
     private Partner partner;
 
     @Column(nullable = false)
-    @NotEmpty(message = "Campaign requires a valid Start Date")
+    @NotNull(message = "Campaign requires a valid Start Date")
     @Convert(converter = Jsr310JpaConverters.LocalDateConverter.class)
     private LocalDate startDate;
 
     @Column(nullable = false)
-    @NotEmpty(message = "Campaign requires a valid End Date")
+    @NotNull(message = "Campaign requires a valid End Date")
     @Convert(converter = Jsr310JpaConverters.LocalDateConverter.class)
     private LocalDate endDate;
 
-    @ElementCollection
-    @JoinTable(name = "CampaignStageDescriptors", joinColumns = @JoinColumn(name = "id"))
-    @Column(name = "StageDescriptors", nullable = false)
-    @Enumerated(EnumType.STRING)
-    private List<StageDescriptor> stageDescriptors;
+    @OneToMany(mappedBy = "campaign", cascade = {CascadeType.ALL})
+    private List<StageDescription> stageDescriptions;
 
     @Column(nullable = false)
     @NotNull(message = "Number of expected Winners cannot be empty")
@@ -61,8 +61,12 @@ public class Campaign extends BaseEntity {
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false, length = 30)
-    @NotEmpty(message = "Campaign Type cannot be empty")
+    @NotNull(message = "Campaign Type cannot be empty")
     private CampaignType campaignType;
+
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false, length = 30)
+    private CampaignStatus campaignStatus;
 
 
     public String getName() {
@@ -89,15 +93,6 @@ public class Campaign extends BaseEntity {
 
     public Campaign setCampaignImages(List<CampaignImage> campaignImages) {
         this.campaignImages = campaignImages;
-        return this;
-    }
-
-    public List<SubCampaign> getSubCampaigns() {
-        return subCampaigns;
-    }
-
-    public Campaign setSubCampaigns(List<SubCampaign> subCampaigns) {
-        this.subCampaigns = subCampaigns;
         return this;
     }
 
@@ -128,12 +123,21 @@ public class Campaign extends BaseEntity {
         return this;
     }
 
-    public List<StageDescriptor> getStageDescriptors() {
-        return stageDescriptors;
+    public List<StageDescription> getStageDescriptions() {
+        return stageDescriptions;
     }
 
-    public Campaign setStageDescriptors(List<StageDescriptor> stageDescriptors) {
-        this.stageDescriptors = stageDescriptors;
+    public Campaign setStageDescriptions(List<StageDescription> stageDescriptions) {
+        this.stageDescriptions = stageDescriptions;
+        return this;
+    }
+
+    public Campaign addStageDescription(StageDescription stageDescription) {
+        if (this.stageDescriptions == null) {
+            stageDescriptions = new ArrayList<>();
+        }
+
+        stageDescriptions.add(stageDescription);
         return this;
     }
 
@@ -162,6 +166,55 @@ public class Campaign extends BaseEntity {
     public Campaign setCampaignType(CampaignType campaignType) {
         this.campaignType = campaignType;
         return this;
+    }
+
+    public boolean isApproved() {
+        return requestStatus == RequestStatus.APPROVED;
+    }
+
+
+    public boolean canBeApproved() {
+        return requestStatus == RequestStatus.PENDING && campaignStatus == CampaignStatus.AWAITING_APPROVAL;
+    }
+
+    public CampaignStatus getCampaignStatus() {
+        return campaignStatus;
+    }
+
+    public Campaign setCampaignStatus(CampaignStatus campaignStatus) {
+        this.campaignStatus = campaignStatus;
+        return this;
+    }
+
+
+    public Stage getFinalStage() throws IllegalStateException {
+        if (stageDescriptions == null) {
+            throw new IllegalStateException("Cannot evaluate Final stage without Stage Descriptions");
+        }
+
+        List<Stage> stages = stageDescriptions
+                .stream().map(StageDescription::getStage)
+                .collect(Collectors.toList());
+
+        stages.sort(Enum::compareTo);
+
+        return stages.get(stages.size() - 1);
+    }
+
+
+    public boolean isFinalStage(Stage stage) throws IllegalStateException {
+        return stage == getFinalStage();
+    }
+
+
+    public Optional<StageDescription> getDescriptionForStage(Stage stage) {
+        for (StageDescription description : stageDescriptions) {
+            if (description.getStage() == stage) {
+                return Optional.of(description);
+            }
+        }
+
+        return Optional.empty();
     }
 
 

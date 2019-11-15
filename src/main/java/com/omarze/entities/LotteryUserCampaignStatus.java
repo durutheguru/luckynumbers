@@ -6,6 +6,7 @@ package com.omarze.entities;
  */
 public enum LotteryUserCampaignStatus {
 
+    EVALUATING,
 
     WAITING,
 
@@ -13,8 +14,7 @@ public enum LotteryUserCampaignStatus {
 
     CAMPAIGN_WINNER,
 
-    LOSER
-
+    LOSER;
 
 
 }

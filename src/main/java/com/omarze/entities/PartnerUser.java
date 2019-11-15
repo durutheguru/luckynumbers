@@ -9,7 +9,7 @@ import javax.persistence.ManyToOne;
  * created by julian
  */
 @Entity
-public class PartnerUser extends User {
+public class PartnerUser extends ApplicationUser {
 
 
     @ManyToOne

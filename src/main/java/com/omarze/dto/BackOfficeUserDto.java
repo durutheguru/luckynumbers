@@ -5,7 +5,7 @@ package com.omarze.dto;
 /**
  * created by julian
  */
-public class BackOfficeUserDto extends BaseDTO {
+public class BackOfficeUserDTO extends BaseDTO {
 
 
     public String name;

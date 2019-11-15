@@ -1,6 +1,9 @@
 package com.omarze.entities;
 
 
+import com.omarze.api.annotation.DTO;
+import com.omarze.dto.LotteryUserCampaignDTO;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
@@ -11,6 +14,7 @@ import javax.validation.constraints.NotEmpty;
  * created by julian
  */
 @Entity
+@DTO(LotteryUserCampaignDTO.class)
 public class LotteryUserCampaign extends BaseEntity {
 
 
@@ -28,6 +32,7 @@ public class LotteryUserCampaign extends BaseEntity {
 
     @Column(nullable = false, length = 50)
     private LotteryUserCampaignStatus campaignStatus;
+
 
 
     public LotteryUser getLotteryUser() {
