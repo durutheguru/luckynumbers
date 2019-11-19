@@ -5,6 +5,9 @@
         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.6.xsd">
 
-    <includeAll path="changelog/" relativeToChangelogFile="true" errorIfMissingOrEmpty="true" />
+
+    <include file="classpath:db/changelog/init.0001.xml" relativeToChangelogFile="false" />
+    <include file="classpath:db/changelog/init.0002.quartz-changelog.xml" relativeToChangelogFile="false" />
+
 
 </databaseChangeLog>
