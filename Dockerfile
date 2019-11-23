@@ -19,7 +19,9 @@ FROM openjdk:8-jre-alpine
 WORKDIR /app
 
 
-ENV RELEASE_TAG
+ARG release_version
+
+ENV RELEASE_TAG $release_version
 
 
 COPY --from=MAVEN_BUILD /build/target/omarze-${RELEASE_TAG}-SNAPSHOT.jar /app/
