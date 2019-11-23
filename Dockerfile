@@ -18,6 +18,10 @@ FROM openjdk:8-jre-alpine
 
 WORKDIR /app
 
+
+ENV RELEASE_TAG
+
+
 COPY --from=MAVEN_BUILD /build/target/omarze-${RELEASE_TAG}-SNAPSHOT.jar /app/
 
 ENTRYPOINT ["java", "-Dspring.profiles.active=docker", "-jar", "omarze-${RELEASE_TAG}-SNAPSHOT.jar"]
