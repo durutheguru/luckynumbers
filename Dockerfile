@@ -11,13 +11,14 @@ COPY src /build/src/
 RUN mvn package
 
 
+
 # 2nd Stage of Build -
 
 FROM openjdk:8-jre-alpine
 
 WORKDIR /app
 
-COPY --from=MAVEN_BUILD /build/target/omarze-0.0.1-SNAPSHOT.jar /app/
+COPY --from=MAVEN_BUILD /build/target/omarze-${RELEASE_TAG}-SNAPSHOT.jar /app/
 
-ENTRYPOINT ["java", "-Dspring.profiles.active=docker", "-jar", "omarze-0.0.1-SNAPSHOT.jar"]
+ENTRYPOINT ["java", "-Dspring.profiles.active=docker", "-jar", "omarze-${RELEASE_TAG}-SNAPSHOT.jar"]
 
