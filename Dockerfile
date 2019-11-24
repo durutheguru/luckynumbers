@@ -5,10 +5,8 @@ WORKDIR /app
 
 ARG release_version
 
-ENV RELEASE_TAG $release_version
 
+COPY /target/omarze-$release_version-SNAPSHOT.jar /app/
 
-COPY /target/omarze-${RELEASE_TAG}-SNAPSHOT.jar /app/
-
-ENTRYPOINT ["java", "-Dspring.profiles.active=docker", "-jar", "omarze-${RELEASE_TAG}-SNAPSHOT.jar"]
+ENTRYPOINT ["java", "-Dspring.profiles.active=docker", "-jar", "omarze-$release_version-SNAPSHOT.jar"]
 
