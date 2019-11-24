@@ -3,10 +3,10 @@ FROM openjdk:8-jre-alpine
 WORKDIR /app
 
 
-ARG release_version
+ARG release_version=${RELEASE_TAG}
 
 
-COPY /target/omarze-$release_version-SNAPSHOT.jar /app/
+COPY /target/omarze-${RELEASE_TAG}-SNAPSHOT.jar /app/
 
-ENTRYPOINT ["java", "-Dspring.profiles.active=docker", "-jar", "omarze-$release_version-SNAPSHOT.jar"]
+ENTRYPOINT ["java", "-Dspring.profiles.active=docker", "-jar", "omarze-${RELEASE_TAG}-SNAPSHOT.jar"]
 
