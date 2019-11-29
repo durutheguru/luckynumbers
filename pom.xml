@@ -12,7 +12,7 @@
 
 	<groupId>com.omarze</groupId>
 	<artifactId>omarze</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>${RELEASE_VERSION}</version>
 	<name>omarze</name>
 	<description>Project for Celebrity Lotto platform</description>
 

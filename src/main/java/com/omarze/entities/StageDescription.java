@@ -41,6 +41,7 @@ public class StageDescription extends BaseEntity {
 
     public StageDescription() {}
 
+
     public StageDescription (Stage stage) {
         this.stage = stage;
     }
