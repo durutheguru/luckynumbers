@@ -29,5 +29,6 @@ HELP.md
 .vscode/
 
 *.log
+*.properties
 
 
