@@ -1,10 +1,7 @@
 package com.omarze.api.dto;
 
 
-import com.omarze.entities.CampaignStatus;
-import com.omarze.entities.CampaignType;
-import com.omarze.entities.RequestStatus;
-import com.omarze.entities.Stage;
+import com.omarze.entities.*;
 import lombok.Data;
 
 import javax.validation.constraints.NotEmpty;
@@ -43,7 +40,7 @@ public class CampaignDTO extends BaseDTO {
     private LocalDate endDate;
 
 
-    private List<Stage> stages;
+    public List<StageDescriptionDTO> stageDescriptions;
 
 
     @NotNull(message = "Number of expected Winners cannot be empty")

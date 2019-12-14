@@ -18,6 +18,7 @@ public class StageDescription extends BaseEntity {
 
 
     @Enumerated(EnumType.ORDINAL)
+    @Column(nullable = false)
     private Stage stage;
 
 
@@ -32,11 +33,7 @@ public class StageDescription extends BaseEntity {
     private LocalDateTime evaluationTime;
 
 
-    @OneToOne
-    private SubCampaign subCampaign;
-
-
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(nullable = false)
     private Campaign campaign;
 
@@ -56,7 +53,7 @@ public class StageDescription extends BaseEntity {
 
 
     public boolean hasWinnings() {
-        return campaign.isFinalStage(stage) || subCampaign != null;
+        return campaign.isFinalStage(stage);
     }
 
 

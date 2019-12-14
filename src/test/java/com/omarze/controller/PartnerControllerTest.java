@@ -80,7 +80,7 @@ public class PartnerControllerTest extends BaseControllerTest {
 
         mockMvc.perform(
                 put("/api/v1/partners")
-                .content(new JSONObject((LinkedHashMap)JsonPath.read(savedPartnerResponse, Constants.PAYLOAD_JSON_PATH)).toString())
+                .content(new JSONObject((LinkedHashMap)JsonPath.read(savedPartnerResponse, "$")).toString())
                 .contentType(MediaType.APPLICATION_JSON)
         ).andDo(MockMvcResultHandlers.print())
                 .andExpect(status().isOk());
@@ -113,8 +113,7 @@ public class PartnerControllerTest extends BaseControllerTest {
                 .content(JSONUtil.asJsonString(partnerDTO))
                 .contentType(MediaType.APPLICATION_JSON)
         ).andDo(MockMvcResultHandlers.print())
-                .andExpect(status().is5xxServerError())
-                .andExpect(jsonPath("$.code").value(InvalidObjectException.CODE));
+                .andExpect(status().is5xxServerError());
     }
 
 

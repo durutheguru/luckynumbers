@@ -9,7 +9,7 @@ import com.omarze.exception.EntityNotFoundException;
 import com.omarze.exception.ServiceException;
 import com.omarze.persistence.CampaignRepository;
 import com.omarze.persistence.LotteryUserCampaignRepository;
-import com.omarze.services.AbstractServiceHandler;
+import com.omarze.services.CommandBase;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 
@@ -22,7 +22,7 @@ import java.util.stream.Collectors;
 /**
  * created by julian
  */
-public class Evaluation extends AbstractServiceHandler<CampaignStageEvaluationResult>  {
+public class Evaluation extends CommandBase<CampaignStageEvaluationResult> {
 
 
     private Random random = new Random(System.currentTimeMillis());
@@ -77,7 +77,7 @@ public class Evaluation extends AbstractServiceHandler<CampaignStageEvaluationRe
 
 
     @Override
-    protected CampaignStageEvaluationResult execute() throws ServiceException {
+    protected CampaignStageEvaluationResult execute_() throws ServiceException {
 
         userCampaignRepository.updateParticipatingUserCampaignsToStatus(campaignId, LotteryUserCampaignStatus.EVALUATING);
 

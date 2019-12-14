@@ -10,14 +10,14 @@ import com.omarze.exception.InvalidUpdateException;
 import com.omarze.exception.ServiceException;
 import com.omarze.model.ApprovalAction;
 import com.omarze.persistence.CampaignRepository;
-import com.omarze.services.ServiceHandler;
+import com.omarze.services.Command;
 
 import java.util.Optional;
 
 /**
  * created by julian
  */
-public class ApproveCampaign implements ServiceHandler<Campaign> {
+public class ApproveCampaign implements Command<Campaign> {
 
     private Campaign campaign;
 
@@ -33,7 +33,7 @@ public class ApproveCampaign implements ServiceHandler<Campaign> {
 
 
     @Override
-    public Campaign run() throws ServiceException {
+    public Campaign execute() throws ServiceException {
         campaign = getCampaignEntity();
 
         ApprovalAction action = campaignApproval.getApprovalAction();

@@ -20,60 +20,60 @@ public class Campaign extends BaseEntity {
 
 
     @Column(nullable = false, length = 200)
-    private String name;
+    public String name;
 
 
     @Column(nullable = false, length = 250)
-    private String description;
+    public String description;
 
 
     @OneToMany(mappedBy = "campaign", cascade = {CascadeType.ALL})
-    private List<CampaignImage> campaignImages;
+    public List<CampaignImage> campaignImages;
 
 
     @ManyToOne
     @JoinColumn(nullable = false)
-    private Partner partner;
+    public Partner partner;
 
 
     @Column(nullable = false)
     @Convert(converter = Jsr310JpaConverters.LocalDateConverter.class)
-    private LocalDate startDate;
+    public LocalDate startDate;
 
 
     @Column(nullable = false)
     @Convert(converter = Jsr310JpaConverters.LocalDateConverter.class)
-    private LocalDate endDate;
+    public LocalDate endDate;
 
 
-    @OneToMany(mappedBy = "campaign", cascade = {CascadeType.ALL})
-    private List<StageDescription> stageDescriptions;
+    @OneToMany(mappedBy = "campaign", cascade = {CascadeType.ALL}, orphanRemoval = true)
+    public List<StageDescription> stageDescriptions;
 
 
     @Column(nullable = false)
-    private Integer expectedWinnerCount;
+    public Integer expectedWinnerCount;
 
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false, length = 60)
-    private RequestStatus requestStatus;
+    public RequestStatus requestStatus;
 
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false, length = 30)
-    private CampaignType campaignType;
+    public CampaignType campaignType;
 
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false, length = 30)
-    private CampaignStatus campaignStatus;
+    public CampaignStatus campaignStatus;
 
 
     public Campaign() {}
 
 
     @Builder
-    private Campaign(
+    public Campaign(
         String name,
         String description,
         List<CampaignImage> campaignImages,
@@ -100,12 +100,6 @@ public class Campaign extends BaseEntity {
     }
 
 
-    //
-//
-//    public Campaign(CampaignStatus campaignStatus) {
-//        this.campaignStatus = campaignStatus;
-//    }
-
 
     public Campaign addStageDescription(StageDescription stageDescription) {
         if (this.stageDescriptions == null) {
@@ -116,6 +110,14 @@ public class Campaign extends BaseEntity {
         return this;
     }
 
+
+    public Campaign initialize() {
+        for (StageDescription description : stageDescriptions) {
+            description.setCampaign(this);
+        }
+
+        return this;
+    }
 
 
     public boolean canBeApproved() {
