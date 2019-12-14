@@ -5,12 +5,12 @@ import com.omarze.entities.Partner;
 import com.omarze.exception.InvalidUpdateException;
 import com.omarze.exception.ServiceException;
 import com.omarze.persistence.PartnerRepository;
-import com.omarze.services.ServiceHandler;
+import com.omarze.services.Command;
 
 /**
  * created by julian
  */
-public class UpdatePartner implements ServiceHandler<Partner> {
+public class UpdatePartner implements Command<Partner> {
 
 
     private final Partner partner;
@@ -25,7 +25,7 @@ public class UpdatePartner implements ServiceHandler<Partner> {
 
 
     @Override
-    public Partner run() throws ServiceException {
+    public Partner execute() throws ServiceException {
         isValidUpdate(partner);
         return partnerRepository.save(partner);
     }

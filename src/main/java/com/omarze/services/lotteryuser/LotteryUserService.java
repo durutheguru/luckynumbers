@@ -6,7 +6,6 @@ import com.omarze.exception.ServiceException;
 import com.omarze.persistence.LotteryUserRepository;
 import com.omarze.security.UserDetailsServiceImpl;
 import com.omarze.services.lotteryuser.handlers.AddLotteryUser;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -31,7 +30,7 @@ public class LotteryUserService {
 
 
     public LotteryUser addLotteryUser(LotteryUser lotteryUser) throws ServiceException {
-        return new AddLotteryUser(lotteryUser, lotteryUserRepository, passwordEncoder, userDetailsService).run();
+        return new AddLotteryUser(lotteryUser, lotteryUserRepository, passwordEncoder, userDetailsService).execute();
     }
 
 

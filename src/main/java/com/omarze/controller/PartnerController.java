@@ -2,10 +2,10 @@ package com.omarze.controller;
 
 
 import com.omarze.Constants;
+import com.omarze.api.dto.PartnerDTO;
 import com.omarze.entities.Partner;
 import com.omarze.exception.ServiceException;
 import com.omarze.services.partner.PartnerService;
-
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -31,13 +31,17 @@ public class PartnerController {
 
     @PostMapping
     @ResponseStatus(code = HttpStatus.CREATED)
-    public Partner savePartner(Partner partner) throws ServiceException {
-        return partnerService.savePartner(partner);
+    public Partner savePartner(
+            @RequestBody PartnerDTO partnerDTO
+    ) throws ServiceException {
+        return partnerService.savePartner(partnerDTO);
     }
 
 
     @PutMapping
-    public Partner updatePartner(Partner partner) throws ServiceException {
+    public Partner updatePartner(
+            @RequestBody Partner partner
+    ) throws ServiceException {
         return partnerService.updatePartner(partner);
     }
 

@@ -4,12 +4,12 @@ package com.omarze.services.partner.handlers;
 import com.omarze.entities.Partner;
 import com.omarze.exception.ServiceException;
 import com.omarze.persistence.PartnerRepository;
-import com.omarze.services.ServiceHandler;
+import com.omarze.services.Command;
 
 /**
  * created by julian
  */
-public class GetPartner implements ServiceHandler<Partner> {
+public class GetPartner implements Command<Partner> {
 
     private final Long id;
 
@@ -23,7 +23,7 @@ public class GetPartner implements ServiceHandler<Partner> {
 
 
     @Override
-    public Partner run() throws ServiceException {
+    public Partner execute() throws ServiceException {
         return partnerRepository.getOne(id);
     }
 

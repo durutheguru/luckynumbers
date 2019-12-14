@@ -7,7 +7,7 @@ import com.omarze.exception.ServiceException;
 import com.omarze.exception.UsernameAlreadyExistsException;
 import com.omarze.persistence.LotteryUserRepository;
 import com.omarze.security.UserDetailsServiceImpl;
-import com.omarze.services.ServiceHandler;
+import com.omarze.services.Command;
 import com.omarze.util.ValidatorUtil;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -15,7 +15,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 /**
  * created by julian
  */
-public class AddLotteryUser implements ServiceHandler<LotteryUser> {
+public class AddLotteryUser implements Command<LotteryUser> {
 
     private final LotteryUser lotteryUser;
 
@@ -35,7 +35,7 @@ public class AddLotteryUser implements ServiceHandler<LotteryUser> {
 
 
     @Override
-    public LotteryUser run() throws ServiceException {
+    public LotteryUser execute() throws ServiceException {
         validateNewUser();
         verifyUsernameAvailable();
 

@@ -36,7 +36,7 @@ public class LotteryUserCampaignService {
                 .numberGenerator(numberGenerator)
                 .campaignRepository(campaignRepository)
                 .lotteryUserRepository(lotteryUserRepository)
-                .run();
+                .execute();
     }
 
 
