@@ -1,10 +1,9 @@
 package com.omarze.services.campaign;
 
 
-import com.omarze.dto.CampaignApprovalDTO;
+import com.omarze.api.dto.CampaignApprovalDTO;
 import com.omarze.entities.Campaign;
 import com.omarze.entities.CampaignStatus;
-import com.omarze.entities.LotteryUserCampaign;
 import com.omarze.exception.ServiceException;
 import com.omarze.persistence.CampaignRepository;
 import com.omarze.services.campaign.handlers.AddCampaign;
@@ -49,15 +48,13 @@ public class CampaignService {
     }
 
 
-    public Page<Campaign> getActiveCampaigns(Integer page, Integer size) throws ServiceException {
-        return new GetMatchingCampaign(
-                new Campaign()
-                .setCampaignStatus(CampaignStatus.ACTIVE),
-                PageRequest.of(page, size, Sort.Direction.DESC, "id")
-        ).setCampaignRepository(campaignRepository).run();
-    }
-
-
+//    public Page<Campaign> getActiveCampaigns(Integer page, Integer size) throws ServiceException {
+//        return new GetMatchingCampaign(
+//                new Campaign()
+//                .setCampaignStatus(CampaignStatus.ACTIVE),
+//                PageRequest.of(page, size, Sort.Direction.DESC, "id")
+//        ).setCampaignRepository(campaignRepository).run();
+//    }
 
 
 }

@@ -8,7 +8,7 @@ import com.omarze.data.partner.PartnerDataService;
 import com.omarze.exception.InvalidObjectException;
 import com.omarze.exception.PartnerAlreadyExistsException;
 import com.omarze.util.JSONUtil;
-import com.omarze.dto.PartnerDTO;
+import com.omarze.api.dto.PartnerDTO;
 import org.json.JSONObject;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;

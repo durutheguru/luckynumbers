@@ -7,7 +7,7 @@ package com.omarze;
 public class Constants {
 
 
-    public final static String API_V1_BASE = "/api/v1";
+    public final static String API_BASE = "/api/v1";
 
 
     public final static String PAYLOAD_JSON_PATH = "$.data";

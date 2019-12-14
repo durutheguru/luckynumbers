@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
  * created by julian
  */
 @RestController
-@RequestMapping(Constants.API_V1_BASE + "/lottery_users")
+@RequestMapping(Constants.API_BASE + "/lottery_users")
 public class LotteryUserController {
 
 

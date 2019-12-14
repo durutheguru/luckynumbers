@@ -1,6 +1,8 @@
 package com.omarze.entities;
 
 
+import lombok.Data;
+
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -8,6 +10,7 @@ import javax.persistence.ManyToOne;
 /**
  * created by julian
  */
+@Data
 @Entity
 public class PartnerUser extends ApplicationUser {
 
@@ -16,15 +19,6 @@ public class PartnerUser extends ApplicationUser {
     @JoinColumn(nullable = false)
     private Partner partner;
 
-
-    public Partner getPartner() {
-        return partner;
-    }
-
-    public PartnerUser setPartner(Partner partner) {
-        this.partner = partner;
-        return this;
-    }
 
 
 }

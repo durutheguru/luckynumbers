@@ -14,8 +14,11 @@ import org.springframework.web.bind.annotation.*;
  * created by julian
  */
 @RestController
-@RequestMapping(Constants.API_V1_BASE + "/partners")
+@RequestMapping(PartnerController.PATH)
 public class PartnerController {
+
+
+    public final static String PATH = Constants.API_BASE + "/partners";
 
 
     private PartnerService partnerService;

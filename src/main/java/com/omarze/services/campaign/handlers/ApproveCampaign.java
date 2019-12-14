@@ -1,7 +1,7 @@
 package com.omarze.services.campaign.handlers;
 
 
-import com.omarze.dto.CampaignApprovalDTO;
+import com.omarze.api.dto.CampaignApprovalDTO;
 import com.omarze.entities.Campaign;
 import com.omarze.entities.CampaignStatus;
 import com.omarze.entities.RequestStatus;

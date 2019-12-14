@@ -1,4 +1,4 @@
-package com.omarze.dto;
+package com.omarze.api.dto;
 
 
 import com.omarze.model.ApprovalAction;
