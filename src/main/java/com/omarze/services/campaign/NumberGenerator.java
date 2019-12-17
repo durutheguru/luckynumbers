@@ -37,9 +37,7 @@ public class NumberGenerator {
                 .withIgnoreNullValues();
 
         Example<LotteryUserCampaign> userCampaignExample = Example.of(
-                new LotteryUserCampaign()
-                .setCampaign(campaign)
-                .setUserNumber(number), matcher
+                new LotteryUserCampaign(number, campaign), matcher
         );
         
         return userCampaignRepository.exists(userCampaignExample);

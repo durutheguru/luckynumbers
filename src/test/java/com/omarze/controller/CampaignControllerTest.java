@@ -3,7 +3,7 @@ package com.omarze.controller;
 
 import com.omarze.Constants;
 import com.omarze.data.campaign.CampaignDataService;
-import com.omarze.dto.CampaignDTO;
+import com.omarze.api.dto.CampaignDTO;
 import com.omarze.util.JSONUtil;
 import org.junit.Ignore;
 import org.junit.Test;
@@ -37,7 +37,7 @@ public class CampaignControllerTest extends BaseControllerTest {
         CampaignDTO campaignDTO = campaignDataService.newCampaignDTO();
 
         mockMvc.perform(
-                post(Constants.API_V1_BASE + "/campaigns")
+                post(Constants.API_BASE + "/campaign")
                 .content(JSONUtil.asJsonString(campaignDTO))
                 .contentType(MediaType.APPLICATION_JSON)
         ).andDo(MockMvcResultHandlers.print())
@@ -52,7 +52,7 @@ public class CampaignControllerTest extends BaseControllerTest {
         CampaignDTO campaignDTO = campaignDataService.newCampaignDTO();
 
         String updateResponseString = mockMvc.perform(
-                post(Constants.API_V1_BASE + "/campaigns")
+                post(Constants.API_BASE + "/campaign")
                 .content(JSONUtil.asJsonString(campaignDTO))
                 .contentType(MediaType.APPLICATION_JSON)
         ).andDo(MockMvcResultHandlers.print())
@@ -60,7 +60,7 @@ public class CampaignControllerTest extends BaseControllerTest {
                 .andReturn().getResponse().getContentAsString();
 
         mockMvc.perform(
-                put(Constants.API_V1_BASE + "/campaigns")
+                put(Constants.API_BASE + "/campaign")
                 .content(JSONUtil.readObject(updateResponseString, Constants.PAYLOAD_JSON_PATH).toString())
                 .contentType(MediaType.APPLICATION_JSON)
         ).andDo(MockMvcResultHandlers.print())

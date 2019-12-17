@@ -2,10 +2,9 @@ package com.omarze.service.campaign;
 
 
 import com.omarze.data.campaign.CampaignDataService;
-import com.omarze.dto.CampaignApprovalDTO;
+import com.omarze.api.dto.CampaignApprovalDTO;
 import com.omarze.entities.Campaign;
 import com.omarze.model.ApprovalAction;
-import com.omarze.service.BaseServiceIntegrationTest;
 import com.omarze.services.campaign.CampaignService;
 import org.junit.Before;
 import org.springframework.beans.factory.annotation.Autowired;

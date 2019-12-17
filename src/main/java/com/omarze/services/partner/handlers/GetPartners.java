@@ -4,14 +4,14 @@ package com.omarze.services.partner.handlers;
 import com.omarze.entities.Partner;
 import com.omarze.exception.ServiceException;
 import com.omarze.persistence.PartnerRepository;
-import com.omarze.services.ServiceHandler;
+import com.omarze.services.Command;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 
 /**
  * created by julian
  */
-public class GetPartners implements ServiceHandler<Page<Partner>> {
+public class GetPartners implements Command<Page<Partner>> {
 
     private final PageRequest pageRequest;
 
@@ -25,7 +25,7 @@ public class GetPartners implements ServiceHandler<Page<Partner>> {
 
 
     @Override
-    public Page<Partner> run() throws ServiceException {
+    public Page<Partner> execute() throws ServiceException {
         return partnerRepository.findAll(pageRequest);
     }
 

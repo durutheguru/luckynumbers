@@ -2,7 +2,7 @@ package com.omarze.data.partner;
 
 
 import com.github.javafaker.Faker;
-import com.omarze.dto.PartnerDTO;
+import com.omarze.api.dto.PartnerDTO;
 import com.omarze.entities.Partner;
 import com.omarze.persistence.PartnerRepository;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -15,11 +15,11 @@ import java.util.Optional;
 @EnableJpaAuditing(auditorAwareRef = "auditorProvider")
 public class JpaAuditingConfiguration {
 
+
     @Bean
     public AuditorAware<String> auditorProvider() {
         return () -> Optional.of("");
     }
-
 
 
 }

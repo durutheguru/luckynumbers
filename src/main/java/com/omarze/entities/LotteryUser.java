@@ -1,45 +1,40 @@
 package com.omarze.entities;
 
 
-import com.omarze.api.annotation.DTO;
-import com.omarze.dto.LotteryUserDTO;
+import lombok.Data;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.validation.constraints.Size;
+import java.util.Collections;
+import java.util.List;
 
 /**
  * created by julian
  */
+@Data
 @Entity
-@DTO(LotteryUserDTO.class)
 public class LotteryUser extends ApplicationUser {
+
+
+    public final static String ROLE_ID = "LOTTERY_USER";
+
 
     @Column(nullable = false)
     private boolean signedUpWithFacebook = false;
+
 
     @Column(length = 30)
     @Size(max = 30, message = "Phone Number cannot exceed 30")
     private String phoneNumber;
 
 
-    public boolean isSignedUpWithFacebook() {
-        return signedUpWithFacebook;
-    }
-
-    public LotteryUser setSignedUpWithFacebook(boolean signedUpWithFacebook) {
-        this.signedUpWithFacebook = signedUpWithFacebook;
-        return this;
-    }
-
-    public String getPhoneNumber() {
-        return phoneNumber;
-    }
-
-    public LotteryUser setPhoneNumber(String phoneNumber) {
-        this.phoneNumber = phoneNumber;
-        return this;
+    @Override
+    protected List<String> roles() {
+        return Collections.singletonList(ROLE_ID);
     }
 
 
 }
+
+

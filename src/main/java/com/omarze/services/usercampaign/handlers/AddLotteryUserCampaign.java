@@ -9,10 +9,8 @@ import com.omarze.exception.*;
 import com.omarze.persistence.CampaignRepository;
 import com.omarze.persistence.LotteryUserCampaignRepository;
 import com.omarze.persistence.LotteryUserRepository;
-import com.omarze.services.AbstractServiceHandler;
-import com.omarze.services.ServiceHandler;
+import com.omarze.services.CommandBase;
 import com.omarze.services.campaign.NumberGenerator;
-import com.omarze.util.ValidatorUtil;
 import org.springframework.util.Assert;
 
 import javax.validation.constraints.NotNull;
@@ -21,7 +19,7 @@ import java.util.Optional;
 /**
  * created by julian
  */
-public class AddLotteryUserCampaign extends AbstractServiceHandler<LotteryUserCampaign> {
+public class AddLotteryUserCampaign extends CommandBase<LotteryUserCampaign> {
 
     @NotNull(message = "User Campaign Must be initialized.")
     private LotteryUserCampaign userCampaign;
@@ -81,12 +79,6 @@ public class AddLotteryUserCampaign extends AbstractServiceHandler<LotteryUserCa
     }
 
 
-    @Override
-    protected void preExecute() throws ServiceException {
-        verifyCampaignStatus();
-        verifyUserCampaignDoesNotExist();
-    }
-
 
     private void verifyCampaignStatus() throws InactiveCampaignException {
         Boolean activeCampaign = campaignRepository.isCampaignActive(campaignId);
@@ -108,7 +100,7 @@ public class AddLotteryUserCampaign extends AbstractServiceHandler<LotteryUserCa
 
 
     @Override
-    protected LotteryUserCampaign execute() throws ServiceException {
+    protected LotteryUserCampaign execute_() throws ServiceException {
         loadCampaign();
         loadLotteryUser();
 

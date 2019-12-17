@@ -4,7 +4,7 @@ package com.omarze.services.campaign.handlers;
 import com.omarze.entities.Campaign;
 import com.omarze.exception.ServiceException;
 import com.omarze.persistence.CampaignRepository;
-import com.omarze.services.AbstractServiceHandler;
+import com.omarze.services.CommandBase;
 import org.springframework.data.domain.Example;
 import org.springframework.data.domain.ExampleMatcher;
 import org.springframework.data.domain.Page;
@@ -15,7 +15,7 @@ import javax.validation.constraints.NotNull;
 /**
  * created by julian
  */
-public class GetMatchingCampaign extends AbstractServiceHandler<Page<Campaign>>{
+public class GetMatchingCampaign extends CommandBase<Page<Campaign>> {
 
 
     private final Campaign candidate;
@@ -39,7 +39,7 @@ public class GetMatchingCampaign extends AbstractServiceHandler<Page<Campaign>>{
 
 
     @Override
-    protected Page<Campaign> execute() throws ServiceException {
+    protected Page<Campaign> execute_() throws ServiceException {
         ExampleMatcher matcher = ExampleMatcher.matching()
                 .withIgnorePaths("id")
                 .withIgnoreNullValues();
