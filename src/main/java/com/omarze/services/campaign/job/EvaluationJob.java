@@ -60,7 +60,7 @@ public class EvaluationJob extends QuartzJobBean {
                     .setWinnerCount(dataMap.getIntValue(WINNERS_COUNT))
                     .setUserCampaignRepository(userCampaignRepository)
                     .setCampaignRepository(campaignRepository)
-                    .run();
+                    .execute();
 
             EvaluationResultProcessor.process(resultProcessors, evaluationResult);
         }

@@ -5,12 +5,12 @@ import com.omarze.entities.Campaign;
 import com.omarze.exception.InvalidUpdateException;
 import com.omarze.exception.ServiceException;
 import com.omarze.persistence.CampaignRepository;
-import com.omarze.services.ServiceHandler;
+import com.omarze.services.Command;
 
 /**
  * created by julian
  */
-public class UpdateCampaign implements ServiceHandler<Campaign> {
+public class UpdateCampaign implements Command<Campaign> {
 
     public final Campaign campaign;
 
@@ -24,7 +24,7 @@ public class UpdateCampaign implements ServiceHandler<Campaign> {
 
 
     @Override
-    public Campaign run() throws ServiceException {
+    public Campaign execute() throws ServiceException {
         isValidUpdate(campaign);
         return campaignRepository.save(campaign);
     }

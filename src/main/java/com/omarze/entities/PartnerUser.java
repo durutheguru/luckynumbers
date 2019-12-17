@@ -1,15 +1,23 @@
 package com.omarze.entities;
 
 
+import lombok.Data;
+
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import java.util.Collections;
+import java.util.List;
 
 /**
  * created by julian
  */
+@Data
 @Entity
 public class PartnerUser extends ApplicationUser {
+
+
+    public final static String ROLE_ID = "PARTNER_USER";
 
 
     @ManyToOne
@@ -17,13 +25,9 @@ public class PartnerUser extends ApplicationUser {
     private Partner partner;
 
 
-    public Partner getPartner() {
-        return partner;
-    }
-
-    public PartnerUser setPartner(Partner partner) {
-        this.partner = partner;
-        return this;
+    @Override
+    protected List<String> roles() {
+        return Collections.singletonList(ROLE_ID);
     }
 
 
