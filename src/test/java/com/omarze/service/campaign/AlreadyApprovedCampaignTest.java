@@ -16,9 +16,9 @@ public class AlreadyApprovedCampaignTest extends CampaignActionTest {
 
     @Before
     @Override
-    public void init() {
-        Campaign approvedCampaign = new Campaign();
-        approvedCampaign.setRequestStatus(RequestStatus.APPROVED);
+    public void init() {new Campaign();
+        Campaign approvedCampaign = Campaign.builder()
+        .requestStatus(RequestStatus.APPROVED).build();
 
         campaign = campaignDataService.saveCampaign(approvedCampaign);
     }

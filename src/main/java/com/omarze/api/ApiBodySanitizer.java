@@ -6,6 +6,7 @@ package com.omarze.api;
  */
 public class ApiBodySanitizer {
 
+
     private final static String DEFAULT_ERROR_MESSAGE = "An error has occurred";
 
 

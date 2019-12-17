@@ -2,6 +2,7 @@ package com.omarze.controller;
 
 
 import com.omarze.Constants;
+import com.omarze.api.dto.CampaignDTO;
 import com.omarze.entities.Campaign;
 import com.omarze.exception.ServiceException;
 import com.omarze.services.campaign.CampaignService;
@@ -13,8 +14,8 @@ import org.springframework.web.bind.annotation.*;
  * created by julian
  */
 @RestController
-@RequestMapping(Constants.API_V1_BASE + "/campaigns")
-public class CampaignController {
+@RequestMapping(Constants.API_BASE + "/campaign")
+public class CampaignController extends ApiBaseController {
 
 
     private CampaignService campaignService;
@@ -29,13 +30,18 @@ public class CampaignController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public Campaign addCampaign(Campaign campaign) throws ServiceException {
-        return campaignService.addCampaign(campaign);
+    public CampaignDTO addCampaign(
+            @RequestBody CampaignDTO campaignDto
+    ) throws ServiceException {
+        Campaign campaign = campaignService.addCampaign(campaignDto);
+        return map(campaign, CampaignDTO.class);
     }
 
 
     @PutMapping
-    public Campaign updateCampaign(Campaign campaign) throws ServiceException {
+    public Campaign updateCampaign(
+            @RequestBody Campaign campaign
+    ) throws ServiceException {
         return campaignService.updateCampaign(campaign);
     }
 

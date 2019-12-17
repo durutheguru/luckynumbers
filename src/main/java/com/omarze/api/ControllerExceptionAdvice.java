@@ -9,6 +9,7 @@ import org.springframework.core.Ordered;
 import org.springframework.core.annotation.Order;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
@@ -23,15 +24,26 @@ public class ControllerExceptionAdvice {
     private final static Logger logger = LoggerFactory.getLogger(ControllerExceptionAdvice.class);
 
 
+
     @ExceptionHandler({Exception.class})
     public ResponseEntity<ApiErrorResponse> handleAllExceptions(Exception e) {
-
         logger.error("Controller Exception: " + e.getMessage(), e);
+        return new ResponseEntity<>(new ApiErrorResponse(e), HttpStatus.INTERNAL_SERVER_ERROR);
+    }
 
-        return new ResponseEntity<>(
-                new ApiErrorResponse(e), HttpStatus.INTERNAL_SERVER_ERROR
-        );
+
+    @ExceptionHandler({AccessDeniedException.class})
+    public ResponseEntity<ApiErrorResponse> handleAccessDeniedException(Exception e) {
+        logger.error("Controller Exception: " + e.getMessage(), e);
+        return new ResponseEntity<>(new ApiErrorResponse(e), HttpStatus.FORBIDDEN);
     }
 
 
 }
+
+
+
+
+
+
+

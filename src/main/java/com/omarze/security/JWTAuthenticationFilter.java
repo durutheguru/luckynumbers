@@ -9,7 +9,6 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 import javax.servlet.FilterChain;
@@ -25,7 +24,9 @@ import java.util.Date;
  */
 public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilter {
 
+
     private ObjectMapper objectMapper = new ObjectMapper();
+
 
     private final AuthenticationManager authenticationManager;
 
@@ -55,7 +56,7 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
                 .withSubject(authResult.getPrincipal().toString())
                 .withExpiresAt(new Date(System.currentTimeMillis() + Constants.Security.EXPIRATION_TIME))
                 .sign(Algorithm.HMAC512(Constants.Security.SECRET.getBytes()));
-
+        
         response.addHeader(Constants.Security.HEADER_STRING, Constants.Security.TOKEN_PREFIX + token);
     }
 

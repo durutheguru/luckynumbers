@@ -80,20 +80,20 @@ public class CampaignActivationSchedulerTest extends BaseServiceIntegrationTest 
 
     private List<Campaign> saveCampaigns() {
         List<Campaign> campaigns = Arrays.asList(
-                new Campaign()
-                        .setCampaignStatus(CampaignStatus.APPROVED)
-                        .setStageDescriptions(campaignDataService.campaignStageDescriptions())
-                        .setStartDate(LocalDate.now().minusDays(5)),
+                Campaign.builder()
+                        .campaignStatus(CampaignStatus.APPROVED)
+                        .stageDescriptions(campaignDataService.campaignStageDescriptions())
+                        .startDate(LocalDate.now().minusDays(5)).build(),
 
-                new Campaign()
-                        .setCampaignStatus(CampaignStatus.APPROVED)
-                        .setStageDescriptions(campaignDataService.campaignStageDescriptions())
-                        .setStartDate(LocalDate.now()),
+                Campaign.builder()
+                        .campaignStatus(CampaignStatus.APPROVED)
+                        .stageDescriptions(campaignDataService.campaignStageDescriptions())
+                        .startDate(LocalDate.now()).build(),
 
-                new Campaign()
-                        .setCampaignStatus(CampaignStatus.APPROVED)
-                        .setStageDescriptions(campaignDataService.campaignStageDescriptions())
-                        .setStartDate(LocalDate.now().plusDays(5))
+                Campaign.builder()
+                        .campaignStatus(CampaignStatus.APPROVED)
+                        .stageDescriptions(campaignDataService.campaignStageDescriptions())
+                        .startDate(LocalDate.now().plusDays(5)).build()
         );
 
         return campaignDataService.saveCampaigns(campaigns);

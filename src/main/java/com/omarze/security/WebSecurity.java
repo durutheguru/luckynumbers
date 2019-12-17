@@ -5,6 +5,7 @@ import com.omarze.Constants;
 import org.springframework.context.annotation.Bean;
 import org.springframework.core.annotation.Order;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
+import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
@@ -20,6 +21,7 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
  */
 @Order(1)
 @EnableWebSecurity
+@EnableGlobalMethodSecurity(prePostEnabled = true)
 public class WebSecurity extends WebSecurityConfigurerAdapter {
 
 
@@ -32,7 +34,12 @@ public class WebSecurity extends WebSecurityConfigurerAdapter {
     private PasswordEncoder passwordEncoder;
 
 
-    public WebSecurity(UserDetailsService userDetailsService, UsernameAuthenticationProvider usernameAuthenticationProvider, UsernamePasswordAuthenticationProvider usernamePasswordAuthenticationProvider, PasswordEncoder passwordEncoder) {
+    public WebSecurity(
+            UserDetailsService userDetailsService,
+            UsernameAuthenticationProvider usernameAuthenticationProvider,
+            UsernamePasswordAuthenticationProvider usernamePasswordAuthenticationProvider,
+            PasswordEncoder passwordEncoder
+    ) {
         this.userDetailsService = userDetailsService;
         this.usernameAuthenticationProvider = usernameAuthenticationProvider;
         this.usernamePasswordAuthenticationProvider = usernamePasswordAuthenticationProvider;
@@ -43,14 +50,14 @@ public class WebSecurity extends WebSecurityConfigurerAdapter {
     @Override
     public void configure(HttpSecurity httpSecurity) throws Exception {
         httpSecurity
-                .cors().and().csrf().disable()
-                .authorizeRequests()
-                .anyRequest().authenticated()
-                .antMatchers(Constants.API_V1_BASE + "/lottery_user/sign_up").permitAll()
-                .and()
-                .addFilter(new JWTAuthenticationFilter(authenticationManager()))
-                .addFilter(new JWTAuthorizationFilter(authenticationManager()))
-                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
+            .cors().and().csrf().disable()
+            .authorizeRequests()
+            .antMatchers(Constants.API_BASE + "/lottery_user/sign_up").permitAll()
+            .anyRequest().authenticated()
+            .and()
+            .addFilter(new JWTAuthenticationFilter(authenticationManager()))
+            .addFilter(new JWTAuthorizationFilter(authenticationManager(), userDetailsService))
+            .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 
     }
 
@@ -58,10 +65,10 @@ public class WebSecurity extends WebSecurityConfigurerAdapter {
     @Override
     public void configure(AuthenticationManagerBuilder authBuilder) throws Exception {
         authBuilder
-                .authenticationProvider(usernamePasswordAuthenticationProvider)
-                .authenticationProvider(usernameAuthenticationProvider)
-                .userDetailsService(userDetailsService)
-                .passwordEncoder(passwordEncoder);
+            .authenticationProvider(usernamePasswordAuthenticationProvider)
+            .authenticationProvider(usernameAuthenticationProvider)
+            .userDetailsService(userDetailsService)
+            .passwordEncoder(passwordEncoder);
     }
 
 

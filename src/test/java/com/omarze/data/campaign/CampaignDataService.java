@@ -3,7 +3,7 @@ package com.omarze.data.campaign;
 
 import com.github.javafaker.Faker;
 import com.omarze.data.partner.PartnerDataService;
-import com.omarze.dto.CampaignDTO;
+import com.omarze.api.dto.CampaignDTO;
 import com.omarze.entities.*;
 import com.omarze.persistence.CampaignRepository;
 import com.omarze.util.ObjectUtil;
@@ -51,19 +51,17 @@ public class CampaignDataService {
     public Campaign newCampaign() {
         Partner partner = partnerDataService.savePartner();
 
-        Campaign campaign = new Campaign();
-
-        campaign.setName("Party with " + faker.name().fullName());
-        campaign.setDescription("Come and " + campaign.getName());
-        campaign.setStartDate(LocalDate.now());
-        campaign.setEndDate(LocalDate.now().plusDays(5));
-        campaign.setExpectedWinnerCount(1);
-        campaign.setCampaignType(CampaignType.SINGLE);
-        campaign.setStageDescriptions(campaignStageDescriptions());
-        campaign.setPartner(partner);
-        campaign.setRequestStatus(RequestStatus.PENDING);
-
-        return campaign;
+        return Campaign.builder()
+                .name("Party with " + faker.name().fullName())
+                .description("Come and ")
+                .startDate(LocalDate.now())
+                .endDate(LocalDate.now().plusDays(5))
+                .expectedWinnerCount(1)
+                .campaignType(CampaignType.SINGLE)
+                .stageDescriptions(campaignStageDescriptions())
+                .partner(partner)
+                .requestStatus(RequestStatus.PENDING)
+                .build();
     }
 
 
@@ -97,15 +95,17 @@ public class CampaignDataService {
 
     public List<StageDescription> campaignStageDescriptions() {
         return Arrays.asList(
-                new StageDescription()
-                .setStage(Stage.FIRST)
-                .setWinnersCount(faker.random().nextInt(5) + 1)
-                .setEvaluationTime(LocalDateTime.now()),
+            new StageDescription(
+                Stage.FIRST,
+                faker.random().nextInt(5) + 1,
+                LocalDateTime.now()
+            ),
 
-                new StageDescription()
-                .setStage(Stage.SECOND)
-                .setWinnersCount(faker.random().nextInt(5) + 1)
-                        .setEvaluationTime(LocalDateTime.now())
+            new StageDescription(
+                Stage.SECOND,
+                faker.random().nextInt(5) + 1,
+                LocalDateTime.now()
+            )
         );
     }
 

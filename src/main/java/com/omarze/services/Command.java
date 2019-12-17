@@ -7,9 +7,9 @@ import com.omarze.util.ValidatorUtil;
 /**
  * created by julian
  */
-public interface ServiceHandler<T> {
+public interface Command<T> {
 
-    T run() throws ServiceException;
+    T execute() throws ServiceException;
 
 }
 

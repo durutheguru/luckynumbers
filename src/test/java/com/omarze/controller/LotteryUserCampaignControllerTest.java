@@ -3,9 +3,9 @@ package com.omarze.controller;
 
 import com.omarze.Constants;
 import com.omarze.data.lotteryuser.LotteryUserCampaignDataService;
-import com.omarze.dto.CampaignDTO;
-import com.omarze.dto.LotteryUserCampaignDTO;
-import com.omarze.dto.LotteryUserDTO;
+import com.omarze.api.dto.CampaignDTO;
+import com.omarze.api.dto.LotteryUserCampaignDTO;
+import com.omarze.api.dto.LotteryUserDTO;
 import com.omarze.util.JSONUtil;
 import org.junit.Ignore;
 import org.junit.Test;
@@ -48,7 +48,7 @@ public class LotteryUserCampaignControllerTest extends BaseControllerTest {
         userCampaignDTO.setLotteryUser(lotteryUserDTO);
 
         mockMvc.perform(
-                post(Constants.API_V1_BASE + "/user_campaigns")
+                post(Constants.API_BASE + "/user_campaigns")
                 .content(JSONUtil.asJsonString(userCampaignDTO))
                 .contentType(MediaType.APPLICATION_JSON)
         ).andDo(MockMvcResultHandlers.print())

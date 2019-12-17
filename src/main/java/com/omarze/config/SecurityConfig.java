@@ -14,7 +14,6 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
  * created by julian
  */
 @EnableWebSecurity
-@EnableGlobalMethodSecurity(prePostEnabled = true)
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
 
@@ -26,13 +25,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     private String issuer;
 
 
-
     public void configure(HttpSecurity httpSecurity) throws Exception {
         JwtWebSecurityConfigurer
-                .forRS256(apiAudience, issuer)
-                .configure(httpSecurity)
-                .cors().and().csrf().disable().authorizeRequests()
-                .anyRequest().permitAll();
+            .forRS256(apiAudience, issuer)
+            .configure(httpSecurity)
+            .cors().and().csrf().disable().authorizeRequests()
+            .anyRequest().permitAll();
     }
 
 

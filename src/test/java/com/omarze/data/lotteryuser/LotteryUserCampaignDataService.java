@@ -2,7 +2,7 @@ package com.omarze.data.lotteryuser;
 
 
 import com.omarze.data.campaign.CampaignDataService;
-import com.omarze.dto.LotteryUserCampaignDTO;
+import com.omarze.api.dto.LotteryUserCampaignDTO;
 import com.omarze.entities.*;
 import com.omarze.persistence.LotteryUserCampaignRepository;
 import org.modelmapper.ModelMapper;
@@ -33,9 +33,7 @@ public class LotteryUserCampaignDataService {
 
 
     public LotteryUserCampaign newUserCampaign() {
-        Campaign campaign = campaignDataService.saveCampaign(
-                new Campaign().setCampaignStatus(CampaignStatus.ACTIVE)
-        );
+        Campaign campaign = campaignDataService.saveCampaign(Campaign.builder().campaignStatus(CampaignStatus.ACTIVE).build());
         LotteryUser lotteryUser = lotteryUserDataService.saveLotteryUser();
 
         LotteryUserCampaign userCampaign = new LotteryUserCampaign();
