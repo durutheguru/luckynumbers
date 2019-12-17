@@ -9,6 +9,7 @@ import com.omarze.services.partner.handlers.Save;
 import com.omarze.services.partner.handlers.GetPartner;
 import com.omarze.services.partner.handlers.GetPartners;
 import com.omarze.services.partner.handlers.UpdatePartner;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -20,17 +21,11 @@ import org.springframework.web.bind.annotation.PathVariable;
  * created by julian
  */
 @Service
+@RequiredArgsConstructor
 public class PartnerService {
 
 
-    public PartnerRepository partnerRepository;
-
-
-    @Autowired
-    public PartnerService setPartnerRepository(PartnerRepository partnerRepository) {
-        this.partnerRepository = partnerRepository;
-        return this;
-    }
+    public final PartnerRepository partnerRepository;
 
 
     public Partner savePartner(PartnerDTO partnerDto) throws ServiceException {
@@ -57,5 +52,8 @@ public class PartnerService {
     }
 
 
-
 }
+
+
+
+

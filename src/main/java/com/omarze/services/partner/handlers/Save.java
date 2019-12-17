@@ -36,6 +36,7 @@ public class Save extends CommandBase<Partner> {
     }
 
 
+    @Override
     protected void validate() throws ServiceException {
         partnerExists();
     }

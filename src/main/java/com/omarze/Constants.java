@@ -13,12 +13,6 @@ public class Constants {
     public final static String PAYLOAD_JSON_PATH = "$.data";
 
 
-    public final static Long MILLIS_IN_DAY = 86_400_000l;
-
-
-    public final static Integer MINUTES_IN_DAY = 1440;
-
-
 
     public final class Users {
 

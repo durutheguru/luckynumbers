@@ -22,7 +22,7 @@ public class PartnerDTO extends BaseDTO {
 
 
     @NotEmpty(message = "Partner Description is required")
-    @Size(max = 250, message = "Partner Description is required")
+    @Size(max = 250, message = "Partner Description should not exceed {max}")
     public String description;
 
 

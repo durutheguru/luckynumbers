@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.*;
  * created by julian
  */
 @RestController
-@RequestMapping(Constants.API_BASE + "/campaigns")
+@RequestMapping(Constants.API_BASE + "/campaign")
 public class CampaignController extends ApiBaseController {
 
 

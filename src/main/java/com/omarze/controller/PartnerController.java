@@ -5,9 +5,12 @@ import com.omarze.Constants;
 import com.omarze.api.dto.PartnerDTO;
 import com.omarze.entities.Partner;
 import com.omarze.exception.ServiceException;
+import com.omarze.security.annotation.IsBackOfficeUser;
+import com.omarze.security.annotation.IsLotteryUser;
 import com.omarze.services.partner.PartnerService;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 /**
@@ -18,7 +21,7 @@ import org.springframework.web.bind.annotation.*;
 public class PartnerController {
 
 
-    public final static String PATH = Constants.API_BASE + "/partners";
+    public final static String PATH = Constants.API_BASE + "/partner";
 
 
     private PartnerService partnerService;
@@ -31,6 +34,7 @@ public class PartnerController {
 
     @PostMapping
     @ResponseStatus(code = HttpStatus.CREATED)
+    @IsBackOfficeUser
     public Partner savePartner(
             @RequestBody PartnerDTO partnerDTO
     ) throws ServiceException {
@@ -39,6 +43,7 @@ public class PartnerController {
 
 
     @PutMapping
+    @IsBackOfficeUser
     public Partner updatePartner(
             @RequestBody Partner partner
     ) throws ServiceException {
@@ -47,9 +52,12 @@ public class PartnerController {
 
 
     @GetMapping
+    @IsLotteryUser
     public Page<Partner> getPartners(
             @RequestParam(name = "offset", defaultValue = "0") Integer offset, @RequestParam(name = "limit", defaultValue = "10") Integer limit
     ) throws ServiceException {
+        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        principal.toString();
         return partnerService.getPartners(offset, limit);
     }
 

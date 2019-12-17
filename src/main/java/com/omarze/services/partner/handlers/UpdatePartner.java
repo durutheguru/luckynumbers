@@ -15,6 +15,7 @@ public class UpdatePartner implements Command<Partner> {
 
     private final Partner partner;
 
+
     private final PartnerRepository partnerRepository;
 
 

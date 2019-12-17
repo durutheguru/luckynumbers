@@ -1,23 +1,21 @@
 package com.omarze.entities;
 
 
-import com.omarze.Constants;
 import lombok.Data;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
 
 import javax.persistence.Column;
 import javax.persistence.MappedSuperclass;
-import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.Pattern;
-import javax.validation.constraints.Size;
-import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * created by julian
  */
 @Data
 @MappedSuperclass
-public class ApplicationUser extends BaseEntity {
+public abstract class ApplicationUser extends BaseEntity {
 
 
     @Column(length = 100, nullable = false)
@@ -36,8 +34,15 @@ public class ApplicationUser extends BaseEntity {
     private String password;
 
 
+    protected abstract List<String> roles();
+
+
     public User toUser() {
-        return new User(username, password, new ArrayList<>());
+        return new User(
+            username,
+            password,
+            roles().stream().map(SimpleGrantedAuthority::new).collect(Collectors.toList())
+        );
     }
 
 
