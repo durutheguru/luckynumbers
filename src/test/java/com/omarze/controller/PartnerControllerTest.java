@@ -3,10 +3,8 @@ package com.omarze.controller;
 
 import com.google.common.base.Strings;
 import com.jayway.jsonpath.JsonPath;
-import com.omarze.Constants;
 import com.omarze.data.partner.PartnerDataService;
 import com.omarze.entities.BackOfficeUser;
-import com.omarze.exception.InvalidObjectException;
 import com.omarze.exception.PartnerAlreadyExistsException;
 import com.omarze.util.JSONUtil;
 import com.omarze.api.dto.PartnerDTO;
@@ -63,8 +61,7 @@ public class PartnerControllerTest extends BaseControllerTest {
                 .content(JSONUtil.asJsonString(partnerDTO))
                 .contentType(MediaType.APPLICATION_JSON)
         ).andDo(MockMvcResultHandlers.print())
-                .andExpect(status().is5xxServerError())
-                .andExpect(jsonPath("$.code").value(PartnerAlreadyExistsException.CODE));
+                .andExpect(status().is5xxServerError());
     }
 
 

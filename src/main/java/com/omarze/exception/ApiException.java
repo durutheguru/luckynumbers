@@ -6,8 +6,6 @@ package com.omarze.exception;
  */
 public class ApiException extends ServiceException {
 
-    private final static Integer CODE = 1000001;
-
 
     public ApiException() {
         super();
@@ -26,11 +24,6 @@ public class ApiException extends ServiceException {
 
     public ApiException(Throwable cause) {
         super(cause);
-    }
-
-    @Override
-    public Integer generateCode() {
-        return CODE;
     }
 
 

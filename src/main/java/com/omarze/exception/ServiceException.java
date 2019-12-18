@@ -2,6 +2,7 @@ package com.omarze.exception;
 
 
 import com.google.common.base.Strings;
+import com.omarze.util.CryptoUtil;
 import org.slf4j.LoggerFactory;
 
 /**
@@ -53,7 +54,10 @@ public abstract class ServiceException extends Exception {
     }
 
 
-    public abstract Integer generateCode();
+    public Integer generateCode() {
+        byte[] classNameBytes = getClass().getName().getBytes();
+        return CryptoUtil.hashBytes(classNameBytes);
+    }
 
 
     private void setCode() {
