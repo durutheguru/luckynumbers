@@ -14,8 +14,10 @@ public class ApiErrorResponse extends ApiResponse<String> {
 
     public Integer code;
 
+
     @JsonIgnore
     private Exception exception;
+
 
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy hh:mm:ss")
     public LocalDateTime timeStamp;
@@ -47,9 +49,11 @@ public class ApiErrorResponse extends ApiResponse<String> {
 
     private void initialize() {
         this.code = exception != null && exception instanceof ServiceException ?
-                ((ServiceException)exception).getCode() : 0;
+                ((ServiceException)exception).getCode() : -1;
         timeStamp = LocalDateTime.now();
     }
 
 
 }
+
+

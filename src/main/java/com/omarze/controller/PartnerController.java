@@ -10,8 +10,9 @@ import com.omarze.security.annotation.IsLotteryUser;
 import com.omarze.services.partner.PartnerService;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
+
+import javax.validation.Valid;
 
 /**
  * created by julian
@@ -36,7 +37,7 @@ public class PartnerController {
     @ResponseStatus(code = HttpStatus.CREATED)
     @IsBackOfficeUser
     public Partner savePartner(
-            @RequestBody PartnerDTO partnerDTO
+            @Valid @RequestBody PartnerDTO partnerDTO
     ) throws ServiceException {
         return partnerService.savePartner(partnerDTO);
     }
@@ -56,8 +57,6 @@ public class PartnerController {
     public Page<Partner> getPartners(
             @RequestParam(name = "offset", defaultValue = "0") Integer offset, @RequestParam(name = "limit", defaultValue = "10") Integer limit
     ) throws ServiceException {
-        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        principal.toString();
         return partnerService.getPartners(offset, limit);
     }
 
