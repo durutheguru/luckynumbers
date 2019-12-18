@@ -5,10 +5,8 @@ import com.omarze.api.dto.PartnerDTO;
 import com.omarze.entities.Partner;
 import com.omarze.exception.*;
 import com.omarze.persistence.PartnerRepository;
-import com.omarze.services.Command;
 import com.omarze.services.CommandBase;
 import com.omarze.util.MapperUtil;
-import com.omarze.util.ValidatorUtil;
 import lombok.Builder;
 
 import javax.validation.constraints.NotNull;
@@ -52,7 +50,7 @@ public class Save extends CommandBase<Partner> {
     }
 
 
-    private void partnerExists() throws PartnerProcessingException {
+    private void partnerExists() throws ServiceException {
         Optional<Partner> existingPartner = partnerRepository.findByName(partnerDto.getName());
         if (existingPartner.isPresent()) {
             throw new PartnerAlreadyExistsException(partnerDto);

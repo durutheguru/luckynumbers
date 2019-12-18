@@ -6,7 +6,6 @@ package com.omarze.exception;
  */
 public class InactiveCampaignException extends ServiceException{
 
-    public final static Integer CODE = 1069892;
 
     public InactiveCampaignException(Long campaignId)  {
         super(String.format("Campaign %d is currently inactive", campaignId));
@@ -17,11 +16,6 @@ public class InactiveCampaignException extends ServiceException{
         super(message, cause);
     }
 
-
-    @Override
-    public Integer generateCode() {
-        return CODE;
-    }
 
 
 }
