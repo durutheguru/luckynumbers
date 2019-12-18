@@ -32,7 +32,7 @@ public class ApplicationUserDTO extends BaseDTO {
 
 
     @NotEmpty(message = "Password is required")
-    @Size(max = 200, message = "Password length is too long")
+    @Size(max = 50, message = "Password length is too long")
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private String password;
 
