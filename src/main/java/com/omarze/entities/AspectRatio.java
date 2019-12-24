@@ -1,35 +1,30 @@
 package com.omarze.entities;
 
 
+import lombok.Data;
+
 import javax.persistence.Embeddable;
 
 /**
  * created by julian
  */
+@Data
 @Embeddable
 public class AspectRatio {
 
+
     private int scaleWidth;
+
 
     private int scaleHeight;
 
 
-    public int getScaleWidth() {
-        return scaleWidth;
-    }
+    public AspectRatio() {}
 
-    public AspectRatio setScaleWidth(int scaleWidth) {
+
+    public AspectRatio(int scaleWidth, int scaleHeight) {
         this.scaleWidth = scaleWidth;
-        return this;
-    }
-
-    public int getScaleHeight() {
-        return scaleHeight;
-    }
-
-    public AspectRatio setScaleHeight(int scaleHeight) {
         this.scaleHeight = scaleHeight;
-        return this;
     }
 
 
