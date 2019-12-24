@@ -3,7 +3,9 @@ package com.omarze.controller;
 
 import com.omarze.Constants;
 import com.omarze.api.dto.PartnerDTO;
+import com.omarze.api.dto.PartnerImageDTO;
 import com.omarze.entities.Partner;
+import com.omarze.entities.PartnerImage;
 import com.omarze.exception.ServiceException;
 import com.omarze.security.annotation.IsBackOfficeUser;
 import com.omarze.security.annotation.IsLotteryUser;
@@ -11,15 +13,17 @@ import com.omarze.services.partner.PartnerService;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.Valid;
+import java.util.List;
 
 /**
  * created by julian
  */
 @RestController
 @RequestMapping(PartnerController.PATH)
-public class PartnerController {
+public class PartnerController extends ApiBaseController {
 
 
     public final static String PATH = Constants.API_BASE + "/partner";
@@ -36,36 +40,51 @@ public class PartnerController {
     @PostMapping
     @ResponseStatus(code = HttpStatus.CREATED)
     @IsBackOfficeUser
-    public Partner savePartner(
+    public PartnerDTO savePartner(
             @Valid @RequestBody PartnerDTO partnerDTO
     ) throws ServiceException {
-        return partnerService.savePartner(partnerDTO);
+        Partner partner = partnerService.savePartner(partnerDTO);
+        return map(partner, PartnerDTO.class);
     }
 
 
     @PutMapping
     @IsBackOfficeUser
-    public Partner updatePartner(
+    public PartnerDTO updatePartner(
             @Valid @RequestBody PartnerDTO partnerDTO
     ) throws ServiceException {
-        return partnerService.updatePartner(partnerDTO);
+        Partner partner = partnerService.updatePartner(partnerDTO);
+        return map(partner, PartnerDTO.class);
     }
 
 
     @GetMapping
     @IsLotteryUser
-    public Page<Partner> getPartners(
+    public Page<PartnerDTO> getPartners(
             @RequestParam(name = "page", defaultValue = "0") Integer page,
             @RequestParam(name = "size", defaultValue = "10") Integer size
     ) throws ServiceException {
-        return partnerService.getPartners(page, size);
+        Page<Partner> partners = partnerService.getPartners(page, size);
+        return map(partners, PartnerDTO.class);
     }
 
 
     @GetMapping("/{id}")
-    public Partner getPartner(@PathVariable Long id) throws ServiceException {
-        return partnerService.getPartner(id);
+    public PartnerDTO getPartner(@PathVariable Long id) throws ServiceException {
+         return map(partnerService.getPartner(id), PartnerDTO.class);
+    }
+
+
+    @IsBackOfficeUser
+    @PostMapping("/{id}/image")
+    public List<PartnerImageDTO> uploadImages(
+            @PathVariable("id") Long partnerId,
+            @RequestParam("files") MultipartFile[] files
+    ) throws ServiceException {
+        List<PartnerImage> images = partnerService.uploadImages(partnerId, files);
+        return map(images, PartnerImageDTO.class);
     }
 
 
 }
+
