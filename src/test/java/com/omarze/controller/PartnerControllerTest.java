@@ -3,11 +3,10 @@ package com.omarze.controller;
 
 import com.google.common.base.Strings;
 import com.jayway.jsonpath.JsonPath;
+import com.omarze.api.dto.PartnerDTO;
 import com.omarze.data.partner.PartnerDataService;
 import com.omarze.entities.BackOfficeUser;
-import com.omarze.exception.PartnerAlreadyExistsException;
 import com.omarze.util.JSONUtil;
-import com.omarze.api.dto.PartnerDTO;
 import org.json.JSONObject;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,8 +17,8 @@ import org.springframework.test.web.servlet.result.MockMvcResultHandlers;
 
 import java.util.LinkedHashMap;
 
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 
@@ -52,7 +51,6 @@ public class PartnerControllerTest extends BaseControllerTest {
 
     @Test
     public void testSavingAlreadyExistingPartner() throws Exception {
-
         PartnerDTO partnerDTO = partnerDataService.newPartnerDTO();
         savePartner(partnerDTO);
 
@@ -128,3 +126,4 @@ public class PartnerControllerTest extends BaseControllerTest {
 
 
 }
+

@@ -31,6 +31,4 @@ public class Image extends BaseEntity {
     private AspectRatio aspectRatio;
 
 
-
-
 }
