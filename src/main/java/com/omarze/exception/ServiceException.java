@@ -8,7 +8,7 @@ import org.slf4j.LoggerFactory;
 /**
  * created by julian
  */
-public abstract class ServiceException extends Exception {
+public class ServiceException extends Exception {
 
     protected Integer code = 1000000;
 
@@ -71,3 +71,4 @@ public abstract class ServiceException extends Exception {
 
 
 }
+
