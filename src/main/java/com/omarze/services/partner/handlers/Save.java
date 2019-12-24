@@ -20,29 +20,29 @@ public class Save extends CommandBase<Partner> {
 
 
     @NotNull(message = "Partner Object is required")
-    private final PartnerDTO partnerDto;
+    protected final PartnerDTO partnerDTO;
 
 
     @NotNull
-    private final PartnerRepository partnerRepository;
+    protected final PartnerRepository partnerRepository;
 
 
     @Builder
-    public Save(PartnerDTO partnerDto, PartnerRepository partnerRepository) {
-        this.partnerDto = partnerDto;
+    public Save(PartnerDTO partnerDTO, PartnerRepository partnerRepository) {
+        this.partnerDTO = partnerDTO;
         this.partnerRepository = partnerRepository;
     }
 
 
     @Override
     protected void validate() throws ServiceException {
-        partnerExists();
+        checkPartnerExists();
     }
 
 
     @Override
     protected Partner execute_() throws ServiceException {
-        Partner partner = MapperUtil.map(partnerDto, Partner.class);
+        Partner partner = MapperUtil.map(partnerDTO, Partner.class);
 
         partner.setTimeAdded(LocalDateTime.now());
 
@@ -50,13 +50,13 @@ public class Save extends CommandBase<Partner> {
     }
 
 
-    private void partnerExists() throws ServiceException {
-        Optional<Partner> existingPartner = partnerRepository.findByName(partnerDto.getName());
+    private void checkPartnerExists() throws ServiceException {
+        Optional<Partner> existingPartner = partnerRepository.findByName(partnerDTO.getName());
         if (existingPartner.isPresent()) {
-            throw new PartnerAlreadyExistsException(partnerDto);
+            throw new PartnerAlreadyExistsException(partnerDTO);
         }
 
-        existingPartner = partnerRepository.findByDescription(partnerDto.getDescription());
+        existingPartner = partnerRepository.findByDescription(partnerDTO.getDescription());
         if (existingPartner.isPresent()) {
             throw new DuplicatePartnerDescriptionException();
         }
@@ -64,3 +64,6 @@ public class Save extends CommandBase<Partner> {
 
 
 }
+
+
+

@@ -46,18 +46,19 @@ public class PartnerController {
     @PutMapping
     @IsBackOfficeUser
     public Partner updatePartner(
-            @RequestBody Partner partner
+            @Valid @RequestBody PartnerDTO partnerDTO
     ) throws ServiceException {
-        return partnerService.updatePartner(partner);
+        return partnerService.updatePartner(partnerDTO);
     }
 
 
     @GetMapping
     @IsLotteryUser
     public Page<Partner> getPartners(
-            @RequestParam(name = "offset", defaultValue = "0") Integer offset, @RequestParam(name = "limit", defaultValue = "10") Integer limit
+            @RequestParam(name = "page", defaultValue = "0") Integer page,
+            @RequestParam(name = "size", defaultValue = "10") Integer size
     ) throws ServiceException {
-        return partnerService.getPartners(offset, limit);
+        return partnerService.getPartners(page, size);
     }
 
 
