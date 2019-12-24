@@ -28,6 +28,7 @@ public class ApiErrorResponse extends ApiResponse<String> {
         initialize();
     }
 
+
     public ApiErrorResponse(String message) {
         super(Status.ERROR, message);
         initialize();
@@ -55,5 +56,4 @@ public class ApiErrorResponse extends ApiResponse<String> {
 
 
 }
-
 
