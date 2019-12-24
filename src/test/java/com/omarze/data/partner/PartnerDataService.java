@@ -61,4 +61,9 @@ public class PartnerDataService {
     }
 
 
+    public void deletePartner(Partner partner) {
+        partnerRepository.delete(partner);
+    }
+
+
 }
