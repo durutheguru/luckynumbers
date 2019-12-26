@@ -2,7 +2,7 @@ package com.omarze.service.campaign;
 
 
 import com.omarze.entities.Campaign;
-import com.omarze.entities.RequestStatus;
+import com.omarze.entities.CampaignStatus;
 import com.omarze.exception.InvalidUpdateException;
 import org.junit.Before;
 import org.junit.Ignore;
@@ -18,7 +18,7 @@ public class AlreadyApprovedCampaignTest extends CampaignActionTest {
     @Override
     public void init() {new Campaign();
         Campaign approvedCampaign = Campaign.builder()
-        .requestStatus(RequestStatus.APPROVED).build();
+        .campaignStatus(CampaignStatus.APPROVED).build();
 
         campaign = campaignDataService.saveCampaign(approvedCampaign);
     }
