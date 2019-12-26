@@ -8,6 +8,7 @@ import javax.persistence.*;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
+import java.util.List;
 
 /**
  * created by julian
@@ -54,6 +55,15 @@ public class StageDescription extends BaseEntity {
 
     public boolean hasWinnings() {
         return campaign.isFinalStage(stage);
+    }
+
+
+    public static void sort(List<StageDescription> stageDescriptions) {
+        if (stageDescriptions == null || stageDescriptions.isEmpty()) {
+            throw new IllegalStateException("Cannot process Stage Descriptions. Data is empty");
+        }
+
+        stageDescriptions.sort((s1, s2) -> s1.getStage().compareTo(s2.getStage()));
     }
 
 

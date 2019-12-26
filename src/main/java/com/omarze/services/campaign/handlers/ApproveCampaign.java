@@ -4,7 +4,6 @@ package com.omarze.services.campaign.handlers;
 import com.omarze.api.dto.CampaignApprovalDTO;
 import com.omarze.entities.Campaign;
 import com.omarze.entities.CampaignStatus;
-import com.omarze.entities.RequestStatus;
 import com.omarze.exception.EntityNotFoundException;
 import com.omarze.exception.InvalidUpdateException;
 import com.omarze.exception.ServiceException;
@@ -39,7 +38,6 @@ public class ApproveCampaign implements Command<Campaign> {
         ApprovalAction action = campaignApproval.getApprovalAction();
 
         validateCampaignState();
-        campaign.setRequestStatus(RequestStatus.fromApproval(action));
         campaign.setCampaignStatus(CampaignStatus.fromApproval(action));
 
         return campaignRepository.save(campaign);

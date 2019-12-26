@@ -56,11 +56,79 @@ public class CampaignDataService {
                 .description("Come and ")
                 .startDate(LocalDate.now())
                 .endDate(LocalDate.now().plusDays(5))
-                .expectedWinnerCount(1)
                 .campaignType(CampaignType.SINGLE)
                 .stageDescriptions(campaignStageDescriptions())
                 .partner(partner)
-                .requestStatus(RequestStatus.PENDING)
+                .build();
+    }
+
+
+    public CampaignDTO newInvalidStartEndDateCampaignDTO() {
+        Campaign campaign = newInvalidStartEndDateCampaign();
+        return modelMapper.map(campaign, CampaignDTO.class);
+    }
+
+
+    public Campaign newInvalidStartEndDateCampaign() {
+        Partner partner = partnerDataService.savePartner();
+
+        return Campaign.builder()
+                .name("Party with " + faker.name().fullName())
+                .description("Come and ")
+                .startDate(LocalDate.now())
+                .endDate(LocalDate.now().plusDays(5))
+                .campaignType(CampaignType.SINGLE)
+                .stageDescriptions(invalidStartEndDateStageDescriptions())
+                .partner(partner)
+                .build();
+    }
+
+
+    public CampaignDTO newInvalidEvaluationTimeCampaignDTO() {
+        Campaign campaign = newInvalidEvaluationTimeCampaign();
+        return modelMapper.map(campaign, CampaignDTO.class);
+    }
+
+
+
+
+
+    public Campaign newInvalidEvaluationTimeCampaign() {
+        Partner partner = partnerDataService.savePartner();
+
+        return Campaign.builder()
+                .name("Party with " + faker.name().fullName())
+                .description("Come and ")
+                .startDate(LocalDate.now())
+                .endDate(LocalDate.now().plusDays(5))
+                .campaignType(CampaignType.SINGLE)
+                .stageDescriptions(invalidEvaluationTimeStageDescriptions())
+                .partner(partner)
+                .build();
+    }
+
+
+
+    public CampaignDTO newInvalidWinnerCountCampaignDTO() {
+        Campaign campaign = newInvalidWinnerCountCampaign();
+        return modelMapper.map(campaign, CampaignDTO.class);
+    }
+
+
+
+
+
+    public Campaign newInvalidWinnerCountCampaign() {
+        Partner partner = partnerDataService.savePartner();
+
+        return Campaign.builder()
+                .name("Party with " + faker.name().fullName())
+                .description("Come and ")
+                .startDate(LocalDate.now())
+                .endDate(LocalDate.now().plusDays(5))
+                .campaignType(CampaignType.SINGLE)
+                .stageDescriptions(invalidWinnerCountStageDescriptions())
+                .partner(partner)
                 .build();
     }
 
@@ -97,13 +165,65 @@ public class CampaignDataService {
         return Arrays.asList(
             new StageDescription(
                 Stage.FIRST,
-                faker.random().nextInt(5) + 1,
+                20,
                 LocalDateTime.now()
             ),
 
             new StageDescription(
                 Stage.SECOND,
+                3,
+                LocalDateTime.now()
+            )
+        );
+    }
+
+
+
+    public List<StageDescription> invalidStartEndDateStageDescriptions() {
+        return Arrays.asList(
+                new StageDescription(
+                        Stage.FIRST,
+                        faker.random().nextInt(5) + 1,
+                        LocalDateTime.now().minusDays(10)
+                ),
+
+                new StageDescription(
+                        Stage.SECOND,
+                        faker.random().nextInt(5) + 1,
+                        LocalDateTime.now().plusDays(10)
+                )
+        );
+    }
+
+
+    public List<StageDescription> invalidEvaluationTimeStageDescriptions() {
+        return Arrays.asList(
+            new StageDescription(
+                Stage.FIRST,
                 faker.random().nextInt(5) + 1,
+                LocalDateTime.now().plusDays(10)
+            ),
+
+            new StageDescription(
+                Stage.SECOND,
+                faker.random().nextInt(5) + 1,
+                LocalDateTime.now().minusDays(10)
+            )
+        );
+    }
+
+
+    public List<StageDescription> invalidWinnerCountStageDescriptions() {
+        return Arrays.asList(
+            new StageDescription(
+                Stage.FIRST,
+                15,
+                LocalDateTime.now()
+            ),
+
+            new StageDescription(
+                Stage.SECOND,
+                30,
                 LocalDateTime.now()
             )
         );
@@ -111,3 +231,4 @@ public class CampaignDataService {
 
 
 }
+
