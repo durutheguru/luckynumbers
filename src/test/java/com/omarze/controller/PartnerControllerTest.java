@@ -29,11 +29,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 /**
  * created by julian
  */
-@WithMockUser(username = PartnerControllerTest.TEST_USER, authorities = {BackOfficeUser.ROLE_ID})
+@WithMockUser(username = BaseControllerTest.TEST_USER, authorities = {BackOfficeUser.ROLE_ID})
 public class PartnerControllerTest extends BaseControllerTest {
-
-
-    public final static String TEST_USER = "Test BackOffice User";
 
 
     private PartnerDataService partnerDataService;

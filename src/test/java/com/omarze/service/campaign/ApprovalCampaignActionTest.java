@@ -2,7 +2,6 @@ package com.omarze.service.campaign;
 
 
 import com.omarze.entities.CampaignStatus;
-import com.omarze.entities.RequestStatus;
 import org.junit.Assert;
 import org.junit.Ignore;
 import org.junit.Test;
@@ -18,7 +17,6 @@ public class ApprovalCampaignActionTest extends CampaignActionTest {
     public void testApprovingCampaign() throws Exception {
         approveCampaign();
 
-        Assert.assertEquals(campaign.getRequestStatus(), RequestStatus.APPROVED);
         Assert.assertEquals(campaign.getCampaignStatus(), CampaignStatus.APPROVED);
     }
 

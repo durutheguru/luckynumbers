@@ -1,0 +1,180 @@
+<?xml version="1.1" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.5.xsd">
+    <changeSet author="dduru (generated)" id="1577371093299-1">
+        <addColumn tableName="back_office_user">
+            <column name="auth_role_id" type="varchar(255)"/>
+        </addColumn>
+    </changeSet>
+    <changeSet author="dduru (generated)" id="1577371093299-2">
+        <addColumn tableName="campaign">
+            <column name="auth_role_id" type="varchar(255)"/>
+        </addColumn>
+    </changeSet>
+    <changeSet author="dduru (generated)" id="1577371093299-3">
+        <addColumn tableName="campaign_image">
+            <column name="auth_role_id" type="varchar(255)"/>
+        </addColumn>
+    </changeSet>
+    <changeSet author="dduru (generated)" id="1577371093299-4">
+        <addColumn tableName="campaign_stage_evaluation_result">
+            <column name="auth_role_id" type="varchar(255)"/>
+        </addColumn>
+    </changeSet>
+    <changeSet author="dduru (generated)" id="1577371093299-5">
+        <addColumn tableName="charity_organization">
+            <column name="auth_role_id" type="varchar(255)"/>
+        </addColumn>
+    </changeSet>
+    <changeSet author="dduru (generated)" id="1577371093299-6">
+        <addColumn tableName="country">
+            <column name="auth_role_id" type="varchar(255)"/>
+        </addColumn>
+    </changeSet>
+    <changeSet author="dduru (generated)" id="1577371093299-7">
+        <addColumn tableName="lottery_user">
+            <column name="auth_role_id" type="varchar(255)"/>
+        </addColumn>
+    </changeSet>
+    <changeSet author="dduru (generated)" id="1577371093299-8">
+        <addColumn tableName="lottery_user_campaign">
+            <column name="auth_role_id" type="varchar(255)"/>
+        </addColumn>
+    </changeSet>
+    <changeSet author="dduru (generated)" id="1577371093299-9">
+        <addColumn tableName="partner">
+            <column name="auth_role_id" type="varchar(255)"/>
+        </addColumn>
+    </changeSet>
+    <changeSet author="dduru (generated)" id="1577371093299-10">
+        <addColumn tableName="partner_image">
+            <column name="auth_role_id" type="varchar(255)"/>
+        </addColumn>
+    </changeSet>
+    <changeSet author="dduru (generated)" id="1577371093299-11">
+        <addColumn tableName="partner_user">
+            <column name="auth_role_id" type="varchar(255)"/>
+        </addColumn>
+    </changeSet>
+    <changeSet author="dduru (generated)" id="1577371093299-12">
+        <addColumn tableName="stage_description">
+            <column name="auth_role_id" type="varchar(255)"/>
+        </addColumn>
+    </changeSet>
+    <changeSet author="dduru (generated)" id="1577371093299-13">
+        <addColumn tableName="state">
+            <column name="auth_role_id" type="varchar(255)"/>
+        </addColumn>
+    </changeSet>
+    <changeSet author="dduru (generated)" id="1577371093299-14">
+        <addColumn tableName="sub_campaign">
+            <column name="auth_role_id" type="varchar(255)"/>
+        </addColumn>
+    </changeSet>
+    <changeSet author="dduru (generated)" id="1577371093299-15">
+        <addColumn tableName="back_office_user">
+            <column name="auth_username" type="varchar(255)"/>
+        </addColumn>
+    </changeSet>
+    <changeSet author="dduru (generated)" id="1577371093299-16">
+        <addColumn tableName="campaign">
+            <column name="auth_username" type="varchar(255)"/>
+        </addColumn>
+    </changeSet>
+    <changeSet author="dduru (generated)" id="1577371093299-17">
+        <addColumn tableName="campaign_image">
+            <column name="auth_username" type="varchar(255)"/>
+        </addColumn>
+    </changeSet>
+    <changeSet author="dduru (generated)" id="1577371093299-18">
+        <addColumn tableName="campaign_stage_evaluation_result">
+            <column name="auth_username" type="varchar(255)"/>
+        </addColumn>
+    </changeSet>
+    <changeSet author="dduru (generated)" id="1577371093299-19">
+        <addColumn tableName="charity_organization">
+            <column name="auth_username" type="varchar(255)"/>
+        </addColumn>
+    </changeSet>
+    <changeSet author="dduru (generated)" id="1577371093299-20">
+        <addColumn tableName="country">
+            <column name="auth_username" type="varchar(255)"/>
+        </addColumn>
+    </changeSet>
+    <changeSet author="dduru (generated)" id="1577371093299-21">
+        <addColumn tableName="lottery_user">
+            <column name="auth_username" type="varchar(255)"/>
+        </addColumn>
+    </changeSet>
+    <changeSet author="dduru (generated)" id="1577371093299-22">
+        <addColumn tableName="lottery_user_campaign">
+            <column name="auth_username" type="varchar(255)"/>
+        </addColumn>
+    </changeSet>
+    <changeSet author="dduru (generated)" id="1577371093299-23">
+        <addColumn tableName="partner">
+            <column name="auth_username" type="varchar(255)"/>
+        </addColumn>
+    </changeSet>
+    <changeSet author="dduru (generated)" id="1577371093299-24">
+        <addColumn tableName="partner_image">
+            <column name="auth_username" type="varchar(255)"/>
+        </addColumn>
+    </changeSet>
+    <changeSet author="dduru (generated)" id="1577371093299-25">
+        <addColumn tableName="partner_user">
+            <column name="auth_username" type="varchar(255)"/>
+        </addColumn>
+    </changeSet>
+    <changeSet author="dduru (generated)" id="1577371093299-26">
+        <addColumn tableName="stage_description">
+            <column name="auth_username" type="varchar(255)"/>
+        </addColumn>
+    </changeSet>
+    <changeSet author="dduru (generated)" id="1577371093299-27">
+        <addColumn tableName="state">
+            <column name="auth_username" type="varchar(255)"/>
+        </addColumn>
+    </changeSet>
+    <changeSet author="dduru (generated)" id="1577371093299-28">
+        <addColumn tableName="sub_campaign">
+            <column name="auth_username" type="varchar(255)"/>
+        </addColumn>
+    </changeSet>
+    <changeSet author="dduru (generated)" id="1577371093299-29">
+        <addUniqueConstraint columnNames="email" constraintName="UC_BACK_OFFICE_USEREMAIL_COL" tableName="back_office_user"/>
+    </changeSet>
+    <changeSet author="dduru (generated)" id="1577371093299-30">
+        <addUniqueConstraint columnNames="email" constraintName="UC_LOTTERY_USEREMAIL_COL" tableName="lottery_user"/>
+    </changeSet>
+    <changeSet author="dduru (generated)" id="1577371093299-31">
+        <addUniqueConstraint columnNames="email" constraintName="UC_PARTNER_USEREMAIL_COL" tableName="partner_user"/>
+    </changeSet>
+    <changeSet author="dduru (generated)" id="1577371093299-32">
+        <dropForeignKeyConstraint baseTableName="sub_campaign_winning_numbers" constraintName="FK6joy7r20m417v516wap0xhqd2"/>
+    </changeSet>
+
+    <changeSet author="dduru (generated)" id="1577371093299-37">
+        <dropForeignKeyConstraint baseTableName="sub_campaign" constraintName="FKmavf31b1ml6khqedf4lq3v0x8"/>
+    </changeSet>
+    <changeSet author="dduru (generated)" id="1577371093299-49">
+        <dropTable tableName="sub_campaign_winning_numbers"/>
+    </changeSet>
+    <changeSet author="dduru (generated)" id="1577371093299-50">
+        <dropColumn columnName="campaign_id" tableName="sub_campaign"/>
+    </changeSet>
+    <changeSet author="dduru (generated)" id="1577371093299-51">
+        <dropColumn columnName="expected_winner_count" tableName="sub_campaign"/>
+    </changeSet>
+    <changeSet author="dduru (generated)" id="1577371093299-52">
+        <dropNotNullConstraint columnDataType="datetime" columnName="evaluation_time" tableName="stage_description"/>
+    </changeSet>
+    <changeSet author="dduru (generated)" id="1577371093299-53">
+        <addNotNullConstraint columnDataType="int" columnName="stage" tableName="stage_description"/>
+    </changeSet>
+    <changeSet author="dduru (generated)" id="1577371093299-54">
+        <addNotNullConstraint columnDataType="varchar(100)" columnName="website" tableName="charity_organization"/>
+    </changeSet>
+    <changeSet author="dduru" id="882847918841-1783">
+        <dropColumn tableName="campaign" columnName="request_status" />
+    </changeSet>
+</databaseChangeLog>

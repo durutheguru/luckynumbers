@@ -22,6 +22,10 @@ public abstract class BaseControllerTest {
 
     protected Logger logger = LoggerFactory.getLogger(BaseControllerTest.class);
 
+
+    public final static String TEST_USER = "Test User";
+
+
     @Autowired
     protected MockMvc mockMvc;
 

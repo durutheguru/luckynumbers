@@ -47,9 +47,6 @@ public class CampaignDTO extends BaseDTO {
     private Integer expectedWinnerCount;
 
 
-    private RequestStatus requestStatus;
-
-
     @NotNull(message = "Campaign Type cannot be empty")
     private CampaignType campaignType;
 

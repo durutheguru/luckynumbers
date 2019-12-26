@@ -4,6 +4,9 @@ package com.omarze.controller;
 import com.omarze.Constants;
 import com.omarze.data.campaign.CampaignDataService;
 import com.omarze.api.dto.CampaignDTO;
+import com.omarze.entities.BackOfficeUser;
+import com.omarze.entities.LotteryUser;
+import com.omarze.entities.PartnerUser;
 import com.omarze.util.JSONUtil;
 import org.junit.Ignore;
 import org.junit.Test;
@@ -19,8 +22,9 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 /**
  * created by julian
  */
-@WithMockUser
+
 public class CampaignControllerTest extends BaseControllerTest {
+
 
     CampaignDataService campaignDataService;
 
@@ -33,16 +37,28 @@ public class CampaignControllerTest extends BaseControllerTest {
 
 
     @Test
-    public void testAddingCampaign() throws Exception {
+    @WithMockUser(username = BaseControllerTest.TEST_USER, authorities = {BackOfficeUser.ROLE_ID})
+    public void testBackOfficeAddingCampaign() throws Exception {
+        addCampaign();
+    }
+
+
+    @Test
+    @WithMockUser(username = BaseControllerTest.TEST_USER, authorities = {PartnerUser.ROLE_ID})
+    public void testPartnerAddingCampaign() throws Exception {
+        addCampaign();
+    }
+
+
+    private void addCampaign() throws Exception {
         CampaignDTO campaignDTO = campaignDataService.newCampaignDTO();
 
         mockMvc.perform(
-                post(Constants.API_BASE + "/campaign")
-                .content(JSONUtil.asJsonString(campaignDTO))
-                .contentType(MediaType.APPLICATION_JSON)
+                post(CampaignController.PATH)
+                        .content(JSONUtil.asJsonString(campaignDTO))
+                        .contentType(MediaType.APPLICATION_JSON)
         ).andDo(MockMvcResultHandlers.print())
                 .andExpect(status().is2xxSuccessful());
-
     }
 
 

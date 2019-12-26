@@ -15,46 +15,16 @@ import org.springframework.stereotype.Service;
 /**
  * created by julian
  */
-@Service
-public class CampaignService {
+public interface CampaignService {
 
 
-    private CampaignRepository campaignRepository;
+    Campaign addCampaign(CampaignDTO campaignDto) throws ServiceException;
 
 
-    @Autowired
-    public CampaignService setCampaignRepository(CampaignRepository campaignRepository) {
-        this.campaignRepository = campaignRepository;
-        return this;
-    }
+    Campaign updateCampaign(Campaign campaign) throws ServiceException;
 
 
-    public Campaign addCampaign(CampaignDTO campaignDto) throws ServiceException {
-        return Save.builder()
-                .campaignDto(campaignDto)
-                .campaignRepository(campaignRepository)
-                .build()
-                .execute();
-    }
-
-
-    public Campaign updateCampaign(Campaign campaign) throws ServiceException {
-        return new UpdateCampaign(campaign, campaignRepository).execute();
-    }
-
-
-    public Campaign campaignAction(CampaignApprovalDTO campaignApproval) throws ServiceException {
-        return new ApproveCampaign(campaignApproval, campaignRepository).execute();
-    }
-
-
-//    public Page<Campaign> getActiveCampaigns(Integer page, Integer size) throws ServiceException {
-//        return new GetMatchingCampaign(
-//                new Campaign()
-//                .setCampaignStatus(CampaignStatus.ACTIVE),
-//                PageRequest.of(page, size, Sort.Direction.DESC, "id")
-//        ).setCampaignRepository(campaignRepository).execute();
-//    }
+    Campaign campaignAction(CampaignApprovalDTO campaignApproval) throws ServiceException;
 
 
 }

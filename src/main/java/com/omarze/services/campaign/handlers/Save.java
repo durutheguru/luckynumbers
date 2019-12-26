@@ -4,17 +4,18 @@ package com.omarze.services.campaign.handlers;
 import com.omarze.api.dto.CampaignDTO;
 import com.omarze.entities.Campaign;
 import com.omarze.entities.CampaignStatus;
-import com.omarze.entities.RequestStatus;
+import com.omarze.entities.Stage;
+import com.omarze.entities.StageDescription;
+import com.omarze.exception.InvalidObjectException;
 import com.omarze.exception.ServiceException;
 import com.omarze.persistence.CampaignRepository;
-import com.omarze.services.Command;
 import com.omarze.services.CommandBase;
 import com.omarze.util.MapperUtil;
-import com.omarze.util.ValidatorUtil;
 import lombok.Builder;
 
 import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
+import java.util.List;
 
 /**
  * created by julian
@@ -41,7 +42,6 @@ public class Save extends CommandBase<Campaign> {
     protected Campaign execute_() throws ServiceException {
         Campaign campaign = MapperUtil.map(campaignDto, Campaign.class);
 
-        campaign.setRequestStatus(RequestStatus.PENDING);
         campaign.setCampaignStatus(CampaignStatus.AWAITING_APPROVAL);
         campaign.setTimeAdded(LocalDateTime.now());
 
@@ -50,3 +50,5 @@ public class Save extends CommandBase<Campaign> {
 
 
 }
+
+
