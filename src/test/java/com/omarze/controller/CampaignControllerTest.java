@@ -2,11 +2,12 @@ package com.omarze.controller;
 
 
 import com.omarze.Constants;
+import com.omarze.api.dto.CampaignActionDTO;
 import com.omarze.data.campaign.CampaignDataService;
 import com.omarze.api.dto.CampaignDTO;
 import com.omarze.entities.BackOfficeUser;
-import com.omarze.entities.LotteryUser;
 import com.omarze.entities.PartnerUser;
+import com.omarze.model.ApprovalAction;
 import com.omarze.util.JSONUtil;
 import org.junit.Ignore;
 import org.junit.Test;
@@ -50,15 +51,57 @@ public class CampaignControllerTest extends BaseControllerTest {
     }
 
 
+    @Test
+    @WithMockUser(username = BaseControllerTest.TEST_USER, authorities = {BackOfficeUser.ROLE_ID})
+    public void testBackOfficeUserApprovingCampaignAsCreator() throws Exception {
+        addCampaignWithUpdate();
+    }
+
+
     private void addCampaign() throws Exception {
         CampaignDTO campaignDTO = campaignDataService.newCampaignDTO();
 
+        mockMvc
+            .perform(
+                    post(CampaignController.PATH)
+                            .content(JSONUtil.asJsonString(campaignDTO))
+                            .contentType(MediaType.APPLICATION_JSON)
+            )
+            .andDo(MockMvcResultHandlers.print())
+            .andExpect(status().is2xxSuccessful());
+    }
+
+
+
+    private void addCampaignWithUpdate() throws Exception {
+        CampaignDTO campaignDTO = campaignDataService.newCampaignDTO();
+
+        mockMvc
+            .perform(
+                    post(CampaignController.PATH)
+                            .content(JSONUtil.asJsonString(campaignDTO))
+                            .contentType(MediaType.APPLICATION_JSON)
+            )
+            .andDo(MockMvcResultHandlers.print())
+            .andExpect(status().is2xxSuccessful())
+            .andDo(mvcResult -> {
+                String json = mvcResult.getResponse().getContentAsString();
+                CampaignDTO dtoResult = JSONUtil.fromJsonString(json, CampaignDTO.class);
+
+                approveCampaignByCreator(dtoResult.getId());
+            });
+    }
+
+
+    private void approveCampaignByCreator(Long campaignId) throws Exception {
+        CampaignActionDTO action = new CampaignActionDTO(campaignId, ApprovalAction.APPROVED);
+
         mockMvc.perform(
-                post(CampaignController.PATH)
-                        .content(JSONUtil.asJsonString(campaignDTO))
+                post(CampaignApprovalController.PATH)
+                        .content(JSONUtil.asJsonString(action))
                         .contentType(MediaType.APPLICATION_JSON)
         ).andDo(MockMvcResultHandlers.print())
-                .andExpect(status().is2xxSuccessful());
+                .andExpect(status().is5xxServerError());
     }
 
 
@@ -85,5 +128,5 @@ public class CampaignControllerTest extends BaseControllerTest {
     }
 
 
-
 }
+

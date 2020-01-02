@@ -7,9 +7,12 @@ package com.omarze.api;
 
 public class ApiResponse<T> {
 
+
     public final Status status;
 
+
     public final String message;
+
 
     public final T data;
 

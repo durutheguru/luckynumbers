@@ -164,7 +164,7 @@ public class Campaign extends BaseEntity {
 
         boolean campaignEndError = lastStageDescription
                 .getEvaluationTime()
-                .isAfter(getEndDate().atStartOfDay());
+                .isAfter(getEndDate().plusDays(1).atStartOfDay());
 
         if (campaignStartError || campaignEndError) {
             throw new InvalidObjectException("Invalid Campaign Stage Descriptions. " +
