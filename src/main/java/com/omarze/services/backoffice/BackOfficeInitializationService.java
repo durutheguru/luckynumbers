@@ -40,7 +40,7 @@ public class BackOfficeInitializationService {
         BackOfficeUserDTO userDTO = new BackOfficeUserDTO();
 
         userDTO.setUsername("superuser");
-        userDTO.setPassword("password");
+        userDTO.setPasswordIn("password");
         userDTO.setName("Julian Duru");
         userDTO.setEmail("durutheguru@gmail.com");
         userDTO.setTimeAdded(LocalDateTime.now());
