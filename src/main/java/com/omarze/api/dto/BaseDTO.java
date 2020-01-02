@@ -13,7 +13,6 @@ import java.time.LocalDateTime;
 public class BaseDTO {
 
 
-    @Id
     public Long id;
 
 

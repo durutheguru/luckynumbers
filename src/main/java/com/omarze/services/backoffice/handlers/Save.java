@@ -51,7 +51,7 @@ public class Save extends CommandBase<BackOfficeUser> {
 
         BackOfficeUser backOfficeUser = MapperUtil.map(userDTO, BackOfficeUser.class);
         backOfficeUser.setTimeAdded(LocalDateTime.now());
-        backOfficeUser.setPassword(passwordEncoder.encode(backOfficeUser.getPassword()));
+        backOfficeUser.setPassword(passwordEncoder.encode(userDTO.getPasswordIn()));
 
         return backOfficeUserRepository.save(backOfficeUser);
     }
