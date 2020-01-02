@@ -1,12 +1,15 @@
 package com.omarze.services.campaign;
 
 
-import com.omarze.api.dto.CampaignApprovalDTO;
+import com.omarze.annotation.PostTrigger;
+import com.omarze.api.dto.CampaignActionDTO;
 import com.omarze.api.dto.CampaignDTO;
 import com.omarze.entities.Campaign;
+import com.omarze.event.CampaignActionEvent;
 import com.omarze.exception.ServiceException;
 import com.omarze.persistence.CampaignRepository;
-import com.omarze.services.campaign.handlers.ApproveCampaign;
+import com.omarze.persistence.PartnerRepository;
+import com.omarze.services.campaign.handlers.Approval;
 import com.omarze.services.campaign.handlers.Save;
 import com.omarze.services.campaign.handlers.UpdateCampaign;
 import lombok.RequiredArgsConstructor;
@@ -23,10 +26,14 @@ public class CampaignServiceImpl implements CampaignService {
     private final CampaignRepository campaignRepository;
 
 
+    private final PartnerRepository partnerRepository;
+
+
     public Campaign addCampaign(CampaignDTO campaignDto) throws ServiceException {
         return Save.builder()
                 .campaignDto(campaignDto)
                 .campaignRepository(campaignRepository)
+                .partnerRepository(partnerRepository)
                 .build()
                 .execute();
     }
@@ -37,8 +44,13 @@ public class CampaignServiceImpl implements CampaignService {
     }
 
 
-    public Campaign campaignAction(CampaignApprovalDTO campaignApproval) throws ServiceException {
-        return new ApproveCampaign(campaignApproval, campaignRepository).execute();
+    @PostTrigger({CampaignActionEvent.class})
+    public Campaign campaignAction(CampaignActionDTO campaignAction) throws ServiceException {
+        return Approval.builder()
+                .campaignAction(campaignAction)
+                .campaignRepository(campaignRepository)
+                .build()
+                .execute();
     }
 
 
@@ -52,3 +64,4 @@ public class CampaignServiceImpl implements CampaignService {
 
 
 }
+

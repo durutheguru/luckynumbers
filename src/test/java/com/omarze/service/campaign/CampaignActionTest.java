@@ -2,7 +2,7 @@ package com.omarze.service.campaign;
 
 
 import com.omarze.data.campaign.CampaignDataService;
-import com.omarze.api.dto.CampaignApprovalDTO;
+import com.omarze.api.dto.CampaignActionDTO;
 import com.omarze.entities.Campaign;
 import com.omarze.model.ApprovalAction;
 import com.omarze.services.campaign.CampaignService;
@@ -33,7 +33,7 @@ public abstract class CampaignActionTest {
 
 
     protected void approveCampaign() throws Exception {
-        CampaignApprovalDTO approvalDTO = new CampaignApprovalDTO(campaign.getId(), ApprovalAction.APPROVED);
+        CampaignActionDTO approvalDTO = new CampaignActionDTO(campaign.getId(), ApprovalAction.APPROVED);
         campaign = campaignService.campaignAction(approvalDTO);
     }
 

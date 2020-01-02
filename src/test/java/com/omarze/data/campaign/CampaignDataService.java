@@ -5,7 +5,9 @@ import com.github.javafaker.Faker;
 import com.omarze.data.partner.PartnerDataService;
 import com.omarze.api.dto.CampaignDTO;
 import com.omarze.entities.*;
+import com.omarze.exception.InvalidObjectException;
 import com.omarze.persistence.CampaignRepository;
+import com.omarze.util.AppLogger;
 import com.omarze.util.ObjectUtil;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Component;
@@ -51,15 +53,25 @@ public class CampaignDataService {
     public Campaign newCampaign() {
         Partner partner = partnerDataService.savePartner();
 
-        return Campaign.builder()
+        Campaign campaign = Campaign.builder()
                 .name("Party with " + faker.name().fullName())
                 .description("Come and ")
                 .startDate(LocalDate.now())
                 .endDate(LocalDate.now().plusDays(5))
                 .campaignType(CampaignType.SINGLE)
                 .stageDescriptions(campaignStageDescriptions())
+                .campaignStatus(CampaignStatus.AWAITING_APPROVAL)
+                .expectedWinnerCount(3)
                 .partner(partner)
                 .build();
+
+        try {
+            return campaign.initialize();
+        }
+        catch (InvalidObjectException e) {
+            AppLogger.error(e);
+            return campaign;
+        }
     }
 
 
