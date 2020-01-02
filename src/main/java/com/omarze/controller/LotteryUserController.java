@@ -10,12 +10,17 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
+
 /**
  * created by julian
  */
 @RestController
-@RequestMapping(Constants.API_BASE + "/lottery_user")
-public class LotteryUserController {
+@RequestMapping(LotteryUserController.PATH)
+public class LotteryUserController extends ApiBaseController {
+
+
+    public final static String PATH = Constants.API_BASE + "/lottery_user";
 
 
     private LotteryUserService lotteryUserService;
@@ -30,11 +35,15 @@ public class LotteryUserController {
 
     @PostMapping("/sign_up")
     @ResponseStatus(HttpStatus.CREATED)
-    public LotteryUser addLotteryUser(
-            @RequestBody LotteryUser lotteryUser
+    public LotteryUserDTO addLotteryUser(
+            @RequestBody @Valid LotteryUserDTO lotteryUserDTO
     ) throws ServiceException {
-        return lotteryUserService.addLotteryUser(lotteryUser);
+        LotteryUser lotteryUser = lotteryUserService.addLotteryUser(lotteryUserDTO);
+
+        return map(lotteryUser, LotteryUserDTO.class);
     }
 
 
 }
+
+

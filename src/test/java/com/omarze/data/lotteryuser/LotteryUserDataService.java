@@ -2,6 +2,7 @@ package com.omarze.data.lotteryuser;
 
 
 import com.github.javafaker.Faker;
+import com.omarze.api.dto.LotteryUserDTO;
 import com.omarze.entities.LotteryUser;
 import com.omarze.persistence.LotteryUserRepository;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -33,6 +34,20 @@ public class LotteryUserDataService {
         user.setName(faker.name().fullName());
         user.setUsername(faker.internet().emailAddress());
         user.setPassword(faker.internet().password());
+        user.setEmail(user.getUsername());
+        user.setPhoneNumber(faker.phoneNumber().cellPhone());
+
+
+        return user;
+    }
+
+
+    public LotteryUserDTO newLotteryUserDTO() {
+        LotteryUserDTO user = new LotteryUserDTO();
+
+        user.setName(faker.name().fullName());
+        user.setUsername(faker.internet().emailAddress());
+        user.setPasswordIn(faker.internet().password());
         user.setEmail(user.getUsername());
         user.setPhoneNumber(faker.phoneNumber().cellPhone());
 
