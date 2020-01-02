@@ -22,24 +22,7 @@ public class JpaAuditingConfiguration {
 
     @Bean
     public AuditorAware<UserAuthId> auditorProvider() {
-        return () -> {
-            Authentication authentication = Auth.getContext();
-            if (authentication == null) {
-                return Optional.empty();
-            }
-
-            String user = ((User)authentication.getPrincipal()).getUsername();
-            final String[] roleId = {""};
-
-            authentication.getAuthorities()
-                    .stream()
-                    .findFirst()
-                    .ifPresent(a -> roleId[0] = a.getAuthority());
-
-            UserAuthId authId = new UserAuthId(user, roleId[0]);
-
-            return Optional.of(authId);
-        };
+        return Auth::getUserAuthId;
     }
 
 

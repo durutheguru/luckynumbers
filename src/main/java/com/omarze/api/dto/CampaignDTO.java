@@ -1,9 +1,11 @@
 package com.omarze.api.dto;
 
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.omarze.entities.*;
 import lombok.Data;
 
+import javax.validation.Valid;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -29,21 +31,25 @@ public class CampaignDTO extends BaseDTO {
     private List<CampaignImageDTO> campaignImages;
 
 
-    private PartnerDTO partner;
+    @NotNull(message = "Partner ID is required")
+    private Long partnerId;
 
 
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy")
     @NotNull(message = "Campaign requires a valid Start Date")
     private LocalDate startDate;
 
 
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy")
     @NotNull(message = "Campaign requires a valid End Date")
     private LocalDate endDate;
 
 
+    @Valid
+    @NotEmpty(message = "Stage Descriptions can not be empty")
     public List<StageDescriptionDTO> stageDescriptions;
 
 
-    @NotNull(message = "Number of expected Winners cannot be empty")
     private Integer expectedWinnerCount;
 
 

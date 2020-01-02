@@ -102,7 +102,7 @@ public class PartnerControllerTest extends BaseControllerTest {
 
 
     @Test
-    public void testSavingPartnerWithLongNameCauses5xxError() throws Exception {
+    public void testSavingPartnerWithLongNameCausesError() throws Exception {
         PartnerDTO partnerDTO = partnerDataService.newPartnerDTO();
 
         partnerDTO.name = Strings.repeat("Long Arse Name", 100);
@@ -112,7 +112,7 @@ public class PartnerControllerTest extends BaseControllerTest {
                 .content(JSONUtil.asJsonString(partnerDTO))
                 .contentType(MediaType.APPLICATION_JSON)
         ).andDo(MockMvcResultHandlers.print())
-                .andExpect(status().is5xxServerError());
+                .andExpect(status().is4xxClientError());
     }
 
 
