@@ -13,6 +13,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
+
 /**
  * created by julian
  */
@@ -39,7 +41,7 @@ public class CampaignController extends ApiBaseController {
     @ResponseStatus(HttpStatus.CREATED)
     @CanWriteCampaign
     public CampaignDTO addCampaign(
-            @RequestBody CampaignDTO campaignDto
+            @Valid @RequestBody CampaignDTO campaignDto
     ) throws ServiceException {
         Campaign campaign = campaignService.addCampaign(campaignDto);
         return map(campaign, CampaignDTO.class);
@@ -53,6 +55,9 @@ public class CampaignController extends ApiBaseController {
     ) throws ServiceException {
         return campaignService.updateCampaign(campaign);
     }
+
+
+//    public P
 
 
 }

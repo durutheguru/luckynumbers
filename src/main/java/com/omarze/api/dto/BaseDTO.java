@@ -23,5 +23,5 @@ public class BaseDTO {
     public LocalDateTime timeUpdated;
 
 
-
 }
+
