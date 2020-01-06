@@ -4,6 +4,7 @@ package com.omarze.util;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.BeanWrapper;
 import org.springframework.beans.BeanWrapperImpl;
+import org.springframework.beans.InvalidPropertyException;
 import org.springframework.util.Assert;
 
 import java.beans.PropertyDescriptor;
@@ -31,7 +32,13 @@ public class ObjectUtil {
         BeanWrapper beanWrapper = new BeanWrapperImpl(obj);
         return Stream.of(beanWrapper.getPropertyDescriptors())
                 .map(PropertyDescriptor::getName)
-                .filter(n -> beanWrapper.getPropertyValue(n) == null)
+                .filter(n -> {
+                    try {
+                        return beanWrapper.getPropertyValue(n) == null;
+                    } catch (InvalidPropertyException e) {
+                        return true;
+                    }
+                })
                 .collect(Collectors.toList());
     }
 

@@ -17,9 +17,12 @@ public class LotteryUserCampaignDataService {
 
     final ModelMapper modelMapper;
 
+
     final CampaignDataService campaignDataService;
 
+
     final LotteryUserDataService lotteryUserDataService;
+
 
     final LotteryUserCampaignRepository userCampaignRepository;
 
@@ -33,7 +36,7 @@ public class LotteryUserCampaignDataService {
 
 
     public LotteryUserCampaign newUserCampaign() {
-        Campaign campaign = campaignDataService.saveCampaign(Campaign.builder().campaignStatus(CampaignStatus.ACTIVE).build());
+        Campaign campaign = campaignDataService.saveCampaign(Campaign.builder().campaignStatus(CampaignStatus.APPROVED).build());
         LotteryUser lotteryUser = lotteryUserDataService.saveLotteryUser();
 
         LotteryUserCampaign userCampaign = new LotteryUserCampaign();
@@ -46,7 +49,13 @@ public class LotteryUserCampaignDataService {
 
     public LotteryUserCampaignDTO newUserCampaignDTO() {
         LotteryUserCampaign userCampaign = newUserCampaign();
-        return modelMapper.map(userCampaign, LotteryUserCampaignDTO.class);
+
+        LotteryUserCampaignDTO userCampaignDTO = new LotteryUserCampaignDTO();
+
+        userCampaignDTO.setCampaignId(userCampaign.getCampaign().getId());
+        userCampaignDTO.setLotteryUserId(userCampaign.getLotteryUser().getId());
+
+        return userCampaignDTO;
     }
 
 
