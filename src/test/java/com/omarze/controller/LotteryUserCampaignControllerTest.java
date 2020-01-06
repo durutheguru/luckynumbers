@@ -34,21 +34,11 @@ public class LotteryUserCampaignControllerTest extends BaseControllerTest {
 
 
     @Test
-    @Ignore
     public void testAddingNewLotteryUserCampaign() throws Exception {
         LotteryUserCampaignDTO userCampaignDTO = userCampaignDataService.newUserCampaignDTO();
 
-        CampaignDTO campaignDTO = new CampaignDTO();
-        LotteryUserDTO lotteryUserDTO = new LotteryUserDTO();
-
-        campaignDTO.setId(userCampaignDTO.getCampaign().getId());
-        lotteryUserDTO.setId(userCampaignDTO.getLotteryUser().getId());
-
-        userCampaignDTO.setCampaign(campaignDTO);
-        userCampaignDTO.setLotteryUser(lotteryUserDTO);
-
         mockMvc.perform(
-                post(Constants.API_BASE + "/user_campaigns")
+                post(Constants.API_BASE + "/user_campaign")
                 .content(JSONUtil.asJsonString(userCampaignDTO))
                 .contentType(MediaType.APPLICATION_JSON)
         ).andDo(MockMvcResultHandlers.print())
@@ -57,3 +47,4 @@ public class LotteryUserCampaignControllerTest extends BaseControllerTest {
 
 
 }
+
