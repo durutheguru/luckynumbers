@@ -10,6 +10,7 @@ import org.slf4j.LoggerFactory;
  */
 public class ServiceException extends Exception {
 
+
     protected Integer code = 1000000;
 
 

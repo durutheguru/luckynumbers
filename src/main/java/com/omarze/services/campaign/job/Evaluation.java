@@ -1,15 +1,14 @@
 package com.omarze.services.campaign.job;
 
 
-import com.omarze.entities.CampaignStageEvaluationResult;
-import com.omarze.entities.LotteryUserCampaign;
-import com.omarze.entities.LotteryUserCampaignStatus;
-import com.omarze.entities.Stage;
+import com.omarze.entities.*;
 import com.omarze.exception.EntityNotFoundException;
 import com.omarze.exception.ServiceException;
 import com.omarze.persistence.CampaignRepository;
+import com.omarze.persistence.CampaignStageEvaluationResultRepository;
 import com.omarze.persistence.LotteryUserCampaignRepository;
 import com.omarze.services.CommandBase;
+import lombok.Builder;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 
@@ -25,74 +24,84 @@ import java.util.stream.Collectors;
 public class Evaluation extends CommandBase<CampaignStageEvaluationResult> {
 
 
-    private Random random = new Random(System.currentTimeMillis());
-
-    private List<Integer> luckyIndices = new ArrayList<>();
-
-    private List<LotteryUserCampaign> luckyUserCampaigns = new ArrayList<>();
-
     @NotNull(message = "Winner count cannot be empty")
     private Integer winnerCount;
+
 
     @NotNull(message = "Stage cannot be empty")
     private Stage stage;
 
-    @NotNull(message = "Campaign ID cannot be empty")
+
+    @NotNull
     private Long campaignId;
 
-    @NotNull(message = "User Campaign Repository cannot be empty")
+
+    @NotNull
     private LotteryUserCampaignRepository userCampaignRepository;
 
-    @NotNull(message = "Campaign Repository cannot be empty")
+
+    @NotNull
     private CampaignRepository campaignRepository;
 
 
+    @NotNull
+    private CampaignStageEvaluationResultRepository evaluationResultRepository;
 
-    public Evaluation setWinnerCount(Integer winnerCount) {
+
+    private Campaign campaign;
+
+
+    private Random random = new Random(System.currentTimeMillis());
+
+
+    private List<Integer> luckyIndices = new ArrayList<>();
+
+
+    private List<LotteryUserCampaign> luckyUserCampaigns = new ArrayList<>();
+
+
+    @Builder
+    private Evaluation(
+        Integer winnerCount,
+        Stage stage,
+        Long campaignId,
+        LotteryUserCampaignRepository userCampaignRepository,
+        CampaignRepository campaignRepository,
+        CampaignStageEvaluationResultRepository evaluationResultRepository
+    ) {
         this.winnerCount = winnerCount;
-        return this;
-    }
-
-    public Evaluation setStage(Stage stage) {
         this.stage = stage;
-        return this;
-    }
-
-    public Evaluation setCampaignId(Long campaignId) {
         this.campaignId = campaignId;
-        return this;
-    }
-
-
-    public Evaluation setUserCampaignRepository(LotteryUserCampaignRepository userCampaignRepository) {
         this.userCampaignRepository = userCampaignRepository;
-        return this;
-    }
-
-
-    public Evaluation setCampaignRepository(CampaignRepository campaignRepository) {
         this.campaignRepository = campaignRepository;
-        return this;
+        this.evaluationResultRepository = evaluationResultRepository;
     }
 
 
     @Override
     protected CampaignStageEvaluationResult execute_() throws ServiceException {
-
         userCampaignRepository.updateParticipatingUserCampaignsToStatus(campaignId, LotteryUserCampaignStatus.EVALUATING);
 
-        generateLuckyIndices();
+        loadCampaign();
 
+        generateLuckyIndices();
         loadWinningUserCampaigns();
+        if (campaign.isFinalStage(stage)) {
+            campaign.setCampaignStatus(CampaignStatus.COMPLETED);
+        }
 
         return result();
     }
 
 
-    private void generateLuckyIndices() {
+    private void generateLuckyIndices() throws ServiceException {
         Long waitingCount = userCampaignRepository.countByCampaignStatusAndCampaign_Id(
                 LotteryUserCampaignStatus.EVALUATING, campaignId
         );
+
+        if (waitingCount < 1) {
+            throw new ServiceException("Unable to proceed with Stage Evaluation. No users waiting for Lottery :(");
+        }
 
         int luckyIndex;
 
@@ -104,6 +113,7 @@ public class Evaluation extends CommandBase<CampaignStageEvaluationResult> {
             }
 
             luckyIndices.add(luckyIndex);
+            //TODO: TRIGGER Event to notify of selected winner
         }
     }
 
@@ -123,7 +133,11 @@ public class Evaluation extends CommandBase<CampaignStageEvaluationResult> {
 
             for (LotteryUserCampaign campaign : userCampaignPage) {
                 if (luckyIndices.contains(index)) {
+                    campaign.setCampaignStatus(LotteryUserCampaignStatus.CAMPAIGN_WINNER);
                     luckyUserCampaigns.add(campaign);
+                }
+                else {
+                    campaign.setCampaignStatus(LotteryUserCampaignStatus.LOSER);
                 }
 
                 ++index;
@@ -133,25 +147,28 @@ public class Evaluation extends CommandBase<CampaignStageEvaluationResult> {
     }
 
 
+    private void loadCampaign() throws EntityNotFoundException {
+        campaign = campaignRepository
+                .findById(campaignId)
+                .orElseThrow(() -> new EntityNotFoundException("Campaign", campaignId));
+    }
+
+
     private CampaignStageEvaluationResult result() throws EntityNotFoundException {
         CampaignStageEvaluationResult result = new CampaignStageEvaluationResult();
 
         result.setStage(stage);
-        result.setCampaign(
-                campaignRepository
-                        .findById(campaignId)
-                        .orElseThrow(() -> new EntityNotFoundException("Campaign", campaignId))
-        );
+        result.setCampaign(campaign);
+        result.setUserCampaigns(luckyUserCampaigns);
         result.setWinningNumbers(
-                luckyUserCampaigns
-                        .stream()
-                        .map(LotteryUserCampaign::getUserNumber)
-                        .collect(Collectors.toList())
+            luckyUserCampaigns
+                .stream()
+                .map(LotteryUserCampaign::getUserNumber)
+                .collect(Collectors.toList())
         );
 
-        return result;
+        return evaluationResultRepository.save(result);
     }
-
 
 
 }
