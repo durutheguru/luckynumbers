@@ -2,12 +2,10 @@ package com.omarze.controller;
 
 
 import com.omarze.Constants;
-import com.omarze.data.lotteryuser.LotteryUserCampaignDataService;
-import com.omarze.api.dto.CampaignDTO;
 import com.omarze.api.dto.LotteryUserCampaignDTO;
-import com.omarze.api.dto.LotteryUserDTO;
+import com.omarze.data.lotteryuser.LotteryUserCampaignDataService;
+import com.omarze.entities.LotteryUser;
 import com.omarze.util.JSONUtil;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
@@ -20,7 +18,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 /**
  * created by julian
  */
-@WithMockUser
+@WithMockUser(username = BaseControllerTest.TEST_USER, authorities = {LotteryUser.ROLE_ID})
 public class LotteryUserCampaignControllerTest extends BaseControllerTest {
 
     private LotteryUserCampaignDataService userCampaignDataService;

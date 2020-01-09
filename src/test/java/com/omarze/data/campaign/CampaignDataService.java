@@ -75,6 +75,31 @@ public class CampaignDataService {
     }
 
 
+    public Campaign newActiveCampaign() {
+        Partner partner = partnerDataService.savePartner();
+
+        Campaign campaign = Campaign.builder()
+                .name("Party with " + faker.name().fullName())
+                .description("Come and ")
+                .startDate(LocalDate.now().minusDays(5))
+                .endDate(LocalDate.now())
+                .campaignType(CampaignType.SINGLE)
+                .stageDescriptions(activeCampaignStageDescriptions())
+                .campaignStatus(CampaignStatus.ACTIVE)
+                .expectedWinnerCount(3)
+                .partner(partner)
+                .build();
+
+        try {
+            return campaign.initialize();
+        }
+        catch (InvalidObjectException e) {
+            AppLogger.error(e);
+            return campaign;
+        }
+    }
+
+
     public CampaignDTO newInvalidStartEndDateCampaignDTO() {
         Campaign campaign = newInvalidStartEndDateCampaign();
         return modelMapper.map(campaign, CampaignDTO.class);
@@ -102,9 +127,6 @@ public class CampaignDataService {
     }
 
 
-
-
-
     public Campaign newInvalidEvaluationTimeCampaign() {
         Partner partner = partnerDataService.savePartner();
 
@@ -120,14 +142,10 @@ public class CampaignDataService {
     }
 
 
-
     public CampaignDTO newInvalidWinnerCountCampaignDTO() {
         Campaign campaign = newInvalidWinnerCountCampaign();
         return modelMapper.map(campaign, CampaignDTO.class);
     }
-
-
-
 
 
     public Campaign newInvalidWinnerCountCampaign() {
@@ -151,9 +169,22 @@ public class CampaignDataService {
     }
 
 
+    public Campaign saveActiveCampaign() {
+        Campaign campaign = newActiveCampaign();
+        return campaignRepository.save(campaign);
+    }
+
+
     public Campaign saveCampaign(Campaign example) {
         Campaign campaign = newCampaign();
         ObjectUtil.copyProperties(example, campaign);
+
+        try {
+            campaign.initialize();
+        }
+        catch (InvalidObjectException e) {
+            AppLogger.error(e);
+        }
 
         return campaignRepository.save(campaign);
     }
@@ -186,6 +217,23 @@ public class CampaignDataService {
                 3,
                 LocalDateTime.now()
             )
+        );
+    }
+
+
+    public List<StageDescription> activeCampaignStageDescriptions() {
+        return Arrays.asList(
+                new StageDescription(
+                        Stage.FIRST,
+                        20,
+                        LocalDateTime.now().minusDays(5)
+                ),
+
+                new StageDescription(
+                        Stage.SECOND,
+                        3,
+                        LocalDateTime.now()
+                )
         );
     }
 
