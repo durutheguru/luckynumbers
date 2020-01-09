@@ -1,8 +1,10 @@
 package com.omarze.services.usercampaign;
 
 
+import com.omarze.annotation.PostTrigger;
 import com.omarze.api.dto.LotteryUserCampaignDTO;
 import com.omarze.entities.LotteryUserCampaign;
+import com.omarze.event.LotteryUserCampaignEvent;
 import com.omarze.exception.ServiceException;
 import com.omarze.persistence.CampaignRepository;
 import com.omarze.persistence.LotteryUserCampaignRepository;
@@ -33,6 +35,7 @@ public class LotteryUserCampaignServiceImpl implements LotteryUserCampaignServic
 
 
     @Override
+    @PostTrigger({LotteryUserCampaignEvent.class})
     public LotteryUserCampaign addUserCampaign(LotteryUserCampaignDTO userCampaignDTO) throws ServiceException {
         return Save.builder()
             .userCampaignDTO(userCampaignDTO)
@@ -46,4 +49,3 @@ public class LotteryUserCampaignServiceImpl implements LotteryUserCampaignServic
 
 
 }
-

@@ -1,12 +1,15 @@
 package com.omarze.entities;
 
 
+import lombok.Data;
+
 import javax.persistence.*;
 import java.util.List;
 
 /**
  * created by julian
  */
+@Data
 @Entity
 public class CampaignStageEvaluationResult extends BaseEntity {
 
@@ -25,32 +28,8 @@ public class CampaignStageEvaluationResult extends BaseEntity {
     private List<String> winningNumbers;
 
 
-    public Campaign getCampaign() {
-        return campaign;
-    }
-
-    public CampaignStageEvaluationResult setCampaign(Campaign campaign) {
-        this.campaign = campaign;
-        return this;
-    }
-
-    public Stage getStage() {
-        return stage;
-    }
-
-    public CampaignStageEvaluationResult setStage(Stage stage) {
-        this.stage = stage;
-        return this;
-    }
-
-    public List<String> getWinningNumbers() {
-        return winningNumbers;
-    }
-
-    public CampaignStageEvaluationResult setWinningNumbers(List<String> winningNumbers) {
-        this.winningNumbers = winningNumbers;
-        return this;
-    }
+    @Transient
+    private List<LotteryUserCampaign> userCampaigns;
 
 
     public boolean isFinalStage() {
