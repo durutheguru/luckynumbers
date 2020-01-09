@@ -15,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * created by julian
@@ -54,26 +55,14 @@ public class CampaignActivationSchedulerTest extends BaseServiceIntegrationTest 
 
     @Test
     public void testActivatingAllDueCampaigns() throws Exception {
-        saveCampaigns();
+        List<Campaign> campaigns = saveCampaigns();
         campaignActivationScheduler.activateDueCampaigns();
 
-        List<Campaign> savedCampaigns = campaignRepository.findAll();
+        List<Campaign> savedCampaigns = campaignRepository.findAllById(campaigns.stream().map(Campaign::getId).collect(Collectors.toList()));
 
-        int activeCount = 0;
-        int inactiveCount = 0;
-
-        for (Campaign campaign : savedCampaigns) {
-            switch (campaign.getCampaignStatus()) {
-                case ACTIVE:
-                    ++activeCount;
-                    break;
-                default:
-                    ++inactiveCount;
-            }
-        }
-
-        Assert.assertEquals(activeCount, 2);
-        Assert.assertEquals(inactiveCount, 1);
+        Assert.assertEquals(savedCampaigns.get(0).getCampaignStatus(), CampaignStatus.ACTIVE);
+        Assert.assertEquals(savedCampaigns.get(1).getCampaignStatus(), CampaignStatus.ACTIVE);
+        Assert.assertEquals(savedCampaigns.get(2).getCampaignStatus(), CampaignStatus.APPROVED);
     }
 
 
