@@ -5,6 +5,7 @@ import com.omarze.Constants;
 import com.omarze.api.dto.LotteryUserCampaignDTO;
 import com.omarze.entities.LotteryUserCampaign;
 import com.omarze.exception.ServiceException;
+import com.omarze.security.annotation.IsLotteryUser;
 import com.omarze.services.usercampaign.LotteryUserCampaignService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -32,6 +33,7 @@ public class LotteryUserCampaignController extends ApiBaseController {
 
 
     @PostMapping
+    @IsLotteryUser
     @ResponseStatus(HttpStatus.CREATED)
     public LotteryUserCampaignDTO addUserCampaign(
             @Valid @RequestBody LotteryUserCampaignDTO userCampaignDTO

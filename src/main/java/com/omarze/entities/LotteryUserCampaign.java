@@ -3,10 +3,7 @@ package com.omarze.entities;
 
 import lombok.Data;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
+import javax.persistence.*;
 
 /**
  * created by julian
@@ -30,6 +27,7 @@ public class LotteryUserCampaign extends BaseEntity {
     private String userNumber;
 
 
+    @Enumerated(EnumType.STRING)
     @Column(nullable = false, length = 50)
     private LotteryUserCampaignStatus campaignStatus;
 

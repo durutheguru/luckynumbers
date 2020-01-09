@@ -8,6 +8,9 @@ import com.omarze.persistence.LotteryUserRepository;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * created by julian
  */
@@ -58,10 +61,19 @@ public class LotteryUserDataService {
 
     public LotteryUser saveLotteryUser() {
         LotteryUser lotteryUser = newLotteryUser();
-
         lotteryUser.setPassword(passwordEncoder.encode(lotteryUser.getPassword()));
-
         return lotteryUserRepository.save(lotteryUser);
+    }
+
+
+    public List<LotteryUser> saveLotteryUsers(int count) {
+        List<LotteryUser> users = new ArrayList<>();
+
+        for (int i = 0; i < count; i++) {
+            users.add(saveLotteryUser());
+        }
+
+        return users;
     }
 
 

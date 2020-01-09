@@ -177,4 +177,7 @@
     <changeSet author="dduru" id="882847918841-1783">
         <dropColumn tableName="campaign" columnName="request_status" />
     </changeSet>
+    <changeSet author="dduru" id="7398184194-19479">
+        <modifyDataType tableName="lottery_user_campaign" columnName="campaign_status" newDataType="VARCHAR(30)" />
+    </changeSet>
 </databaseChangeLog>
