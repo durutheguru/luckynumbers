@@ -1,4 +1,4 @@
-package com.omarze.controller;
+package com.omarze.controller.api;
 
 
 import com.omarze.Constants;
@@ -6,8 +6,6 @@ import com.omarze.api.dto.CampaignDTO;
 import com.omarze.entities.Campaign;
 import com.omarze.exception.ServiceException;
 import com.omarze.security.annotation.CanWriteCampaign;
-import com.omarze.security.annotation.IsBackOfficeUser;
-import com.omarze.security.annotation.IsPartnerUser;
 import com.omarze.services.campaign.CampaignService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

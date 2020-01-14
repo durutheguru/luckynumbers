@@ -1,4 +1,4 @@
-package com.omarze.controller;
+package com.omarze.controller.api;
 
 
 import com.omarze.Constants;
