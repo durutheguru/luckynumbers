@@ -3,8 +3,11 @@ package com.omarze.security;
 
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
+import com.auth0.jwt.exceptions.TokenExpiredException;
 import com.google.common.base.Strings;
 import com.omarze.Constants;
+import com.omarze.util.AppLogger;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -42,14 +45,20 @@ public class JWTAuthorizationFilter extends BasicAuthenticationFilter {
             return;
         }
 
-        UsernamePasswordAuthenticationToken authToken = getAuthenticationToken(headerToken);
-        Auth.setContext(authToken);
+        try {
+            UsernamePasswordAuthenticationToken authToken = getAuthenticationToken(headerToken);
+            Auth.setContext(authToken);
 
-        chain.doFilter(request, response);
+            chain.doFilter(request, response);
+        }
+        catch (TokenExpiredException e) {
+            AppLogger.error(e);
+            response.sendError(HttpStatus.FORBIDDEN.value(), "Token has expired");
+        }
     }
 
 
-    public UsernamePasswordAuthenticationToken getAuthenticationToken(String headerToken) {
+    public UsernamePasswordAuthenticationToken getAuthenticationToken(String headerToken) throws TokenExpiredException {
         String user = JWT.require(Algorithm.HMAC512(Constants.Security.SECRET))
                 .build()
                 .verify(headerToken.replace(Constants.Security.TOKEN_PREFIX, ""))

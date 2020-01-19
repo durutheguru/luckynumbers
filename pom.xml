@@ -12,7 +12,7 @@
 
 	<groupId>com.omarze</groupId>
 	<artifactId>omarze</artifactId>
-	<version>${RELEASE_TAG}-SNAPSHOT</version>
+	<version>0.0.1-SNAPSHOT</version>
 	<name>omarze</name>
 	<description>Project for Celebrity Lotto platform</description>
 
@@ -249,6 +249,37 @@
 						</goals>
 					</execution>
 				</executions>
+			</plugin>
+
+			<plugin>
+				<groupId>com.github.eirslett</groupId>
+				<artifactId>frontend-maven-plugin</artifactId>
+				<version>1.9.1</version>
+
+				<executions>
+					<execution>
+						<id>install node and npm</id>
+						<goals>
+							<goal>install-node-and-npm</goal>
+						</goals>
+						<configuration>
+							<nodeVersion>v10.15.0</nodeVersion>
+							<npmVersion>6.4.1</npmVersion>
+						</configuration>
+					</execution>
+
+					<execution>
+						<id>gulp build</id>
+						<goals>
+							<goal>gulp</goal>
+						</goals>
+					</execution>
+				</executions>
+
+				<configuration>
+					<workingDirectory>src/main/resources/static</workingDirectory>
+				</configuration>
+
 			</plugin>
 
 		</plugins>
