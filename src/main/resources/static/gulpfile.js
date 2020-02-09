@@ -4,7 +4,14 @@ var sass = require('gulp-sass');
 var concat = require('gulp-concat');
 var uglify = require('gulp-uglify');
 var ts = require("gulp-typescript");
+var terser = require("gulp-terser");
 var sourcemaps = require('gulp-sourcemaps');
+const gprint = require('gulp-print');
+const gutil = require("gulp-util");
+const del = require('del');
+const vinylPaths = require('vinyl-paths');
+const webpack_stream = require('webpack-stream')
+const webpack_config = require('./webpack.config.js');
 
 var gulp_helper = require("./app/internal/gulp_helper");
 
@@ -17,7 +24,7 @@ var gulp_helper = require("./app/internal/gulp_helper");
 var VENDOR_CSS_ROOT = "./app/vendor/css";
 
 var cssVendorList = [
-    "/bootstrap.min.css",
+    "/bootstrap.css",
     "/bootstrap-reset.css",
     "/font-awesome.css",
     "/style.css",
@@ -46,6 +53,7 @@ gulp.task('vendorCSSMin', function() {
 gulp.task('sassCompile', function () {
     return gulp.src('app/sass/**/*.scss')
         .pipe(sass())
+        .pipe(concat("app.css"))
         .pipe(cssnano())
         .pipe(gulp.dest('dist/css'));
 });
@@ -75,6 +83,10 @@ var vendorJSList = gulp_helper.mergePathRoot(VENDOR_JS_ROOT, [
     "/common-scripts.js"
 ]);
 
+//vendorJSList = vendorJSList.concat([
+//    "./node_modules/vue/dist/vue.js"
+//]);
+
 
 gulp.task('vendorJSMin', function() {
 
@@ -103,17 +115,19 @@ var tsProject = ts.createProject("tsconfig.json");
 var baseTSList = [];
 
 gulp.task('package-back_office_user', function () {
-    return gulp.src(
-        baseTSList.concat([
-            "./app/ts/back_office_user/index.ts"
-        ])
-    )
-        .pipe(sourcemaps.init())
-        .pipe(tsProject())
-        .pipe(concat("app.js"))
-        .pipe(uglify())
-        .pipe(sourcemaps.write("maps"))
-        .pipe(gulp.dest("./dist/js/back_office_user"));
+    //return gulp.src(
+    //    baseTSList.concat([
+    //        "./app/ts/back_office_user/index.ts"
+    //    ])
+    //)
+    //    .pipe(sourcemaps.init())
+    //    .pipe(tsProject())
+    //    .pipe(concat("app.js"))
+    //    .pipe(terser())
+    //    .pipe(sourcemaps.write("maps"))
+    //    .pipe(gulp.dest("./dist/js/back_office_user"));
+    return webpack_stream(webpack_config)
+        .pipe(gulp.dest("./dist/js/"));
 });
 
 /**

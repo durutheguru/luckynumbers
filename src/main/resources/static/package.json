@@ -15,6 +15,16 @@
     "gulp-sourcemaps": "^2.6.5",
     "gulp-typescript": "^6.0.0-alpha.1",
     "gulp-uglify": "^3.0.2",
-    "typescript": "^3.7.4"
+    "typescript": "^3.7.4",
+    "vue": "^2.6.11"
+  },
+  "devDependencies": {
+    "del": "^5.1.0",
+    "gulp-print": "^5.0.2",
+    "gulp-terser": "^1.2.0",
+    "gulp-util": "^3.0.8",
+    "ts-loader": "^6.2.1",
+    "vinyl-paths": "^3.0.1",
+    "webpack-stream": "^5.2.1"
   }
 }

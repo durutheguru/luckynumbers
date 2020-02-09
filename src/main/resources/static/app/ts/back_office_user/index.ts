@@ -1,11 +1,9 @@
+import Vue from "vue";
 
-function greeting(firstName : string, lastName : string) {
-
-    return "Hello, " + firstName + " " + lastName;
-
-}
-
-var first: string = "Julian";
-
-
+new Vue({
+    el : "#testing_vue",
+    data : {
+        message : "Hello, Testing Vue 1,2..."
+    }
+});
 

@@ -15,8 +15,8 @@ import org.springframework.web.bind.annotation.*;
  * created by julian
  */
 @RestController
-@RequestMapping(BackOfficeUserController.PATH)
-public class BackOfficeUserController extends ApiBaseController {
+@RequestMapping(BackOfficeUserApiController.PATH)
+public class BackOfficeUserApiController extends ApiBaseController {
 
 
     public final static String PATH = Constants.API_BASE + "/back_office_user";
@@ -26,7 +26,7 @@ public class BackOfficeUserController extends ApiBaseController {
 
 
     @Autowired
-    public BackOfficeUserController setBackOfficeUserService(BackOfficeUserService backOfficeUserService) {
+    public BackOfficeUserApiController setBackOfficeUserService(BackOfficeUserService backOfficeUserService) {
         this.backOfficeUserService = backOfficeUserService;
         return this;
     }

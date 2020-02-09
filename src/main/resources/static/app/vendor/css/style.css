@@ -4372,9 +4372,9 @@ tr.odd.gradeX td.sorting_1, tr.even.gradeX td.sorting_1, table.display tr.even.g
 
 
 .full-width .nav > li > a:hover, .full-width .nav  li.active a, .full-width .nav li.dropdown a:hover , .full-width .nav li.dropdown.open a:focus, .full-width .nav .open > a, .full-width  .nav .open > a:hover, .full-width  .nav .open > a:focus{
-    background-color: #F77B6F;
+    background-color: #FFF;
     text-decoration: none;
-    color: #fff;
+    color: #ABABAB;
     transition: all 0.3s ease 0s;
     -webkit-transition: all 0.3s ease 0s;
 }
@@ -4735,6 +4735,9 @@ tr.odd.gradeX td.sorting_1, tr.even.gradeX td.sorting_1, table.display tr.even.g
 /*footer*/
 
 .site-footer {
+    position : fixed;
+    bottom : 0;
+    width : 100%;
     background: #5b6e84;
     color: #fff;
     padding: 10px 0;

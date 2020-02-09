@@ -22,6 +22,13 @@ public class BackOfficeUserWebController {
     }
 
 
+    @GetMapping("/users")
+    public String users() {
+        return "back_office_user/users/index";
+    }
+
+
+
 }
 
 
