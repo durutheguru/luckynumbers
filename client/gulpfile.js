@@ -4,16 +4,16 @@ var sass = require('gulp-sass');
 var concat = require('gulp-concat');
 var uglify = require('gulp-uglify');
 var ts = require("gulp-typescript");
-var terser = require("gulp-terser");
+//var terser = require("gulp-terser");
 var sourcemaps = require('gulp-sourcemaps');
-const gprint = require('gulp-print');
-const gutil = require("gulp-util");
-const del = require('del');
-const vinylPaths = require('vinyl-paths');
-const webpack_stream = require('webpack-stream')
-const webpack_config = require('./webpack.config.js');
+//const gprint = require('gulp-print');
+//const gutil = require("gulp-util");
+//const del = require('del');
+//const vinylPaths = require('vinyl-paths');
+//const webpack_stream = require('webpack-stream')
+//const webpack_config = require('./webpack.config.js');
 
-var gulp_helper = require("./app/internal/gulp_helper");
+var gulp_helper = require("./internal/gulp_helper");
 
 
 
@@ -21,7 +21,7 @@ var gulp_helper = require("./app/internal/gulp_helper");
  * CSS task
  */
 
-var VENDOR_CSS_ROOT = "./app/vendor/css";
+var VENDOR_CSS_ROOT = "./src/vendor/css";
 
 var cssVendorList = [
     "/bootstrap.css",
@@ -36,7 +36,7 @@ gulp.task('vendorCSSMin', function() {
     return gulp.src(gulp_helper.mergePathRoot(VENDOR_CSS_ROOT, cssVendorList))
         .pipe(concat("compile_000.css"))
         .pipe(cssnano())
-        .pipe(gulp.dest("dist/css"));
+        .pipe(gulp.dest("public/compiled/css"));
 
 });
 
@@ -51,11 +51,11 @@ gulp.task('vendorCSSMin', function() {
  * SASS task
  */
 gulp.task('sassCompile', function () {
-    return gulp.src('app/sass/**/*.scss')
+    return gulp.src('./src/sass/**/*.scss')
         .pipe(sass())
         .pipe(concat("app.css"))
         .pipe(cssnano())
-        .pipe(gulp.dest('dist/css'));
+        .pipe(gulp.dest('public/compiled/css'));
 });
 
 /**
@@ -69,7 +69,7 @@ gulp.task('sassCompile', function () {
  * Javascript task
  */
 
-var VENDOR_JS_ROOT = "./app/vendor/js";
+var VENDOR_JS_ROOT = "./src/vendor/js";
 
 var vendorJSList = gulp_helper.mergePathRoot(VENDOR_JS_ROOT, [
     "/jquery.js",
@@ -93,7 +93,7 @@ gulp.task('vendorJSMin', function() {
     return gulp.src(vendorJSList)
         .pipe(concat("compile_000.js"))
         .pipe(uglify())
-        .pipe(gulp.dest("./dist/js"));
+        .pipe(gulp.dest("public/compiled/js"));
 
 });
 

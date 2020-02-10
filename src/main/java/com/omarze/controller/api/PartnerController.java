@@ -59,7 +59,7 @@ public class PartnerController extends ApiBaseController {
 
 
     @GetMapping
-    @IsLotteryUser
+//    @IsLotteryUser
     public Page<PartnerDTO> getPartners(
             @RequestParam(name = "page", defaultValue = "0") Integer page,
             @RequestParam(name = "size", defaultValue = "10") Integer size

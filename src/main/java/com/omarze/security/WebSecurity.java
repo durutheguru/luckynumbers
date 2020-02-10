@@ -53,11 +53,10 @@ public class WebSecurity extends WebSecurityConfigurerAdapter {
             .cors().and().csrf().disable()
             .authorizeRequests()
             .antMatchers(Constants.API_BASE + "/lottery_user/sign_up").permitAll()
+            .antMatchers(Constants.API_BASE + "/partner").permitAll()
             .antMatchers(
-                new String[]{
-                    "/api/**"
-                }
-            ).authenticated()
+                "/api/**"
+            ).fullyAuthenticated()
             .and()
             .addFilter(new JWTAuthenticationFilter(authenticationManager()))
             .addFilter(new JWTAuthorizationFilter(authenticationManager(), userDetailsService))
