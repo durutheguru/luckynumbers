@@ -18,7 +18,7 @@ import javax.validation.Valid;
  */
 @RestController
 @RequestMapping(CampaignController.PATH)
-public class CampaignController extends ApiBaseController {
+public class CampaignController extends BaseApiController {
 
 
     public final static String PATH = Constants.API_BASE + "/campaign";
@@ -35,15 +35,15 @@ public class CampaignController extends ApiBaseController {
     }
 
 
-    @PostMapping
-    @ResponseStatus(HttpStatus.CREATED)
-    @CanWriteCampaign
-    public CampaignDTO addCampaign(
-            @Valid @RequestBody CampaignDTO campaignDto
-    ) throws ServiceException {
-        Campaign campaign = campaignService.addCampaign(campaignDto);
-        return map(campaign, CampaignDTO.class);
-    }
+//    @PostMapping
+//    @ResponseStatus(HttpStatus.CREATED)
+//    @CanWriteCampaign
+//    public CampaignDTO addCampaign(
+//            @Valid @RequestBody CampaignDTO campaignDto
+//    ) throws ServiceException {
+//        Campaign campaign = campaignService.addCampaign(campaignDto);
+//        return map(campaign, CampaignDTO.class);
+//    }
 
 
     @PutMapping

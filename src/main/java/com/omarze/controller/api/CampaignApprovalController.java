@@ -21,7 +21,7 @@ import javax.validation.Valid;
  */
 @RestController
 @RequestMapping(CampaignApprovalController.PATH)
-public class CampaignApprovalController extends ApiBaseController {
+public class CampaignApprovalController extends BaseApiController {
 
     public final static String PATH = Constants.API_BASE + "/campaign_approval";
 
@@ -36,12 +36,12 @@ public class CampaignApprovalController extends ApiBaseController {
     }
 
 
-    @PostMapping
-    @IsBackOfficeUser
-    public CampaignDTO approval(@Valid @RequestBody CampaignActionDTO actionDTO) throws ServiceException {
-        Campaign campaign = campaignService.campaignAction(actionDTO);
-        return map(campaign, CampaignDTO.class);
-    }
+//    @PostMapping
+//    @IsBackOfficeUser
+//    public CampaignDTO approval(@Valid @RequestBody CampaignActionDTO actionDTO) throws ServiceException {
+//        Campaign campaign = campaignService.campaignAction(actionDTO);
+//        return map(campaign, CampaignDTO.class);
+//    }
 
 
 }

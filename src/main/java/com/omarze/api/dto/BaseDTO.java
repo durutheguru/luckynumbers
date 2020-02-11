@@ -3,7 +3,6 @@ package com.omarze.api.dto;
 
 import lombok.Data;
 
-import javax.persistence.Id;
 import java.time.LocalDateTime;
 
 /**

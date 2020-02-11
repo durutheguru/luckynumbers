@@ -8,7 +8,6 @@ import com.omarze.entities.Partner;
 import com.omarze.entities.PartnerImage;
 import com.omarze.exception.ServiceException;
 import com.omarze.security.annotation.IsBackOfficeUser;
-import com.omarze.security.annotation.IsLotteryUser;
 import com.omarze.services.partner.PartnerService;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
@@ -23,7 +22,7 @@ import java.util.List;
  */
 @RestController
 @RequestMapping(PartnerController.PATH)
-public class PartnerController extends ApiBaseController {
+public class PartnerController extends BaseApiController {
 
 
     public final static String PATH = Constants.API_BASE + "/partner";
@@ -37,25 +36,25 @@ public class PartnerController extends ApiBaseController {
     }
 
 
-    @PostMapping
-    @ResponseStatus(code = HttpStatus.CREATED)
-    @IsBackOfficeUser
-    public PartnerDTO savePartner(
-            @Valid @RequestBody PartnerDTO partnerDTO
-    ) throws ServiceException {
-        Partner partner = partnerService.savePartner(partnerDTO);
-        return map(partner, PartnerDTO.class);
-    }
+//    @PostMapping
+//    @ResponseStatus(code = HttpStatus.CREATED)
+//    @IsBackOfficeUser
+//    public PartnerDTO savePartner(
+//            @Valid @RequestBody PartnerDTO partnerDTO
+//    ) throws ServiceException {
+//        Partner partner = partnerService.savePartner(partnerDTO);
+//        return map(partner, PartnerDTO.class);
+//    }
 
 
-    @PutMapping
-    @IsBackOfficeUser
-    public PartnerDTO updatePartner(
-            @Valid @RequestBody PartnerDTO partnerDTO
-    ) throws ServiceException {
-        Partner partner = partnerService.updatePartner(partnerDTO);
-        return map(partner, PartnerDTO.class);
-    }
+//    @PutMapping
+//    @IsBackOfficeUser
+//    public PartnerDTO updatePartner(
+//            @Valid @RequestBody PartnerDTO partnerDTO
+//    ) throws ServiceException {
+//        Partner partner = partnerService.updatePartner(partnerDTO);
+//        return map(partner, PartnerDTO.class);
+//    }
 
 
     @GetMapping
@@ -69,10 +68,10 @@ public class PartnerController extends ApiBaseController {
     }
 
 
-    @GetMapping("/{id}")
-    public PartnerDTO getPartner(@PathVariable Long id) throws ServiceException {
-         return map(partnerService.getPartner(id), PartnerDTO.class);
-    }
+//    @GetMapping("/{id}")
+//    public PartnerDTO getPartner(@PathVariable Long id) throws ServiceException {
+//         return map(partnerService.getPartner(id), PartnerDTO.class);
+//    }
 
 
     @IsBackOfficeUser

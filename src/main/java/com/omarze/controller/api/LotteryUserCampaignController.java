@@ -18,7 +18,7 @@ import javax.validation.Valid;
  */
 @RestController
 @RequestMapping(LotteryUserCampaignController.PATH)
-public class LotteryUserCampaignController extends ApiBaseController {
+public class LotteryUserCampaignController extends BaseApiController {
 
     public final static String PATH = Constants.API_BASE + "/user_campaign";
 
@@ -32,15 +32,15 @@ public class LotteryUserCampaignController extends ApiBaseController {
     }
 
 
-    @PostMapping
-    @IsLotteryUser
-    @ResponseStatus(HttpStatus.CREATED)
-    public LotteryUserCampaignDTO addUserCampaign(
-            @Valid @RequestBody LotteryUserCampaignDTO userCampaignDTO
-    ) throws ServiceException {
-        LotteryUserCampaign userCampaign = userCampaignService.addUserCampaign(userCampaignDTO);
-        return map(userCampaign, LotteryUserCampaignDTO.class);
-    }
+//    @PostMapping
+//    @IsLotteryUser
+//    @ResponseStatus(HttpStatus.CREATED)
+//    public LotteryUserCampaignDTO addUserCampaign(
+//            @Valid @RequestBody LotteryUserCampaignDTO userCampaignDTO
+//    ) throws ServiceException {
+//        LotteryUserCampaign userCampaign = userCampaignService.addUserCampaign(userCampaignDTO);
+//        return map(userCampaign, LotteryUserCampaignDTO.class);
+//    }
 
 
 }
