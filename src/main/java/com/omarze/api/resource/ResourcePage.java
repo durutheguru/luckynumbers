@@ -33,7 +33,7 @@ public class ResourcePage<T, D, C extends BaseApiController> extends PagedResour
 
 
     private void init() {
-        
+
     }
 
 
