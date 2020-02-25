@@ -9,6 +9,7 @@ import com.omarze.entities.PartnerImage;
 import com.omarze.exception.ServiceException;
 import com.omarze.security.annotation.IsBackOfficeUser;
 import com.omarze.services.partner.PartnerService;
+import com.omarze.util.MapperUtil;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -36,25 +37,25 @@ public class PartnerController extends BaseApiController {
     }
 
 
-//    @PostMapping
-//    @ResponseStatus(code = HttpStatus.CREATED)
-//    @IsBackOfficeUser
-//    public PartnerDTO savePartner(
-//            @Valid @RequestBody PartnerDTO partnerDTO
-//    ) throws ServiceException {
-//        Partner partner = partnerService.savePartner(partnerDTO);
-//        return map(partner, PartnerDTO.class);
-//    }
+    @PostMapping
+    @ResponseStatus(code = HttpStatus.CREATED)
+    @IsBackOfficeUser
+    public PartnerDTO savePartner(
+            @Valid @RequestBody PartnerDTO partnerDTO
+    ) throws ServiceException {
+        Partner partner = partnerService.savePartner(partnerDTO);
+        return MapperUtil.map(partner, PartnerDTO.class);
+    }
 
 
-//    @PutMapping
-//    @IsBackOfficeUser
-//    public PartnerDTO updatePartner(
-//            @Valid @RequestBody PartnerDTO partnerDTO
-//    ) throws ServiceException {
-//        Partner partner = partnerService.updatePartner(partnerDTO);
-//        return map(partner, PartnerDTO.class);
-//    }
+    @PutMapping
+    @IsBackOfficeUser
+    public PartnerDTO updatePartner(
+            @Valid @RequestBody PartnerDTO partnerDTO
+    ) throws ServiceException {
+        Partner partner = partnerService.updatePartner(partnerDTO);
+        return MapperUtil.map(partner, PartnerDTO.class);
+    }
 
 
     @GetMapping
@@ -68,10 +69,10 @@ public class PartnerController extends BaseApiController {
     }
 
 
-//    @GetMapping("/{id}")
-//    public PartnerDTO getPartner(@PathVariable Long id) throws ServiceException {
-//         return map(partnerService.getPartner(id), PartnerDTO.class);
-//    }
+    @GetMapping("/{id}")
+    public PartnerDTO getPartner(@PathVariable Long id) throws ServiceException {
+         return MapperUtil.map(partnerService.getPartner(id), PartnerDTO.class);
+    }
 
 
     @IsBackOfficeUser

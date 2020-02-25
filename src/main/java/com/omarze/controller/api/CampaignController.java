@@ -7,6 +7,7 @@ import com.omarze.entities.Campaign;
 import com.omarze.exception.ServiceException;
 import com.omarze.security.annotation.CanWriteCampaign;
 import com.omarze.services.campaign.CampaignService;
+import com.omarze.util.MapperUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -35,15 +36,15 @@ public class CampaignController extends BaseApiController {
     }
 
 
-//    @PostMapping
-//    @ResponseStatus(HttpStatus.CREATED)
-//    @CanWriteCampaign
-//    public CampaignDTO addCampaign(
-//            @Valid @RequestBody CampaignDTO campaignDto
-//    ) throws ServiceException {
-//        Campaign campaign = campaignService.addCampaign(campaignDto);
-//        return map(campaign, CampaignDTO.class);
-//    }
+    @PostMapping
+    @ResponseStatus(HttpStatus.CREATED)
+    @CanWriteCampaign
+    public CampaignDTO addCampaign(
+            @Valid @RequestBody CampaignDTO campaignDto
+    ) throws ServiceException {
+        Campaign campaign = campaignService.addCampaign(campaignDto);
+        return MapperUtil.map(campaign, CampaignDTO.class);
+    }
 
 
     @PutMapping

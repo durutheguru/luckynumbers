@@ -7,6 +7,7 @@ import com.omarze.entities.LotteryUserCampaign;
 import com.omarze.exception.ServiceException;
 import com.omarze.security.annotation.IsLotteryUser;
 import com.omarze.services.usercampaign.LotteryUserCampaignService;
+import com.omarze.util.MapperUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -32,15 +33,15 @@ public class LotteryUserCampaignController extends BaseApiController {
     }
 
 
-//    @PostMapping
-//    @IsLotteryUser
-//    @ResponseStatus(HttpStatus.CREATED)
-//    public LotteryUserCampaignDTO addUserCampaign(
-//            @Valid @RequestBody LotteryUserCampaignDTO userCampaignDTO
-//    ) throws ServiceException {
-//        LotteryUserCampaign userCampaign = userCampaignService.addUserCampaign(userCampaignDTO);
-//        return map(userCampaign, LotteryUserCampaignDTO.class);
-//    }
+    @PostMapping
+    @IsLotteryUser
+    @ResponseStatus(HttpStatus.CREATED)
+    public LotteryUserCampaignDTO addUserCampaign(
+            @Valid @RequestBody LotteryUserCampaignDTO userCampaignDTO
+    ) throws ServiceException {
+        LotteryUserCampaign userCampaign = userCampaignService.addUserCampaign(userCampaignDTO);
+        return MapperUtil.map(userCampaign, LotteryUserCampaignDTO.class);
+    }
 
 
 }

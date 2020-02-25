@@ -6,6 +6,7 @@ import com.omarze.api.dto.LotteryUserDTO;
 import com.omarze.entities.LotteryUser;
 import com.omarze.exception.ServiceException;
 import com.omarze.services.lotteryuser.LotteryUserService;
+import com.omarze.util.MapperUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -33,15 +34,15 @@ public class LotteryUserController extends BaseApiController {
     }
 
 
-//    @PostMapping("/sign_up")
-//    @ResponseStatus(HttpStatus.CREATED)
-//    public LotteryUserDTO addLotteryUser(
-//            @RequestBody @Valid LotteryUserDTO lotteryUserDTO
-//    ) throws ServiceException {
-//        LotteryUser lotteryUser = lotteryUserService.addLotteryUser(lotteryUserDTO);
-//
-//        return map(lotteryUser, LotteryUserDTO.class);
-//    }
+    @PostMapping("/sign_up")
+    @ResponseStatus(HttpStatus.CREATED)
+    public LotteryUserDTO addLotteryUser(
+            @RequestBody @Valid LotteryUserDTO lotteryUserDTO
+    ) throws ServiceException {
+        LotteryUser lotteryUser = lotteryUserService.addLotteryUser(lotteryUserDTO);
+
+        return MapperUtil.map(lotteryUser, LotteryUserDTO.class);
+    }
 
 
 }
