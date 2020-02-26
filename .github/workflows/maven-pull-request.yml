@@ -1,4 +1,4 @@
-name: Java CI
+name: Pull Request Flow
 
 on:
   pull_request:
