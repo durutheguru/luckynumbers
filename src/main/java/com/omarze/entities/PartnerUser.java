@@ -17,7 +17,7 @@ import java.util.List;
 public class PartnerUser extends ApplicationUser {
 
 
-    public final static String ROLE_ID = "PARTNER_USER";
+    public static final String ROLE_ID = "PARTNER_USER";
 
 
     @ManyToOne

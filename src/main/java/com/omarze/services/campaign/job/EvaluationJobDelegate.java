@@ -25,11 +25,11 @@ import java.util.Map;
 public class EvaluationJobDelegate {
 
 
-    public final static String WINNERS_COUNT = "WINNERS_COUNT";
+    public static final String WINNERS_COUNT = "WINNERS_COUNT";
 
-    public final static String STAGE = "STAGE";
+    public static final String STAGE = "STAGE";
 
-    public final static String CAMPAIGN_ID = "CAMPAIGN_ID";
+    public static final String CAMPAIGN_ID = "CAMPAIGN_ID";
 
 
     private final LotteryUserCampaignRepository userCampaignRepository;

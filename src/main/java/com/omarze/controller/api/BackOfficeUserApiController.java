@@ -22,7 +22,7 @@ import org.springframework.web.bind.annotation.*;
 public class BackOfficeUserApiController extends BaseApiController<BackOfficeUserResource, BackOfficeUserPageResource> {
 
 
-    public final static String PATH = Constants.API_BASE + "/back_office_user";
+    public static final String PATH = Constants.API_BASE + "/back_office_user";
 
 
     private BackOfficeUserService backOfficeUserService;

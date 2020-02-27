@@ -26,9 +26,13 @@ public class GetMatchingCampaign extends CommandBase<Page<Campaign>> {
     private CampaignRepository campaignRepository;
 
 
-    public GetMatchingCampaign(Campaign candidate, PageRequest pageRequest) {
+    public GetMatchingCampaign(
+        Campaign candidate, PageRequest pageRequest,
+        CampaignRepository campaignRepository
+    ) {
         this.candidate = candidate;
         this.pageRequest = pageRequest;
+        this.campaignRepository = campaignRepository;
     }
 
 

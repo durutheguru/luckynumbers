@@ -22,7 +22,7 @@ import javax.validation.Valid;
 public class CampaignController extends BaseApiController {
 
 
-    public final static String PATH = Constants.API_BASE + "/campaign";
+    public static final String PATH = Constants.API_BASE + "/campaign";
 
 
 

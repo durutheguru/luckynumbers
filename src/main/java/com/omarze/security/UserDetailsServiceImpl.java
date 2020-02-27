@@ -91,7 +91,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         for (UserDetailsProvider<? extends ApplicationUser> provider : userDetailsProviders) {
             applicationUser = provider.findUser(username, credentials);
 
-            if (applicationUser == null || !applicationUser.isPresent()) {
+            if (!applicationUser.isPresent()) {
                 continue;
             }
 

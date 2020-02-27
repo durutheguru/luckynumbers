@@ -21,7 +21,7 @@ import javax.validation.Valid;
 public class LotteryUserController extends BaseApiController {
 
 
-    public final static String PATH = Constants.API_BASE + "/lottery_user";
+    public static final String PATH = Constants.API_BASE + "/lottery_user";
 
 
     private LotteryUserService lotteryUserService;

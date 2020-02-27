@@ -21,7 +21,7 @@ import javax.validation.Valid;
 @RequestMapping(LotteryUserCampaignController.PATH)
 public class LotteryUserCampaignController extends BaseApiController {
 
-    public final static String PATH = Constants.API_BASE + "/user_campaign";
+    public static final String PATH = Constants.API_BASE + "/user_campaign";
 
 
     private LotteryUserCampaignService userCampaignService;

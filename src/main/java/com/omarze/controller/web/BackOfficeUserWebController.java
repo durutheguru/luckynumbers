@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class BackOfficeUserWebController {
 
 
-    public final static String PATH = "/back_office_user";
+    public static final String PATH = "/back_office_user";
 
 
     @GetMapping

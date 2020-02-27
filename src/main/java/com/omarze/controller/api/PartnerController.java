@@ -26,7 +26,7 @@ import java.util.List;
 public class PartnerController extends BaseApiController {
 
 
-    public final static String PATH = Constants.API_BASE + "/partner";
+    public static final String PATH = Constants.API_BASE + "/partner";
 
 
     private PartnerService partnerService;

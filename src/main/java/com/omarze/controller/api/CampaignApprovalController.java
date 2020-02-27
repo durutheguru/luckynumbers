@@ -24,7 +24,7 @@ import javax.validation.Valid;
 @RequestMapping(CampaignApprovalController.PATH)
 public class CampaignApprovalController extends BaseApiController {
 
-    public final static String PATH = Constants.API_BASE + "/campaign_approval";
+    public static final String PATH = Constants.API_BASE + "/campaign_approval";
 
 
     private CampaignService campaignService;
