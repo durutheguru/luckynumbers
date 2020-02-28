@@ -17,7 +17,7 @@ import java.util.List;
 public class LotteryUser extends ApplicationUser {
 
 
-    public final static String ROLE_ID = "LOTTERY_USER";
+    public static final String ROLE_ID = "LOTTERY_USER";
 
 
     @Column(nullable = false)

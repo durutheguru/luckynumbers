@@ -7,22 +7,22 @@ package com.omarze;
 public class Constants {
 
 
-    public final static String API_BASE = "/api/v1";
+    public static final String API_BASE = "/api/v1";
 
 
-    public final static String PAYLOAD_JSON_PATH = "$.data";
+    public static final String PAYLOAD_JSON_PATH = "$.data";
 
 
 
     public final class Users {
 
-        public final static String LOTTERY_USER = "Lottery User";
+        public static final String LOTTERY_USER = "Lottery User";
 
 
-        public final static String BACK_OFFICE_USER = "BackOffice User";
+        public static final String BACK_OFFICE_USER = "BackOffice User";
 
 
-        public final static String PARTNER_USER = "Partner User";
+        public static final String PARTNER_USER = "Partner User";
 
     }
 
@@ -44,11 +44,11 @@ public class Constants {
 
     public static class Patterns {
 
-        public final static String PHONE = "^[+]*[(]{0,1}[0-9]{1,4}[)]{0,1}[-\\s\\./0-9]*$";
+        public static final String PHONE = "^[+]*[(]{0,1}[0-9]{1,4}[)]{0,1}[-\\s\\./0-9]*$";
 
-        public final static String EMAIL = "^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\\.[a-zA-Z0-9-]+)*$";
+        public static final String EMAIL = "^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\\.[a-zA-Z0-9-]+)*$";
 
-        public final static String WEBSITE = "^((https?|ftp|smtp):\\/\\/)?(www.)?[a-z0-9]+\\.[a-z]+(\\/[a-zA-Z0-9#]+\\/?)*$";
+        public static final String WEBSITE = "^((https?|ftp|smtp):\\/\\/)?(www.)?[a-z0-9]+\\.[a-z]+(\\/[a-zA-Z0-9#]+\\/?)*$";
 
     }
 

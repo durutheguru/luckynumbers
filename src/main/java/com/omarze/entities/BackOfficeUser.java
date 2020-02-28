@@ -12,7 +12,7 @@ import java.util.List;
 public class BackOfficeUser extends ApplicationUser {
 
 
-    public final static String ROLE_ID = "BACK_OFFICE_USER";
+    public static final String ROLE_ID = "BACK_OFFICE_USER";
 
 
     @Override

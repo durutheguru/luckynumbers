@@ -1,4 +1,4 @@
-package com.omarze.controller;
+package com.omarze.controller.api;
 
 
 import com.omarze.Constants;
@@ -6,6 +6,7 @@ import com.omarze.api.dto.LotteryUserDTO;
 import com.omarze.entities.LotteryUser;
 import com.omarze.exception.ServiceException;
 import com.omarze.services.lotteryuser.LotteryUserService;
+import com.omarze.util.MapperUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -17,10 +18,10 @@ import javax.validation.Valid;
  */
 @RestController
 @RequestMapping(LotteryUserController.PATH)
-public class LotteryUserController extends ApiBaseController {
+public class LotteryUserController extends BaseApiController {
 
 
-    public final static String PATH = Constants.API_BASE + "/lottery_user";
+    public static final String PATH = Constants.API_BASE + "/lottery_user";
 
 
     private LotteryUserService lotteryUserService;
@@ -40,7 +41,7 @@ public class LotteryUserController extends ApiBaseController {
     ) throws ServiceException {
         LotteryUser lotteryUser = lotteryUserService.addLotteryUser(lotteryUserDTO);
 
-        return map(lotteryUser, LotteryUserDTO.class);
+        return MapperUtil.map(lotteryUser, LotteryUserDTO.class);
     }
 
 

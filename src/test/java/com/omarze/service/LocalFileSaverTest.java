@@ -20,10 +20,10 @@ import java.nio.file.Paths;
 public class LocalFileSaverTest extends BaseServiceIntegrationTest {
 
 
-    private final static byte[] TEST_BYTES = new byte[]{0x0, 0x0, 0x1};
+    private static final byte[] TEST_BYTES = new byte[]{0x0, 0x0, 0x1};
 
 
-    private final static String TEST_RELATIVE_PATH = "/relative/file.png";
+    private static final String TEST_RELATIVE_PATH = "/relative/file.png";
     
 
     @Autowired

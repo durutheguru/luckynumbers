@@ -1,4 +1,4 @@
-package com.omarze.controller;
+package com.omarze.controller.api;
 
 
 import com.omarze.Constants;
@@ -7,6 +7,7 @@ import com.omarze.entities.LotteryUserCampaign;
 import com.omarze.exception.ServiceException;
 import com.omarze.security.annotation.IsLotteryUser;
 import com.omarze.services.usercampaign.LotteryUserCampaignService;
+import com.omarze.util.MapperUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -18,9 +19,9 @@ import javax.validation.Valid;
  */
 @RestController
 @RequestMapping(LotteryUserCampaignController.PATH)
-public class LotteryUserCampaignController extends ApiBaseController {
+public class LotteryUserCampaignController extends BaseApiController {
 
-    public final static String PATH = Constants.API_BASE + "/user_campaign";
+    public static final String PATH = Constants.API_BASE + "/user_campaign";
 
 
     private LotteryUserCampaignService userCampaignService;
@@ -39,7 +40,7 @@ public class LotteryUserCampaignController extends ApiBaseController {
             @Valid @RequestBody LotteryUserCampaignDTO userCampaignDTO
     ) throws ServiceException {
         LotteryUserCampaign userCampaign = userCampaignService.addUserCampaign(userCampaignDTO);
-        return map(userCampaign, LotteryUserCampaignDTO.class);
+        return MapperUtil.map(userCampaign, LotteryUserCampaignDTO.class);
     }
 
 

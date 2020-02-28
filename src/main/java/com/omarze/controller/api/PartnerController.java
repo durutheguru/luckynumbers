@@ -1,4 +1,4 @@
-package com.omarze.controller;
+package com.omarze.controller.api;
 
 
 import com.omarze.Constants;
@@ -8,8 +8,8 @@ import com.omarze.entities.Partner;
 import com.omarze.entities.PartnerImage;
 import com.omarze.exception.ServiceException;
 import com.omarze.security.annotation.IsBackOfficeUser;
-import com.omarze.security.annotation.IsLotteryUser;
 import com.omarze.services.partner.PartnerService;
+import com.omarze.util.MapperUtil;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -23,10 +23,10 @@ import java.util.List;
  */
 @RestController
 @RequestMapping(PartnerController.PATH)
-public class PartnerController extends ApiBaseController {
+public class PartnerController extends BaseApiController {
 
 
-    public final static String PATH = Constants.API_BASE + "/partner";
+    public static final String PATH = Constants.API_BASE + "/partner";
 
 
     private PartnerService partnerService;
@@ -44,7 +44,7 @@ public class PartnerController extends ApiBaseController {
             @Valid @RequestBody PartnerDTO partnerDTO
     ) throws ServiceException {
         Partner partner = partnerService.savePartner(partnerDTO);
-        return map(partner, PartnerDTO.class);
+        return MapperUtil.map(partner, PartnerDTO.class);
     }
 
 
@@ -54,12 +54,12 @@ public class PartnerController extends ApiBaseController {
             @Valid @RequestBody PartnerDTO partnerDTO
     ) throws ServiceException {
         Partner partner = partnerService.updatePartner(partnerDTO);
-        return map(partner, PartnerDTO.class);
+        return MapperUtil.map(partner, PartnerDTO.class);
     }
 
 
     @GetMapping
-    @IsLotteryUser
+//    @IsLotteryUser
     public Page<PartnerDTO> getPartners(
             @RequestParam(name = "page", defaultValue = "0") Integer page,
             @RequestParam(name = "size", defaultValue = "10") Integer size
@@ -71,7 +71,7 @@ public class PartnerController extends ApiBaseController {
 
     @GetMapping("/{id}")
     public PartnerDTO getPartner(@PathVariable Long id) throws ServiceException {
-         return map(partnerService.getPartner(id), PartnerDTO.class);
+         return MapperUtil.map(partnerService.getPartner(id), PartnerDTO.class);
     }
 
 

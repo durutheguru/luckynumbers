@@ -9,6 +9,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -37,6 +38,11 @@ public class MapperUtil implements ApplicationContextAware {
         return tPage == null ? Page.<R>empty() : tPage.map(t -> modelMapper.map(t, targetClass));
     }
 
+
+    public static <T, R> Collection<R> map(Collection<T> tList, Class<R> targetClass) {
+        return tList == null ? new ArrayList<>() : tList.stream().map(t -> modelMapper.map(t, targetClass))
+                .collect(Collectors.toList());
+    }
 
     public static <T, R> List<R> map(List<T> tList, Class<R> targetClass) {
         return tList == null ? new ArrayList<>() : tList.stream().map(t -> modelMapper.map(t, targetClass))

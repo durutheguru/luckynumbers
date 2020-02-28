@@ -4,6 +4,7 @@ package com.omarze.controller;
 import com.google.common.base.Strings;
 import com.jayway.jsonpath.JsonPath;
 import com.omarze.api.dto.PartnerDTO;
+import com.omarze.controller.api.PartnerController;
 import com.omarze.data.partner.PartnerDataService;
 import com.omarze.entities.BackOfficeUser;
 import com.omarze.entities.Partner;
