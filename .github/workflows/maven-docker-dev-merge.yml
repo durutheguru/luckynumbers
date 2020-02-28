@@ -6,8 +6,8 @@ on:
       - development
   
 env:
-  OLD_RELEASE_VERSION: $(cat version.ver)
-  NEW_RELEASE_VERSION: 1.${GITHUB_RUN_ID}.${GITHUB_RUN_NUMBER}
+  OLD_RELEASE_VERSION: ''
+  NEW_RELEASE_VERSION: ${{ join('1.', github.run_id, github.run_number) }}
       
 
 jobs:
@@ -49,6 +49,7 @@ jobs:
         - name: Publish Docker image
           run: |
             docker push ${{ secrets.DOCKER_USER }}/lucky_numbers:$NEW_RELEASE_VERSION
+            echo "::set-env name=OLD_RELEASE_VERSION::$(cat version.ver)"
             echo "Pushed Docker Image with New Release"
 
 
