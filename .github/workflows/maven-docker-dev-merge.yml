@@ -39,7 +39,7 @@ jobs:
         - uses: actions/checkout@v2
         - name: Setting Version Number
           run: |
-            mvn versions:set -DnewVersion=$NEW_RELEASE_VERSION
+            mvn versions:set -DnewVersion=${NEW_RELEASE_VERSION}-SNAPSHOT
         - name: Maven Package
           run: |
             mvn package 
