@@ -7,7 +7,7 @@ on:
   
 env:
   OLD_RELEASE_VERSION: ''
-  NEW_RELEASE_VERSION: ${{ join(github.run_id, github.run_number) }}
+  NEW_RELEASE_VERSION: ${{ join('1.' + github.run_id, github.run_number) }}
       
 
 jobs:
@@ -41,7 +41,10 @@ jobs:
       steps:
         - uses: actions/checkout@v2
         - name: Maven Package
-          run: mvn package
+          run: |
+            mvn package 
+        - name: Target Contents
+            ls target
         - name: Login to Docker
           run: docker login -u ${{ secrets.DOCKER_USER }} -p ${{ secrets.DOCKER_PWD }}
         - name: Build Docker Image
@@ -50,6 +53,7 @@ jobs:
           run: |
             docker push ${{ secrets.DOCKER_USER }}/lucky_numbers:$NEW_RELEASE_VERSION
             echo "::set-env name=OLD_RELEASE_VERSION::$(cat version.ver)"
+            echo "OLD_VERSION: $OLD_RELEASE_VERSION"
             echo "Pushed Docker Image with New Release"
 
 
