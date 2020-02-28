@@ -7,7 +7,7 @@ on:
   
 env:
   OLD_RELEASE_VERSION: ''
-  NEW_RELEASE_VERSION: ${{ join('1.' + github.run_id, github.run_number) }}
+  NEW_RELEASE_VERSION: ${{ join('1.' & github.run_id, github.run_number) }}
       
 
 jobs:
