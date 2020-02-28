@@ -23,9 +23,6 @@ jobs:
       uses: actions/setup-java@v1
       with:
         java-version: 1.8
-    - name: Setting Version Number
-      run: |
-        mvn versions:set -DnewVersion=$NEW_RELEASE_VERSION
     - name: Verify with Maven, Scan with Sonar
       run: |
         mvn -B clean verify -Psonar -Dsonar.login=${{ secrets.SONAR_TOKEN }}
@@ -40,6 +37,9 @@ jobs:
       
       steps:
         - uses: actions/checkout@v2
+        - name: Setting Version Number
+          run: |
+            mvn versions:set -DnewVersion=$NEW_RELEASE_VERSION
         - name: Maven Package
           run: |
             mvn package 
