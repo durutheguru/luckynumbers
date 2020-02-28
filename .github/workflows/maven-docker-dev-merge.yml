@@ -29,6 +29,8 @@ jobs:
     - name: Verify with Maven, Scan with Sonar
       run: |
         mvn -B clean verify -Psonar -Dsonar.login=${{ secrets.SONAR_TOKEN }}
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       
       
   docker:
