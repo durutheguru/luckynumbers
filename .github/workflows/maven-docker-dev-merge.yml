@@ -66,7 +66,7 @@ jobs:
       steps:
       - name: SSHing to Dev environment
         run: |
-          echo ${{ secrets.SSH_KEY }} > /temp/id_rsa.file
+          echo "${{ secrets.SSH_KEY }}" > /temp/id_rsa.file
           ssh -i /temp/id_rsa.file -tt ${{ secrets.SSH_USER }}@${{ secrets.SSH_STAGING_HOST }} <<EOF
           docker rm -f lucky_numberz || true 
           docker rmi lucky_numbers:$OLD_RELEASE_VERSION || true
