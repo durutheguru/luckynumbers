@@ -64,27 +64,24 @@ jobs:
       needs: [test,docker]
 
       steps:
-      - uses: appleboy/ssh-action@master
-        with:
-          host: ${{ secrets.SSH_STAGING_HOST }}
-          username: ${{ secrets.SSH_USER }}
-          password: ${{ secrets.SSH_PWD }}
-          key: ${{ secrets.SSH_KEY }}
-          script: |
-            docker rm -f lucky_numberz || true 
-            docker rmi lucky_numbers:$OLD_RELEASE_VERSION || true
-            docker rmi ${{ secrets.DOCKER_USER }}/lucky_numbers:$OLD_RELEASE_VERSION || true
-            docker rm -f mysql_docker_data || true
-            docker build -t mysql_docker_data:0.0.1 -<<EOF
-            FROM mysql:latest
-            VOLUME /var/lib/mysql
-            CMD ["true"]
-            EOF
-            docker create --name mysql_docker_data mysql_docker_data:0.0.1 
-            docker rm -f docker-mysql || true
-            docker run -d -p 6603:3306 --name docker-mysql --volumes-from mysql_docker_data \
-            -v /var/lib/mysql:/var/lib/mysql -e MYSQL_ROOT_PASSWORD=root -e MYSQL_PASSWORD=root \
-            -e MYSQL_DATABASE=omarze mysql
-            
-            docker run -d -p 9111:9012 -e RELEASE_TAG=$NEW_RELEASE_VERSION --name lucky_numberz --link docker-mysql:mysql lucky_numbers:$NEW_RELEASE_VERSION 
+      - name: SSHing to Dev environment
+        run: |
+          ssh -i ${{ secrets.SSH_KEY }} -tt ${{ secrets.SSH_USER }}@${{ secrets.SSH_STAGING_HOST }} <<EOF
+          docker rm -f lucky_numberz || true 
+          docker rmi lucky_numbers:$OLD_RELEASE_VERSION || true
+          docker rmi ${{ secrets.DOCKER_USER }}/lucky_numbers:$OLD_RELEASE_VERSION || true
+          docker rm -f mysql_docker_data || true
+          docker build -t mysql_docker_data:0.0.1 -<<EOF
+          FROM mysql:latest
+          VOLUME /var/lib/mysql
+          CMD ["true"]
+          EOF
+          docker create --name mysql_docker_data mysql_docker_data:0.0.1 
+          docker rm -f docker-mysql || true
+          docker run -d -p 6603:3306 --name docker-mysql --volumes-from mysql_docker_data \
+          -v /var/lib/mysql:/var/lib/mysql -e MYSQL_ROOT_PASSWORD=root -e MYSQL_PASSWORD=root \
+          -e MYSQL_DATABASE=omarze mysql
+
+          docker run -d -p 9111:9012 -e RELEASE_TAG=$NEW_RELEASE_VERSION --name lucky_numberz --link docker-mysql:mysql lucky_numbers:$NEW_RELEASE_VERSION 
+          EOF
 
