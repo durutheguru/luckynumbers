@@ -66,8 +66,7 @@ jobs:
       steps:
       - name: SSHing to Dev environment
         run: |
-          echo "${{ secrets.SSH_KEY }}" > /temp/id_rsa.file
-          ssh -i /temp/id_rsa.file -tt ${{ secrets.SSH_USER }}@${{ secrets.SSH_STAGING_HOST }} <<EOF
+          echo "${{ secrets.SSH_KEY }}" | ssh -q -i /dev/stdin -tt ${{ secrets.SSH_USER }}@${{ secrets.SSH_STAGING_HOST }} <<EOF
           docker rm -f lucky_numberz || true 
           docker rmi lucky_numbers:$OLD_RELEASE_VERSION || true
           docker rmi ${{ secrets.DOCKER_USER }}/lucky_numbers:$OLD_RELEASE_VERSION || true
@@ -85,5 +84,5 @@ jobs:
 
           docker run -d -p 9111:9012 -e RELEASE_TAG=$NEW_RELEASE_VERSION --name lucky_numberz --link docker-mysql:mysql lucky_numbers:$NEW_RELEASE_VERSION 
           EOF
-          rm -rf /temp/id_rsa.file
+
 
