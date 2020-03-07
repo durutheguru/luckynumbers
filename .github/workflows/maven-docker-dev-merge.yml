@@ -69,7 +69,7 @@ jobs:
           which ssh-agent || ( apt-get update -y && apt-get install openssh-client -y )
           eval $(ssh-agent -s)
           ssh-add <(echo "${{ secrets.SSH_KEY }}")
-          ssh -tt ${{ secrets.SSH_USER }}@${{ secrets.SSH_STAGING_HOST }} <<EOF
+          ssh -tt ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} <<EOF
           docker rm -f lucky_numberz || true 
           docker rmi lucky_numbers:$OLD_RELEASE_VERSION || true
           docker rmi ${{ secrets.DOCKER_USER }}/lucky_numbers:$OLD_RELEASE_VERSION || true
