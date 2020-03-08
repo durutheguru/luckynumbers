@@ -30,11 +30,11 @@
         <lombok.version>1.18.4</lombok.version>
         <diffChangeLogFile>/.</diffChangeLogFile>
         <code.coverage.inclusions>
-            src/main/java/**,
+            src/main/java/**
         </code.coverage.inclusions>
         <code.coverage.exclusions>
             **/com/omarze/entities/**,
-            **/com/omarze/api/dto/**,
+            **/com/omarze/api/dto/**
         </code.coverage.exclusions>
     </properties>
 
