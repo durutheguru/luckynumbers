@@ -58,35 +58,5 @@ jobs:
             echo "Pushed Docker Image with New Release"
 
 
-  ssh_staging:
-      name: SSH Deploy to Staging
-      runs-on: ubuntu-latest
-      needs: [test,docker]
-
-      steps:
-      - name: SSHing to Dev environment
-        run: |
-          which ssh-agent || ( apt-get update -y && apt-get install openssh-client -y )
-          eval $(ssh-agent -s)
-          ssh-add <(echo "${{ secrets.SSH_KEY }}")
-          ssh -o StrictHostKeyChecking=no -tt ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} <<EOF
-          docker rm -f lucky_numberz || true 
-          docker rmi lucky_numbers:$OLD_RELEASE_VERSION || true
-          docker rmi ${{ secrets.DOCKER_USER }}/lucky_numbers:$OLD_RELEASE_VERSION || true
-          docker rm -f mysql_docker_data || true
-          docker build -t mysql_docker_data:0.0.1 -<<EOM
-          FROM mysql:latest
-          VOLUME /var/lib/mysql
-          CMD ["true"]
-          EOM
-          docker create --name mysql_docker_data mysql_docker_data:0.0.1 
-          docker rm -f docker-mysql || true
-          docker run -d -p 6603:3306 --name docker-mysql --volumes-from mysql_docker_data \
-          -v /var/lib/mysql:/var/lib/mysql -e MYSQL_ROOT_PASSWORD=root -e MYSQL_PASSWORD=root \
-          -e MYSQL_DATABASE=omarze mysql
-
-          docker run -d -p 9111:9012 -e RELEASE_TAG=$NEW_RELEASE_VERSION --name lucky_numberz --link docker-mysql:mysql lucky_numbers:$NEW_RELEASE_VERSION 
-          exit
-          EOF
 
 
