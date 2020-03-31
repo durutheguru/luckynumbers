@@ -40,7 +40,7 @@ jobs:
           name: Get Git Version
           with:
             args: /github/workspace /nofetch /exec /bin/sh /execargs "-c \"echo $GitVersion_FullSemVer > /github/workspace/version.txt\""
-            run:  |
+            run: |
               echo 'version.txt >>>>>>>>'
               cat /github/workspace/version.txt
       
