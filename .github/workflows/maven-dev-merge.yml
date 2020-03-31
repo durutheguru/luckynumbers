@@ -52,6 +52,8 @@ jobs:
         - uses: actions/checkout@v2
         - name: Read Version Number
           run: |
+            pwd
+            ls
             NEW_RELEASE_VERSION = $(cat /home/runner/work/luckynumbers/luckynumbers/version.txt)
             echo "New Version: ${NEW_RELEASE_VERSION}"
         - name: Setting Version Number
