@@ -59,7 +59,7 @@ jobs:
           uses: gittools/actions/gitversion/execute@v0.9
         - name: Setting Version Number
           run: |
-            sh "NEW_RELEASE_VERSION= ${{ steps.gitversion.outputs.fullSemVer }}"
+            NEW_RELEASE_VERSION=${{ steps.gitversion.outputs.semVer }}
             echo "Setting Newly Read Version: ${NEW_RELEASE_VERSION} from value ${{ steps.gitversion.outputs.fullSemVer }}"
             mvn versions:set -DnewVersion=${NEW_RELEASE_VERSION}-SNAPSHOT
         - name: Maven Package
