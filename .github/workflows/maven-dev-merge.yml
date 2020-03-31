@@ -41,11 +41,6 @@ jobs:
           uses: docker://gittools/gitversion:5.0.2-beta1-27-linux-centos-7-netcoreapp2.2
           with:
             args: /github/workspace /nofetch /exec /bin/sh /execargs "-c \"echo $GitVersion_FullSemVer > /github/workspace/version.txt\""
-            run: |
-              echo 'version.txt >>>>>>>>'
-              cat version.txt
-              echo '/github/workspace/version.txt >>>>>>>>'
-              cat /github/workspace/version.txt
       
       
   docker:
@@ -55,8 +50,13 @@ jobs:
       
       steps:
         - uses: actions/checkout@v2
+        - name: Read Version Number
+          run: |
+            NEW_RELEASE_VERSION = $(cat /home/runner/work/luckynumbers/luckynumbers/version.txt)
+            echo "New Version: ${NEW_RELEASE_VERSION}"
         - name: Setting Version Number
           run: |
+            echo "Setting Newly Read Version: ${NEW_RELEASE_VERSION}"
             mvn versions:set -DnewVersion=${NEW_RELEASE_VERSION}-SNAPSHOT
         - name: Maven Package
           run: |
