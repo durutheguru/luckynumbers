@@ -49,16 +49,17 @@ jobs:
       needs: [test]
       
       steps:
-        - uses: actions/checkout@v2
-        - name: Read Version Number
-          run: |
-            pwd
-            ls
-            NEW_RELEASE_VERSION = $(cat /home/runner/work/luckynumbers/luckynumbers/version.txt)
-            echo "New Version: ${NEW_RELEASE_VERSION}"
+        - name: Installing GitVersion
+          uses: gittools/actions/gitversion/setup@v0.9
+          with:
+              versionSpec: '5.1.x'
+        - name: Use GitVersion
+          id: gitversion
+          uses: gittools/actions/gitversion/execute@v0.9
         - name: Setting Version Number
           run: |
-            echo "Setting Newly Read Version: ${NEW_RELEASE_VERSION}"
+            sh "NEW_RELEASE_VERSION= ${{ steps.gitversion.outputs.fullSemVer }}"
+            echo "Setting Newly Read Version: ${NEW_RELEASE_VERSION} from value ${{ steps.gitversion.outputs.fullSemVer }}"
             mvn versions:set -DnewVersion=${NEW_RELEASE_VERSION}-SNAPSHOT
         - name: Maven Package
           run: |
