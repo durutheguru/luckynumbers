@@ -1,4 +1,4 @@
-name: Development Merge
+name: Development Branch Merge
 
 on:
   push:
