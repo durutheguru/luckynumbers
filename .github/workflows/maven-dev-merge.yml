@@ -39,10 +39,10 @@ jobs:
         - uses: docker://gittools/gitversion:5.0.2-beta1-27-linux-centos-7-netcoreapp2.2
           name: Get Git Version
           with:
-            args: /github/workspace /nofetch /exec /bin/sh /execargs "-c \"echo $GitVersion_FullSemVer > /github/workspace/version.txt\""
+            args: / /nofetch /exec /bin/sh /execargs "-c \"echo $GitVersion_FullSemVer > version.txt\""
             run: |
               echo 'version.txt >>>>>>>>'
-              cat /github/workspace/version.txt
+              cat version.txt
       
       
   docker:
