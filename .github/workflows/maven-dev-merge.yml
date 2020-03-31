@@ -36,13 +36,16 @@ jobs:
       needs: [test]
 
       steps:
-        - uses: docker://gittools/gitversion:5.0.2-beta1-27-linux-centos-7-netcoreapp2.2
-          name: Get Git Version
+        - uses: actions/checkout@v1
+        - name: Get Git Version
+          uses: docker://gittools/gitversion:5.0.2-beta1-27-linux-centos-7-netcoreapp2.2
           with:
-            args: / /nofetch /exec /bin/sh /execargs "-c \"echo $GitVersion_FullSemVer > version.txt\""
+            args: /github/workspace /nofetch /exec /bin/sh /execargs "-c \"echo $GitVersion_FullSemVer > /github/workspace/version.txt\""
             run: |
               echo 'version.txt >>>>>>>>'
               cat version.txt
+              echo '/github/workspace/version.txt >>>>>>>>'
+              cat /github/workspace/version.txt
       
       
   docker:
