@@ -1,24 +1,24 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: lucky_numberz-back-end
+  name: lucky-numberz-back-end
   namespace: lucky-namespace
   labels:
-    app: lucky_numberz-back-end-service
+    app: lucky-numberz-back-end-service
 spec:
   replicas: 3
   selector:
     matchLabels:
-      app: lucky_numberz-back-end-service
+      app: lucky-numberz-back-end-service
   template:
     metadata:
       labels:
-        app: lucky_numberz-back-end-service
+        app: lucky-numberz-back-end-service
     spec:
       containers:
-      - name: lucky_numberz-back-end-service
+      - name: lucky-numberz-back-end-service
         image: durutheguru/lucky_numbers:1.110.0-alpha.41
-        imagePullPolicy: ifNotPresent
+        imagePullPolicy: IfNotPresent
         ports:
         - name: http
           containerPort: 9111
