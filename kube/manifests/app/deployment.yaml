@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
       - name: lucky_numberz-back-end-service
-        image: ./lucky_numbers:v1
+        image: durutheguru/lucky_numbers:1.110.0-alpha.41
         imagePullPolicy: ifNotPresent
         ports:
         - name: http
