@@ -69,6 +69,7 @@ jobs:
             git config user.name ${{ secrets.GIT_USERNAME }}
             git add .
             git commit -m "Upgraded Version >> $RELEASE_TAG"
+            git push origin HEAD
 
 
 
