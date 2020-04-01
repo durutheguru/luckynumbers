@@ -45,7 +45,7 @@ jobs:
             mvn versions:set -DnewVersion=${{ steps.gitversion.outputs.semVer }}-SNAPSHOT
         - name: Maven Package
           run: |
-            mvn package 
+            mvn package -DskipTests
         - name: Target Contents
           run: |
             ls target
@@ -64,6 +64,8 @@ jobs:
           run: |
             RELEASE_TAG=${{ steps.gitversion.outputs.semVer }}
             echo $RELEASE_TAG > version.ver
+            git config user.email ${{ secrets.GIT_EMAIL }}
+            git config user.name ${{ secrets.GIT_USERNAME }}
             git add .
             git commit -m "Upgraded Version >> $RELEASE_TAG"
 
