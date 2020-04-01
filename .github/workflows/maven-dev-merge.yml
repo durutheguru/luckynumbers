@@ -64,6 +64,7 @@ jobs:
           run: |
             RELEASE_TAG=${{ steps.gitversion.outputs.semVer }}
             echo $RELEASE_TAG > version.ver
+            ls
             git config user.email ${{ secrets.GIT_EMAIL }}
             git config user.name ${{ secrets.GIT_USERNAME }}
             git add .
