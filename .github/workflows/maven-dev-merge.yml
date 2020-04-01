@@ -42,9 +42,7 @@ jobs:
           uses: gittools/actions/gitversion/execute@v0.9
         - name: Setting Version Number
           run: |
-            RELEASE_TAG=${{ steps.gitversion.outputs.semVer }}
-            echo "Setting Newly Read Version: ${RELEASE_TAG} from value ${{ steps.gitversion.outputs.semVer }}"
-            mvn versions:set -DnewVersion=${RELEASE_TAG}-SNAPSHOT
+            mvn versions:set -DnewVersion=${{ steps.gitversion.outputs.semVer }}-SNAPSHOT
         - name: Maven Package
           run: |
             mvn package 
@@ -62,6 +60,12 @@ jobs:
             RELEASE_TAG=${{ steps.gitversion.outputs.semVer }}
             docker push ${{ secrets.DOCKER_USER }}/lucky_numbers:$RELEASE_TAG
             echo "Pushed Docker Image with New Release"
+        - name: Upgrading Version
+          run: |
+            RELEASE_TAG=${{ steps.gitversion.outputs.semVer }}
+            echo $RELEASE_TAG > version.ver
+            git add .
+            git commit -m "Upgraded Version >> $RELEASE_TAG"
 
 
 
