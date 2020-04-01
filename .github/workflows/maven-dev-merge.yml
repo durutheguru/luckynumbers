@@ -69,7 +69,12 @@ jobs:
             git config user.name ${{ secrets.GIT_USERNAME }}
             git add .
             git commit -m "Upgraded Version >> $RELEASE_TAG"
-            git push origin HEAD
+        - name: Push changes
+          uses: ad-m/github-push-action@master
+          with:
+            branch: development
+            github_token: ${{ secrets.GIT_TOKEN }}
+
 
 
 
