@@ -102,7 +102,7 @@ jobs:
         VERSION=$(<version.ver)
         sed -i "s/lucky_numbers:1/lucky_numbers:$VERSION/g" kube/manifests/app/deployment.yaml
         cat kube/manifests/app/deployment.yaml
-    - name: Deploy to Cluster
+    - name: Deploying to Cluster
       uses: steebchen/kubectl@master
       env:
         KUBECTL_VERSION: "1.17"
