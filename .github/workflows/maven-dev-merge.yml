@@ -39,7 +39,7 @@ jobs:
               versionSpec: '5.1.x'
         - name: Fetching All
           run: |
-            git fetch --all
+            git fetch --unshallow
         - name: Use GitVersion
           id: gitversion
           uses: gittools/actions/gitversion/execute@v0.9
