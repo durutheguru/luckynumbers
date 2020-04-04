@@ -32,7 +32,7 @@ jobs:
       needs: [test]
       
       steps:    
-        - uses: actions/checkout@v1
+        - uses: actions/checkout@v2
         - name: Installing GitVersion
           uses: gittools/actions/gitversion/setup@v0.9
           with:
@@ -74,8 +74,21 @@ jobs:
           with:
             branch: development
             github_token: ${{ secrets.GIT_TOKEN }}
+            
+            
+  kube-deploy:
+    name: Deploy to Kubernetes
+    runs-on: ubuntu-latest
+    needs: [docker]
 
-
-
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v2
+    - name: 'Deploy'
+      run: |
+        apt-get install kubectl -y
+        echo ${{ secrets.KUBECONFIG }} > kube-conf.yaml
+        ls && cat kube-conf.yaml
+        kubectl --kubeconfig kube-conf.yaml apply -f kube/manifests
 
 
