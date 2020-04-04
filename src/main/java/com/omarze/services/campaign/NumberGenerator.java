@@ -17,7 +17,7 @@ import java.util.Random;
 @Service
 public class NumberGenerator {
 
-    private final static Random random = new Random(System.currentTimeMillis());
+    private static final Random random = new Random(System.currentTimeMillis());
 
     @Value("${lottery.config.numberLength:10}")
     private Integer numberSize;

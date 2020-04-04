@@ -25,10 +25,17 @@ HELP.md
 /.nb-gradle/
 /build/
 
+
 ### VS Code ###
 .vscode/
+
 
 *.log
 *.properties
 
 
+/**/static/dist
+/**/static/node
+/**/static/node_modules
+
+**/*.versionsBackup

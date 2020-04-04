@@ -8,7 +8,6 @@ import com.omarze.persistence.CampaignRepository;
 import com.omarze.service.BaseServiceIntegrationTest;
 import com.omarze.services.campaign.CampaignActivationScheduler;
 import org.junit.Assert;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 

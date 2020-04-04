@@ -1,0 +1,42 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: lucky-numberz-back-end
+  namespace: lucky-namespace
+  labels:
+    app: lucky-numberz-back-end-service
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: lucky-numberz-back-end-service
+  template:
+    metadata:
+      labels:
+        app: lucky-numberz-back-end-service
+    spec:
+      containers:
+      - name: lucky-numberz-back-end-service
+        image: durutheguru/lucky_numbers:1.110.0-alpha.41
+        imagePullPolicy: IfNotPresent
+        ports:
+        - name: http
+          containerPort: 9111
+        env:
+        - name: SPRING_DATASOURCE_USERNAME
+          valueFrom:
+            secretKeyRef:
+              name: mysql-user-pass
+              key: username
+        - name: SPRING_DATASOURCE_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: mysql-user-pass
+              key: password
+        - name: SPRING_DATASOURCE_URL
+          valueFrom:
+            secretKeyRef:
+              name: mysql-db-url
+              key: database
+
+

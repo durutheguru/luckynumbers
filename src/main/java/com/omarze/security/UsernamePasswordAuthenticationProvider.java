@@ -39,7 +39,7 @@ public class UsernamePasswordAuthenticationProvider implements AuthenticationPro
             throw new BadCredentialsException("User Authentication failed");
         }
 
-        return new UsernamePasswordAuthenticationToken(user, null);
+        return new UsernamePasswordAuthenticationToken(user, null, userDetails.getAuthorities());
     }
 
     @Override
@@ -48,3 +48,4 @@ public class UsernamePasswordAuthenticationProvider implements AuthenticationPro
     }
 
 }
+

@@ -53,12 +53,14 @@ public class WebSecurity extends WebSecurityConfigurerAdapter {
             .cors().and().csrf().disable()
             .authorizeRequests()
             .antMatchers(Constants.API_BASE + "/lottery_user/sign_up").permitAll()
-            .anyRequest().authenticated()
+            .antMatchers(Constants.API_BASE + "/partner").permitAll()
+            .antMatchers(
+                "/api/**"
+            ).fullyAuthenticated()
             .and()
             .addFilter(new JWTAuthenticationFilter(authenticationManager()))
             .addFilter(new JWTAuthorizationFilter(authenticationManager(), userDetailsService))
             .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
-
     }
 
 
@@ -74,8 +76,11 @@ public class WebSecurity extends WebSecurityConfigurerAdapter {
 
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
+        CorsConfiguration corsConfiguration = new CorsConfiguration().applyPermitDefaultValues();
+        corsConfiguration.addExposedHeader("Authorization");
+
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-        source.registerCorsConfiguration("/**", new CorsConfiguration().applyPermitDefaultValues());
+        source.registerCorsConfiguration("/**", corsConfiguration);
 
         return source;
     }

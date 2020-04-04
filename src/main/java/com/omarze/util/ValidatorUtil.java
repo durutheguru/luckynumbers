@@ -17,7 +17,6 @@ import java.util.Set;
 public class ValidatorUtil {
 
 
-
     static Logger log = LoggerFactory.getLogger(ValidatorUtil.class);
 
 
@@ -46,8 +45,6 @@ public class ValidatorUtil {
     public static <T> void testValid(T item) {
         assert isValid(item);
     }
-
-
 
 
 }

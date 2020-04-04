@@ -1,0 +1,23 @@
+name: Pull Request Flow
+
+on:
+  pull_request:
+    branches:
+      - development
+
+jobs:
+  test_merge_candidate:
+    name: Testing Merge Candidate 
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Printing GitBranch
+      run: |
+        git branch
+    - name: Set up JDK 1.8
+      uses: actions/setup-java@v1
+      with:
+        java-version: 1.8
+    - name: Build with Maven, Scan with Sonar
+      run: mvn -B clean verify -Psonar -Dsonar.login=${{ secrets.SONAR_TOKEN }}

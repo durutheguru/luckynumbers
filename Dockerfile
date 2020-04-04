@@ -10,5 +10,5 @@ ENV RELEASE_TAG $release_version
 
 COPY /target/omarze-${RELEASE_TAG}-SNAPSHOT.jar /app/omarze.jar
 
-ENTRYPOINT ["java", "-Dspring.profiles.active=docker", "-jar", "omarze.jar"]
+ENTRYPOINT ["java", "-jar", "omarze.jar"]
 

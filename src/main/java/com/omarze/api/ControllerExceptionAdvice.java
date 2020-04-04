@@ -1,6 +1,7 @@
 package com.omarze.api;
 
 
+import com.auth0.jwt.exceptions.TokenExpiredException;
 import com.omarze.util.AppLogger;
 import org.springframework.core.Ordered;
 import org.springframework.core.annotation.Order;
