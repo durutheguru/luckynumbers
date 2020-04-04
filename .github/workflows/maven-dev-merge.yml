@@ -91,7 +91,7 @@ jobs:
       run: |
         git config user.email ${{ secrets.GIT_EMAIL }}
         git config user.name ${{ secrets.GIT_USERNAME }}
-        git checkout master
+        git fetch origin master && git checkout master
         git merge --no-ff development
     - name: Push changes
       uses: ad-m/github-push-action@master
