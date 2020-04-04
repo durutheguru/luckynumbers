@@ -87,12 +87,15 @@ jobs:
     steps:
     - name: Checkout
       uses: actions/checkout@v2
-    - name: 'Deploy'
-      run: |
-        apt-get update -y && apt-get install kubectl -y
-        echo ${{ secrets.KUBECONFIG }} > kube-conf.yaml
-        ls && cat kube-conf.yaml
-        kubectl --kubeconfig kube-conf.yaml apply -f kube/manifests
-
+    - name: Deploy to Cluster
+      uses: steebchen/kubectl@master
+      env:
+        KUBECTL_VERSION: "1.17"
+        KUBE_CONFIG_DATA: ${{ secrets.KUBECONFIG }}
+      with:
+        args: apply -f kube/manifests
+        
+        
+  
 
 
