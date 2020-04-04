@@ -89,7 +89,7 @@ jobs:
       uses: actions/checkout@v2
     - name: 'Deploy'
       run: |
-        apt-get install kubectl -y
+        apt-get update -y && apt-get install kubectl -y
         echo ${{ secrets.KUBECONFIG }} > kube-conf.yaml
         ls && cat kube-conf.yaml
         kubectl --kubeconfig kube-conf.yaml apply -f kube/manifests
