@@ -87,11 +87,22 @@ jobs:
     steps:
     - name: Checkout
       uses: actions/checkout@v2
-    - name: Set Deployment Version
+    - name: Merge to Master
+      run: |
+        git config user.email ${{ secrets.GIT_EMAIL }}
+        git config user.name ${{ secrets.GIT_USERNAME }}
+        git checkout master
+        git merge --no-ff development
+    - name: Push changes
+      uses: ad-m/github-push-action@master
+      with:
+        branch: master
+        github_token: ${{ secrets.GIT_TOKEN }}
+    - name: Set Kube Deployment Version
       run: |
         ls
         VERSION=$(<version.ver)
-        sed -i /s/lucky_numbers:1/lucky_numbers:$VERSION/g/ kube/manifests/app/deployment.yaml
+        sed -i "s/lucky_numbers:1/lucky_numbers:$VERSION/g" kube/manifests/app/deployment.yaml
         cat kube/manifests/app/deployment.yaml
     - name: Deploy to Cluster
       uses: steebchen/kubectl@master
