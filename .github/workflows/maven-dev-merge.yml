@@ -88,9 +88,12 @@ jobs:
     - name: Checkout
       uses: actions/checkout@v2
     - name: Merge to Master
-      run: |
-        git config user.email ${{ secrets.GIT_EMAIL }}
-        git config user.name ${{ secrets.GIT_USERNAME }}
+      uses: devmasx/merge-branch@v1.1.0
+      with:
+        type: now
+        target_branch: 'master'
+      env:
+        GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
     - name: Push changes
       uses: ad-m/github-push-action@master
       with:
