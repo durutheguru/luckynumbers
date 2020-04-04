@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
       - name: lucky-numberz-back-end-service
-        image: durutheguru/lucky_numbers:1.110.0-alpha.41
+        image: durutheguru/{{image-placeholder}}
         imagePullPolicy: IfNotPresent
         ports:
         - name: http
@@ -38,5 +38,6 @@ spec:
             secretKeyRef:
               name: mysql-db-url
               key: database
+
 
 
