@@ -87,13 +87,19 @@ jobs:
     steps:
     - name: Checkout
       uses: actions/checkout@v2
+    - name: Set Deployment Version
+      run: |
+        ls
+        VERSION=$(<version.ver)
+        sed -i '' /s/lucky_numbers:1/lucky_numbers:$VERSION/g/ kube/manifests/app/deployment.yaml
+        cat kube/manifests/app/deployment.yaml
     - name: Deploy to Cluster
       uses: steebchen/kubectl@master
       env:
         KUBECTL_VERSION: "1.17"
         KUBE_CONFIG_DATA: ${{ secrets.KUBECONFIG }}
       with:
-        args: apply -f kube/manifests
+        args: apply -f kube/manifests/app
         
         
   
