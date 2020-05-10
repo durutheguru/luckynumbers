@@ -7,6 +7,7 @@ import org.junit.runner.RunWith;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
@@ -24,6 +25,10 @@ public abstract class BaseControllerTest {
 
 
     public static final String TEST_USER = "Test User";
+
+
+    @Value("${spring.data.rest.basePath}")
+    protected String API_BASE_PATH;
 
 
     @Autowired

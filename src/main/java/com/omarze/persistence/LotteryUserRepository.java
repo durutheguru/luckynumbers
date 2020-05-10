@@ -20,4 +20,10 @@ public interface LotteryUserRepository extends JpaRepository<LotteryUser, Long> 
     Optional<LotteryUser> findByUsernameAndPassword(String username, String password);
 
 
+    Boolean existsByUsername(String username);
+
+
+    Boolean existsByEmail(String email);
+
+
 }

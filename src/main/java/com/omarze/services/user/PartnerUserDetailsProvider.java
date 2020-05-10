@@ -29,6 +29,18 @@ public class PartnerUserDetailsProvider implements UserDetailsProvider<PartnerUs
 
 
     @Override
+    public Boolean hasUser(String principal) {
+        return userRepository.existsByUsername(principal);
+    }
+
+
+    @Override
+    public Boolean hasEmail(String email) {
+        return userRepository.existsByEmail(email);
+    }
+
+
+    @Override
     public Optional<PartnerUser> findUser(String principal) {
         return userRepository.findByUsername(principal);
     }

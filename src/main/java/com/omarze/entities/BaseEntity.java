@@ -1,6 +1,7 @@
 package com.omarze.entities;
 
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.omarze.util.LocalDateTimeConverter;
 import lombok.Data;

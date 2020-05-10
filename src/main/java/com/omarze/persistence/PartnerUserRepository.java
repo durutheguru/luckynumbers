@@ -16,7 +16,14 @@ public interface PartnerUserRepository extends JpaRepository<PartnerUser, Long> 
 
     Optional<PartnerUser> findByUsername(String username);
 
+
     Optional<PartnerUser> findByUsernameAndPassword(String username, String password);
+
+
+    Boolean existsByUsername(String username);
+
+
+    Boolean existsByEmail(String email);
 
 
 }
