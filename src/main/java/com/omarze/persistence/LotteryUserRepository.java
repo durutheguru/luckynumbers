@@ -1,8 +1,15 @@
 package com.omarze.persistence;
 
 
+import com.omarze.entities.BackOfficeUser;
 import com.omarze.entities.LotteryUser;
+import com.omarze.security.annotation.IsBackOfficeUser;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.repository.query.Param;
+import org.springframework.data.rest.core.annotation.RepositoryRestResource;
+import org.springframework.data.rest.core.annotation.RestResource;
 import org.springframework.stereotype.Repository;
 
 import java.util.Optional;
@@ -11,7 +18,12 @@ import java.util.Optional;
  * created by julian
  */
 @Repository
+@IsBackOfficeUser
+@RepositoryRestResource(path = LotteryUserRepository.PATH)
 public interface LotteryUserRepository extends JpaRepository<LotteryUser, Long> {
+
+
+    String PATH = "/lottery_user";
 
 
     Optional<LotteryUser> findByUsername(String username);
@@ -20,10 +32,22 @@ public interface LotteryUserRepository extends JpaRepository<LotteryUser, Long> 
     Optional<LotteryUser> findByUsernameAndPassword(String username, String password);
 
 
+    Optional<LotteryUser> findFirstBy();
+
+
     Boolean existsByUsername(String username);
 
 
     Boolean existsByEmail(String email);
 
 
+    @RestResource(path = "searchUsers", rel="searchUsers")
+    Page<LotteryUser> findByNameContainingOrUsernameContaining(
+        @Param("name") String name,
+        @Param("username") String username,
+        Pageable pageable
+    );
+
+
 }
+

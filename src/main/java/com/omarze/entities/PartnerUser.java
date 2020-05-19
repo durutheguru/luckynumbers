@@ -32,3 +32,4 @@ public class PartnerUser extends ApplicationUser {
 
 
 }
+

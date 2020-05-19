@@ -3,7 +3,6 @@ package com.omarze.service.campaign.job;
 
 import com.omarze.data.campaign.CampaignDataService;
 import com.omarze.data.lotteryuser.LotteryUserCampaignDataService;
-import com.omarze.data.lotteryuser.LotteryUserDataService;
 import com.omarze.entities.Campaign;
 import com.omarze.entities.CampaignStageEvaluationResult;
 import com.omarze.entities.CampaignStatus;

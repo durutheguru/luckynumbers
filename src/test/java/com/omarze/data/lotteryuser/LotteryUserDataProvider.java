@@ -15,7 +15,7 @@ import java.util.List;
  * created by julian
  */
 @Component
-public class LotteryUserDataService {
+public class LotteryUserDataProvider {
 
     private final Faker faker;
 
@@ -24,7 +24,7 @@ public class LotteryUserDataService {
     private final LotteryUserRepository lotteryUserRepository;
 
 
-    public LotteryUserDataService(Faker faker, PasswordEncoder passwordEncoder, LotteryUserRepository lotteryUserRepository) {
+    public LotteryUserDataProvider(Faker faker, PasswordEncoder passwordEncoder, LotteryUserRepository lotteryUserRepository) {
         this.faker = faker;
         this.passwordEncoder = passwordEncoder;
         this.lotteryUserRepository = lotteryUserRepository;

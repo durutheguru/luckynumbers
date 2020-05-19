@@ -1,9 +1,8 @@
 package com.omarze.persistence.handlers;
 
 
-import com.omarze.entities.BackOfficeUser;
+import com.omarze.entities.LotteryUser;
 import com.omarze.exception.ServiceException;
-import lombok.RequiredArgsConstructor;
 import org.springframework.data.rest.core.annotation.HandleBeforeCreate;
 import org.springframework.data.rest.core.annotation.RepositoryEventHandler;
 import org.springframework.stereotype.Component;
@@ -13,16 +12,13 @@ import org.springframework.stereotype.Component;
  */
 @Component
 @RepositoryEventHandler
-public class BackOfficeUserHandler extends AbstractApplicationUserHandler {
-
+public class LotteryUserHandler extends AbstractApplicationUserHandler {
 
 
     @HandleBeforeCreate
-    public void handleBeforeCreate(BackOfficeUser user) throws ServiceException {
+    public void handleBeforeCreate(LotteryUser user) throws ServiceException {
         prepareApplicationUser(user);
     }
 
 
 }
-
-

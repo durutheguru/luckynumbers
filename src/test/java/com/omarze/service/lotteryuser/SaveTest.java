@@ -1,7 +1,7 @@
 package com.omarze.service.lotteryuser;
 
 
-import com.omarze.data.lotteryuser.LotteryUserDataService;
+import com.omarze.data.lotteryuser.LotteryUserDataProvider;
 import com.omarze.entities.LotteryUser;
 import com.omarze.service.BaseServiceIntegrationTest;
 import com.omarze.services.lotteryuser.LotteryUserService;
@@ -20,12 +20,12 @@ public class SaveTest extends BaseServiceIntegrationTest {
 
 
     @Autowired
-    private LotteryUserDataService lotteryUserDataService;
+    private LotteryUserDataProvider lotteryUserDataProvider;
 
 
     @Test
     public void testAddingNewLotteryUser() throws Exception {
-        LotteryUser lotteryUser = lotteryUserService.addLotteryUser(lotteryUserDataService.newLotteryUserDTO());
+        LotteryUser lotteryUser = lotteryUserService.addLotteryUser(lotteryUserDataProvider.newLotteryUserDTO());
 
         Assert.assertNotNull(lotteryUser);
     }

@@ -3,7 +3,7 @@ package com.omarze.controller;
 
 import com.omarze.api.dto.LotteryUserDTO;
 import com.omarze.controller.api.LotteryUserController;
-import com.omarze.data.lotteryuser.LotteryUserDataService;
+import com.omarze.data.lotteryuser.LotteryUserDataProvider;
 import com.omarze.services.lotteryuser.LotteryUserService;
 import com.omarze.util.JSONUtil;
 import org.junit.Test;
@@ -24,7 +24,7 @@ public class LotteryUserControllerTest extends BaseControllerTest {
 
 
     @Autowired
-    private LotteryUserDataService userDataService;
+    private LotteryUserDataProvider userDataService;
 
 
     @MockBean

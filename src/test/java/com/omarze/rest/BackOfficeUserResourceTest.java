@@ -40,12 +40,11 @@ public class BackOfficeUserResourceTest extends BaseControllerTest {
     @Test
     public void testLoadingBackOfficeUsers() throws Exception {
         mockMvc.perform(
-            get(API_BASE_PATH + BackOfficeUserRepository.PATH)
+            get(API_BASE_PATH + BackOfficeUserRepository.PATH + "?projection=userDetails")
         ).andDo(print())
             .andExpect(status().is2xxSuccessful())
             .andExpect(jsonPath("$._embedded.backOfficeUsers", hasSize(3)));
     }
-
 
 
     @Test
@@ -83,7 +82,7 @@ public class BackOfficeUserResourceTest extends BaseControllerTest {
     public void testSearchingBackOfficeUsers() throws Exception {
         mockMvc.perform(
             get(API_BASE_PATH + BackOfficeUserRepository.PATH +
-                "/search/searchUsers?projection=backOfficeUserDetails&name=superbackoffice2&username=superbackoffice2")
+                "/search/searchUsers?projection=userDetails&name=superbackoffice2&username=superbackoffice2")
         ).andDo(print())
             .andExpect(status().is2xxSuccessful())
             .andExpect(jsonPath("$._embedded.backOfficeUsers", hasSize(1)));
