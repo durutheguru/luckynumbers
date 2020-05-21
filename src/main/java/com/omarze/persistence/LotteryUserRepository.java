@@ -1,9 +1,8 @@
 package com.omarze.persistence;
 
 
-import com.omarze.entities.BackOfficeUser;
 import com.omarze.entities.LotteryUser;
-import com.omarze.security.annotation.IsBackOfficeUser;
+import com.omarze.security.annotation.IsBackOfficeOrLotteryUser;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -18,7 +17,7 @@ import java.util.Optional;
  * created by julian
  */
 @Repository
-@IsBackOfficeUser
+@IsBackOfficeOrLotteryUser
 @RepositoryRestResource(path = LotteryUserRepository.PATH)
 public interface LotteryUserRepository extends JpaRepository<LotteryUser, Long> {
 

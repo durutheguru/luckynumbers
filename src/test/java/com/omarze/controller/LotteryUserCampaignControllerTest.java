@@ -4,6 +4,7 @@ package com.omarze.controller;
 import com.omarze.Constants;
 import com.omarze.api.dto.LotteryUserCampaignDTO;
 import com.omarze.data.lotteryuser.LotteryUserCampaignDataService;
+import com.omarze.entities.BackOfficeUser;
 import com.omarze.entities.LotteryUser;
 import com.omarze.util.JSONUtil;
 import org.junit.Test;

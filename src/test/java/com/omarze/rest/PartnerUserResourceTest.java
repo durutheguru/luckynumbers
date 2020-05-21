@@ -13,6 +13,7 @@ import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.security.test.context.support.WithMockUser;
+import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.jdbc.Sql;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -27,6 +28,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 /**
  * created by julian
  */
+@DirtiesContext(classMode = DirtiesContext.ClassMode.BEFORE_EACH_TEST_METHOD)
 @Sql({"/db/scripts/partner/init.sql"})
 @WithMockUser(username = BaseControllerTest.TEST_USER, authorities = {BackOfficeUser.ROLE_ID})
 public class PartnerUserResourceTest extends BaseControllerTest {
@@ -56,6 +58,7 @@ public class PartnerUserResourceTest extends BaseControllerTest {
 
 
     @Test
+    @Transactional
     public void testAddingPartnerUser() throws Exception {
         Partner partner = partnerRepository.findFirstBy().get();
 
@@ -71,6 +74,7 @@ public class PartnerUserResourceTest extends BaseControllerTest {
 
 
     @Test
+    @Transactional
     public void testAddingPartnerUserWhenUsernameAlreadyExists() throws Exception {
         PartnerUser existingUser = userRepository.findFirstBy().get();
 
