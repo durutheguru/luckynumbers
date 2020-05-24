@@ -2,14 +2,12 @@ package com.omarze.controller;
 
 
 import com.google.common.base.Strings;
-import com.jayway.jsonpath.JsonPath;
 import com.omarze.api.dto.PartnerDTO;
 import com.omarze.controller.api.PartnerController;
 import com.omarze.data.partner.PartnerDataService;
 import com.omarze.entities.BackOfficeUser;
 import com.omarze.entities.Partner;
 import com.omarze.util.JSONUtil;
-import org.json.JSONObject;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ClassPathResource;
@@ -17,13 +15,9 @@ import org.springframework.http.MediaType;
 import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.ResultActions;
-import org.springframework.test.web.servlet.result.MockMvcResultHandlers;
 
-import java.util.LinkedHashMap;
-
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.multipart;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 
@@ -60,46 +54,43 @@ public class PartnerControllerTest extends BaseControllerTest {
                 post(PartnerController.PATH)
                 .content(JSONUtil.asJsonString(partnerDTO))
                 .contentType(MediaType.APPLICATION_JSON)
-        ).andDo(MockMvcResultHandlers.print())
+        ).andDo(print())
                 .andExpect(status().is5xxServerError());
     }
 
 
     @Test
-    public void testUpdatingPartner() throws Exception {
-
+    public void testLoadingPartners() throws Exception {
         PartnerDTO partnerDTO = partnerDataService.newPartnerDTO();
-
-        String savedPartnerResponse = mockMvc.perform(
-                post(PartnerController.PATH)
-                .content(JSONUtil.asJsonString(partnerDTO))
-                .contentType(MediaType.APPLICATION_JSON)
-        ).andDo(MockMvcResultHandlers.print())
-                .andExpect(status().is2xxSuccessful())
-                .andReturn().getResponse().getContentAsString();
+        savePartner(partnerDTO);
 
         mockMvc.perform(
-                put(PartnerController.PATH)
-                .content(new JSONObject((LinkedHashMap)JsonPath.read(savedPartnerResponse, "$")).toString())
-                .contentType(MediaType.APPLICATION_JSON)
-        ).andDo(MockMvcResultHandlers.print())
-                .andExpect(status().isOk());
+            get(PartnerController.PATH)
+        ).andDo(print())
+            .andExpect(status().is2xxSuccessful());
     }
 
 
-    @Test
-    public void testUpdatingPartnerWithNoID() throws Exception {
-
-        PartnerDTO partnerDTO = partnerDataService.newPartnerDTO();
-
-        mockMvc.perform(
-                put(PartnerController.PATH)
-                .content(JSONUtil.asJsonString(partnerDTO))
-                .contentType(MediaType.APPLICATION_JSON)
-        ).andDo(MockMvcResultHandlers.print())
-                .andExpect(status().is5xxServerError());
-
-    }
+//    @Test
+//    public void testUpdatingPartner() throws Exception {
+//
+//        PartnerDTO partnerDTO = partnerDataService.newPartnerDTO();
+//
+//        String savedPartnerResponse = mockMvc.perform(
+//                post(PartnerController.PATH)
+//                .content(JSONUtil.asJsonString(partnerDTO))
+//                .contentType(MediaType.APPLICATION_JSON)
+//        ).andDo(MockMvcResultHandlers.print())
+//                .andExpect(status().is2xxSuccessful())
+//                .andReturn().getResponse().getContentAsString();
+//
+//        mockMvc.perform(
+//                put(PartnerController.PATH)
+//                .content(new JSONObject((LinkedHashMap)JsonPath.read(savedPartnerResponse, "$")).toString())
+//                .contentType(MediaType.APPLICATION_JSON)
+//        ).andDo(MockMvcResultHandlers.print())
+//                .andExpect(status().isOk());
+//    }
 
 
     @Test
@@ -112,7 +103,7 @@ public class PartnerControllerTest extends BaseControllerTest {
                 post(PartnerController.PATH)
                 .content(JSONUtil.asJsonString(partnerDTO))
                 .contentType(MediaType.APPLICATION_JSON)
-        ).andDo(MockMvcResultHandlers.print())
+        ).andDo(print())
                 .andExpect(status().is4xxClientError());
     }
 
@@ -128,7 +119,7 @@ public class PartnerControllerTest extends BaseControllerTest {
                 multipart(PartnerController.PATH + "/" + partner.getId() + "/image")
                 .file(file0)
                 .file(file2)
-        ).andDo(MockMvcResultHandlers.print())
+        ).andDo(print())
                 .andExpect(status().is2xxSuccessful());
     }
 
@@ -138,7 +129,7 @@ public class PartnerControllerTest extends BaseControllerTest {
                 post(PartnerController.PATH)
                         .content(JSONUtil.asJsonString(partnerDTO))
                         .contentType(MediaType.APPLICATION_JSON)
-        ).andDo(MockMvcResultHandlers.print())
+        ).andDo(print())
                 .andExpect(status().is2xxSuccessful());
     }
 
