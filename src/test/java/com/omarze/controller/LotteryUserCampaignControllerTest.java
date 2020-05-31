@@ -4,6 +4,7 @@ package com.omarze.controller;
 import com.omarze.Constants;
 import com.omarze.api.dto.LotteryUserCampaignDTO;
 import com.omarze.data.lotteryuser.LotteryUserCampaignDataService;
+import com.omarze.entities.BackOfficeUser;
 import com.omarze.entities.LotteryUser;
 import com.omarze.util.JSONUtil;
 import org.junit.Test;
@@ -18,7 +19,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 /**
  * created by julian
  */
-@WithMockUser(username = BaseControllerTest.TEST_USER, authorities = {LotteryUser.ROLE_ID})
+@WithMockUser(username = BaseControllerTest.TEST_USER, authorities = {LotteryUser.ROLE_ID, BackOfficeUser.ROLE_ID})
 public class LotteryUserCampaignControllerTest extends BaseControllerTest {
 
     private LotteryUserCampaignDataService userCampaignDataService;

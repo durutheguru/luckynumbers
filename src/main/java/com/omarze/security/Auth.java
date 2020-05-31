@@ -15,6 +15,11 @@ import java.util.Optional;
 public class Auth {
 
 
+    public static boolean hasContext() {
+        return SecurityContextHolder.getContext().getAuthentication() != null;
+    }
+
+
     public static Authentication getContext() {
         return SecurityContextHolder.getContext().getAuthentication();
     }

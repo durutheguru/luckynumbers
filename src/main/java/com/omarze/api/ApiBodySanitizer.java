@@ -1,6 +1,8 @@
 package com.omarze.api;
 
 
+import java.lang.reflect.UndeclaredThrowableException;
+
 /**
  * created by julian
  */
@@ -11,7 +13,14 @@ public class ApiBodySanitizer {
 
 
     public static String sanitizeMessage(Exception e) {
-        String message = e.getMessage();
+        String message = "";
+
+        if (e instanceof UndeclaredThrowableException) {
+            message = ((UndeclaredThrowableException) e).getUndeclaredThrowable().getMessage();
+        }
+        else {
+            message = e.getMessage();
+        }
 
         if (message == null || containsJavaLanguage(message)) {
             return DEFAULT_ERROR_MESSAGE;

@@ -3,6 +3,8 @@ package com.omarze.services.backoffice;
 
 import com.omarze.api.dto.BackOfficeUserDTO;
 import com.omarze.exception.ServiceException;
+import com.omarze.security.Auth;
+import com.omarze.security.AuthContext;
 import com.omarze.util.AppLogger;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.context.event.ApplicationReadyEvent;
@@ -26,6 +28,8 @@ public class BackOfficeInitializationService {
     @EventListener({ApplicationReadyEvent.class})
     public void handleApplicationStarted() {
         try {
+            Auth.setContext(AuthContext.backOfficeUser());
+
             if (!userService.backOfficeUserExists()) {
                 userService.saveBackOfficeUser(newFirstUser());
             }
@@ -47,6 +51,9 @@ public class BackOfficeInitializationService {
 
         return userDTO;
     }
+
+
+
 
 
 }

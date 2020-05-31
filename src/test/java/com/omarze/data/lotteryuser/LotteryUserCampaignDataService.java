@@ -25,16 +25,16 @@ public class LotteryUserCampaignDataService {
     final CampaignDataService campaignDataService;
 
 
-    final LotteryUserDataService lotteryUserDataService;
+    final LotteryUserDataProvider lotteryUserDataProvider;
 
 
     final LotteryUserCampaignRepository userCampaignRepository;
 
 
-    public LotteryUserCampaignDataService(ModelMapper modelMapper, CampaignDataService campaignDataService, LotteryUserDataService lotteryUserDataService, LotteryUserCampaignRepository userCampaignRepository) {
+    public LotteryUserCampaignDataService(ModelMapper modelMapper, CampaignDataService campaignDataService, LotteryUserDataProvider lotteryUserDataProvider, LotteryUserCampaignRepository userCampaignRepository) {
         this.modelMapper = modelMapper;
         this.campaignDataService = campaignDataService;
-        this.lotteryUserDataService = lotteryUserDataService;
+        this.lotteryUserDataProvider = lotteryUserDataProvider;
         this.userCampaignRepository = userCampaignRepository;
     }
 
@@ -46,7 +46,7 @@ public class LotteryUserCampaignDataService {
 
 
     public LotteryUserCampaign newUserCampaign(Campaign campaign) {
-        LotteryUser lotteryUser = lotteryUserDataService.saveLotteryUser();
+        LotteryUser lotteryUser = lotteryUserDataProvider.saveLotteryUser();
 
         LotteryUserCampaign userCampaign = new LotteryUserCampaign();
         userCampaign.setCampaign(campaign);

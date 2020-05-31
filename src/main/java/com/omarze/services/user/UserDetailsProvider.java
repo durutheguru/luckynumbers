@@ -12,7 +12,14 @@ import java.util.Optional;
 public interface UserDetailsProvider<T extends ApplicationUser> {
 
 
+    Boolean hasUser(String principal);
+
+
+    Boolean hasEmail(String email);
+
+
     Optional<T> findUser(String principal);
+
 
     Optional<T> findUser(String principal, String credentials);
 

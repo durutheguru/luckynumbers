@@ -16,8 +16,8 @@ import javax.validation.Valid;
 /**
  * created by julian
  */
-@RestController
-@RequestMapping(LotteryUserController.PATH)
+//@RestController
+//@RequestMapping(LotteryUserController.PATH)
 public class LotteryUserController extends BaseApiController {
 
 
@@ -46,5 +46,4 @@ public class LotteryUserController extends BaseApiController {
 
 
 }
-
 
