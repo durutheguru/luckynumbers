@@ -19,7 +19,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 /**
  * created by julian
  */
-@WithMockUser(username = BaseControllerTest.TEST_USER, authorities = {LotteryUser.ROLE_ID})
+@WithMockUser(username = BaseControllerTest.TEST_USER, authorities = {LotteryUser.ROLE_ID, BackOfficeUser.ROLE_ID})
 public class LotteryUserCampaignControllerTest extends BaseControllerTest {
 
     private LotteryUserCampaignDataService userCampaignDataService;

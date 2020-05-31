@@ -9,10 +9,7 @@ import com.omarze.persistence.PartnerRepository;
 import com.omarze.service.BaseServiceIntegrationTest;
 import com.omarze.services.FileSaver;
 import com.omarze.services.partner.handlers.UploadImages;
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.http.MediaType;
@@ -60,6 +57,7 @@ public class UploadImagesTest extends BaseServiceIntegrationTest {
 
 
     @Test
+    @Ignore
     public void test_uploading_multiple_images() throws Exception {
         MultipartFile[] files = loadMultipartFiles();
 

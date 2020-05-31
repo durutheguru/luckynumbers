@@ -47,7 +47,7 @@ public class CampaignControllerTest extends BaseControllerTest {
 
 
     @Test
-    @WithMockUser(username = BaseControllerTest.TEST_USER, authorities = {PartnerUser.ROLE_ID})
+    @WithMockUser(username = BaseControllerTest.TEST_USER, authorities = {PartnerUser.ROLE_ID, BackOfficeUser.ROLE_ID})
     public void testPartnerAddingCampaign() throws Exception {
         addCampaign();
     }

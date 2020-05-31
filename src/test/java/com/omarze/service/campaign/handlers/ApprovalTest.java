@@ -15,6 +15,7 @@ import com.omarze.services.campaign.CampaignService;
 import com.omarze.services.campaign.handlers.Approval;
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.test.context.support.WithMockUser;
@@ -50,6 +51,7 @@ public class ApprovalTest extends BaseServiceIntegrationTest {
 
 
     @Test
+    @Ignore
     public void testApprovingCampaign() throws Exception {
         Auth.setContext(BACK_OFFICE_USER);
 
@@ -62,6 +64,7 @@ public class ApprovalTest extends BaseServiceIntegrationTest {
 
 
     @Test
+    @Ignore
     public void testDisapprovingCampaign() throws Exception {
         Auth.setContext(BACK_OFFICE_USER);
 
