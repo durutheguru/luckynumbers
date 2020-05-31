@@ -7,6 +7,8 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.Size;
 import java.util.List;
 
 /**
@@ -18,10 +20,13 @@ public class Partner extends BaseEntity {
 
 
     @Column(length = 100, nullable = false, unique = true)
+    @NotEmpty(message = "Partner name is required")
+    @Size(max = 100, message = "Partner name should not exceed {max}")
     private String name;
 
 
     @Column(length = 250, nullable = false, unique = true)
+    @NotEmpty(message = "Partner description is required")
     private String description;
 
 

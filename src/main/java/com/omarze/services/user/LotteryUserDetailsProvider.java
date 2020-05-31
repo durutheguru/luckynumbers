@@ -28,6 +28,18 @@ public class LotteryUserDetailsProvider implements UserDetailsProvider<LotteryUs
 
 
     @Override
+    public Boolean hasUser(String principal) {
+        return userRepository.existsByUsername(principal);
+    }
+
+
+    @Override
+    public Boolean hasEmail(String email) {
+        return userRepository.existsByEmail(email);
+    }
+
+
+    @Override
     public Optional<LotteryUser> findUser(String principal) {
         return userRepository.findByUsername(principal);
     }

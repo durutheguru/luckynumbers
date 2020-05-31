@@ -1,9 +1,6 @@
 package com.omarze.api.dto;
 
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonProperty;
 import com.omarze.Constants;
 import lombok.Data;
 
@@ -33,11 +30,12 @@ public class ApplicationUserDTO extends BaseDTO {
     private String username;
 
 
-
     @NotEmpty(message = "Password is required")
     @Size(max = 50, message = "Password length is too long")
     private String passwordIn;
 
 
 }
+
+
 

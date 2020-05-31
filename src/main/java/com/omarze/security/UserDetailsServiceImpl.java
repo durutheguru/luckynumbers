@@ -23,7 +23,8 @@ import java.util.Optional;
  * created by julian
  */
 @Service
-public class UserDetailsServiceImpl implements UserDetailsService {
+public class UserDetailsServiceImpl implements IUserDetailsService {
+
 
     Logger logger = LoggerFactory.getLogger(UserDetailsServiceImpl.class);
 
@@ -33,6 +34,29 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 
     public UserDetailsServiceImpl(List<UserDetailsProvider<? extends ApplicationUser>> userDetailsProviders) {
         this.userDetailsProviders = userDetailsProviders;
+    }
+
+
+    public boolean usernameExists(String username) {
+        for (UserDetailsProvider provider : userDetailsProviders) {
+            if (provider.hasUser(username)) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+
+    @Override
+    public boolean emailExists(String email) {
+        for (UserDetailsProvider provider : userDetailsProviders) {
+            if (provider.hasEmail(email)) {
+                return true;
+            }
+        }
+
+        return false;
     }
 
 
