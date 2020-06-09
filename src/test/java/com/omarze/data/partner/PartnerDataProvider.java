@@ -5,6 +5,7 @@ import com.github.javafaker.Faker;
 import com.omarze.api.dto.PartnerDTO;
 import com.omarze.entities.Partner;
 import com.omarze.persistence.PartnerRepository;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -12,25 +13,12 @@ import org.springframework.stereotype.Component;
  * created by julian
  */
 @Component
-public class PartnerDataService {
+@RequiredArgsConstructor
+public class PartnerDataProvider {
 
-    private Faker faker;
+    private final Faker faker;
 
-    private PartnerRepository partnerRepository;
-
-
-    @Autowired
-    public PartnerDataService setFaker(Faker faker) {
-        this.faker = faker;
-        return this;
-    }
-
-
-    @Autowired
-    public PartnerDataService setPartnerRepository(PartnerRepository partnerRepository) {
-        this.partnerRepository = partnerRepository;
-        return this;
-    }
+    private final PartnerRepository partnerRepository;
 
 
     public PartnerDTO newPartnerDTO() {

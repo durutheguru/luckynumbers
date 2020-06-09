@@ -1,7 +1,7 @@
 package com.omarze.service.partner.handlers;
 
 
-import com.omarze.data.partner.PartnerDataService;
+import com.omarze.data.partner.PartnerDataProvider;
 import com.omarze.entities.Partner;
 import com.omarze.entities.PartnerImage;
 import com.omarze.persistence.PartnerImageRepository;
@@ -44,7 +44,7 @@ public class UploadImagesTest extends BaseServiceIntegrationTest {
 
 
     @Autowired
-    private PartnerDataService partnerDataService;
+    private PartnerDataProvider partnerDataProvider;
 
 
     private Partner savedPartner;
@@ -52,7 +52,7 @@ public class UploadImagesTest extends BaseServiceIntegrationTest {
 
     @Before
     public void before() {
-        savedPartner = partnerDataService.savePartner();
+        savedPartner = partnerDataProvider.savePartner();
     }
 
 
@@ -97,7 +97,7 @@ public class UploadImagesTest extends BaseServiceIntegrationTest {
     @After
     public void after() {
         imageRepository.deleteAll();
-        partnerDataService.deletePartner(savedPartner);
+        partnerDataProvider.deletePartner(savedPartner);
     }
 
 

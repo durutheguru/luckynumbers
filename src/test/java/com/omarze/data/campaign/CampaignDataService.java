@@ -2,7 +2,7 @@ package com.omarze.data.campaign;
 
 
 import com.github.javafaker.Faker;
-import com.omarze.data.partner.PartnerDataService;
+import com.omarze.data.partner.PartnerDataProvider;
 import com.omarze.api.dto.CampaignDTO;
 import com.omarze.entities.*;
 import com.omarze.exception.InvalidObjectException;
@@ -30,16 +30,16 @@ public class CampaignDataService {
     final ModelMapper modelMapper;
 
 
-    final PartnerDataService partnerDataService;
+    final PartnerDataProvider partnerDataProvider;
 
 
     final CampaignRepository campaignRepository;
 
 
-    public CampaignDataService(Faker faker, ModelMapper modelMapper, PartnerDataService partnerDataService, CampaignRepository campaignRepository) {
+    public CampaignDataService(Faker faker, ModelMapper modelMapper, PartnerDataProvider partnerDataProvider, CampaignRepository campaignRepository) {
         this.faker = faker;
         this.modelMapper = modelMapper;
-        this.partnerDataService = partnerDataService;
+        this.partnerDataProvider = partnerDataProvider;
         this.campaignRepository = campaignRepository;
     }
 
@@ -51,7 +51,7 @@ public class CampaignDataService {
 
 
     public Campaign newCampaign() {
-        Partner partner = partnerDataService.savePartner();
+        Partner partner = partnerDataProvider.savePartner();
 
         Campaign campaign = Campaign.builder()
                 .name("Party with " + faker.name().fullName())
@@ -76,7 +76,7 @@ public class CampaignDataService {
 
 
     public Campaign newActiveCampaign() {
-        Partner partner = partnerDataService.savePartner();
+        Partner partner = partnerDataProvider.savePartner();
 
         Campaign campaign = Campaign.builder()
                 .name("Party with " + faker.name().fullName())
@@ -107,7 +107,7 @@ public class CampaignDataService {
 
 
     public Campaign newInvalidStartEndDateCampaign() {
-        Partner partner = partnerDataService.savePartner();
+        Partner partner = partnerDataProvider.savePartner();
 
         return Campaign.builder()
                 .name("Party with " + faker.name().fullName())
@@ -128,7 +128,7 @@ public class CampaignDataService {
 
 
     public Campaign newInvalidEvaluationTimeCampaign() {
-        Partner partner = partnerDataService.savePartner();
+        Partner partner = partnerDataProvider.savePartner();
 
         return Campaign.builder()
                 .name("Party with " + faker.name().fullName())
@@ -149,7 +149,7 @@ public class CampaignDataService {
 
 
     public Campaign newInvalidWinnerCountCampaign() {
-        Partner partner = partnerDataService.savePartner();
+        Partner partner = partnerDataProvider.savePartner();
 
         return Campaign.builder()
                 .name("Party with " + faker.name().fullName())
