@@ -1,6 +1,7 @@
 package com.omarze.entities;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 
 import javax.persistence.Column;
@@ -42,6 +43,7 @@ public class Partner extends BaseEntity {
     private String website;
 
 
+    @JsonIgnore
     @OneToMany(mappedBy = "partner")
     private List<Campaign> campaigns;
 

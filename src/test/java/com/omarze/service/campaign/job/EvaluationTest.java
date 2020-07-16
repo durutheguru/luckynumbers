@@ -1,7 +1,7 @@
 package com.omarze.service.campaign.job;
 
 
-import com.omarze.data.campaign.CampaignDataService;
+import com.omarze.data.campaign.CampaignDataProvider;
 import com.omarze.data.lotteryuser.LotteryUserCampaignDataService;
 import com.omarze.entities.*;
 import com.omarze.persistence.CampaignRepository;
@@ -27,7 +27,7 @@ public class EvaluationTest extends BaseServiceIntegrationTest {
 
 
     @Autowired
-    private CampaignDataService campaignDataService;
+    private CampaignDataProvider campaignDataProvider;
 
 
     @Autowired
@@ -47,7 +47,7 @@ public class EvaluationTest extends BaseServiceIntegrationTest {
 
     @Before
     public void before() {
-        campaign = campaignDataService.saveActiveCampaign();
+        campaign = campaignDataProvider.saveActiveCampaign();
         userCampaignDataService.saveUserCampaigns(campaign, 40);
     }
 

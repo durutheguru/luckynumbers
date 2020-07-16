@@ -37,44 +37,6 @@ public class PartnerController extends BaseApiController {
     }
 
 
-//    @PostMapping
-//    @ResponseStatus(code = HttpStatus.CREATED)
-//    @IsBackOfficeUser
-//    public PartnerDTO savePartner(
-//            @Valid @RequestBody PartnerDTO partnerDTO
-//    ) throws ServiceException {
-//        Partner partner = partnerService.savePartner(partnerDTO);
-//        return MapperUtil.map(partner, PartnerDTO.class);
-//    }
-//
-//
-//    @PutMapping
-//    @IsBackOfficeUser
-//    public PartnerDTO updatePartner(
-//            @Valid @RequestBody PartnerDTO partnerDTO
-//    ) throws ServiceException {
-//        Partner partner = partnerService.updatePartner(partnerDTO);
-//        return MapperUtil.map(partner, PartnerDTO.class);
-//    }
-//
-//
-//    @GetMapping
-////    @IsLotteryUser
-//    public Page<PartnerDTO> getPartners(
-//            @RequestParam(name = "page", defaultValue = "0") Integer page,
-//            @RequestParam(name = "size", defaultValue = "10") Integer size
-//    ) throws ServiceException {
-//        Page<Partner> partners = partnerService.getPartners(page, size);
-//        return map(partners, PartnerDTO.class);
-//    }
-
-
-//    @GetMapping("/{id}")
-//    public PartnerDTO getPartner(@PathVariable Long id) throws ServiceException {
-//         return MapperUtil.map(partnerService.getPartner(id), PartnerDTO.class);
-//    }
-
-
     @IsBackOfficeUser
     @PostMapping("/{id}/image")
     public List<PartnerImageDTO> uploadImages(

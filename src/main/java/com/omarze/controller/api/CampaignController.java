@@ -22,7 +22,7 @@ import javax.validation.Valid;
 public class CampaignController extends BaseApiController {
 
 
-    public static final String PATH = Constants.API_BASE + "/campaign";
+    public static final String PATH = Constants.API_BASE + "/campaign_request";
 
 
 
@@ -54,9 +54,6 @@ public class CampaignController extends BaseApiController {
     ) throws ServiceException {
         return campaignService.updateCampaign(campaign);
     }
-
-
-//    public P
 
 
 }

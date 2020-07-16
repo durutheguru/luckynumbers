@@ -17,10 +17,10 @@ public class AlreadyApprovedCampaignTest extends CampaignActionTest {
     @Before
     @Override
     public void init() {new Campaign();
-        Campaign approvedCampaign = Campaign.builder()
-        .campaignStatus(CampaignStatus.APPROVED).build();
+        Campaign approvedCampaign = new Campaign();
+        approvedCampaign.setCampaignStatus(CampaignStatus.APPROVED);
 
-        campaign = campaignDataService.saveCampaign(approvedCampaign);
+        campaign = campaignDataProvider.saveEntity(approvedCampaign);
     }
 
 

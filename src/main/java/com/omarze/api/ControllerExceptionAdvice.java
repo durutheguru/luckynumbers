@@ -9,6 +9,7 @@ import org.springframework.data.rest.core.RepositoryConstraintViolationException
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.http.converter.HttpMessageNotWritableException;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.validation.Errors;
 import org.springframework.validation.FieldError;
@@ -40,6 +41,16 @@ public class ControllerExceptionAdvice extends ResponseEntityExceptionHandler{
     public ResponseEntity<ApiErrorResponse> handleAccessDeniedException(Exception e) {
         AppLogger.error("Controller Exception: " + e.getMessage(), e);
         return new ResponseEntity<>(new ApiErrorResponse(e), HttpStatus.FORBIDDEN);
+    }
+
+
+    @Override
+    protected ResponseEntity<Object> handleHttpMessageNotWritable(
+        HttpMessageNotWritableException ex, HttpHeaders headers, HttpStatus status, WebRequest request
+    ) {
+        AppLogger.error(ex);
+
+        return handleExceptionInternal(ex, null, headers, status, request);
     }
 
 

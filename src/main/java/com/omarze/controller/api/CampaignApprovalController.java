@@ -3,12 +3,9 @@ package com.omarze.controller.api;
 
 import com.omarze.Constants;
 import com.omarze.api.dto.CampaignActionDTO;
-import com.omarze.api.dto.CampaignDTO;
-import com.omarze.entities.Campaign;
 import com.omarze.exception.ServiceException;
 import com.omarze.security.annotation.IsBackOfficeUser;
 import com.omarze.services.campaign.CampaignService;
-import com.omarze.util.MapperUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -39,9 +36,8 @@ public class CampaignApprovalController extends BaseApiController {
 
     @PostMapping
     @IsBackOfficeUser
-    public CampaignDTO approval(@Valid @RequestBody CampaignActionDTO actionDTO) throws ServiceException {
-        Campaign campaign = campaignService.campaignAction(actionDTO);
-        return MapperUtil.map(campaign, CampaignDTO.class);
+    public void approval(@Valid @RequestBody CampaignActionDTO actionDTO) throws ServiceException {
+        campaignService.campaignAction(actionDTO);
     }
 
 

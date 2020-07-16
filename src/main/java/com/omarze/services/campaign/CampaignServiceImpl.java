@@ -31,11 +31,11 @@ public class CampaignServiceImpl implements CampaignService {
 
     public Campaign addCampaign(CampaignDTO campaignDto) throws ServiceException {
         return Save.builder()
-                .campaignDto(campaignDto)
-                .campaignRepository(campaignRepository)
-                .partnerRepository(partnerRepository)
-                .build()
-                .execute();
+            .campaignDto(campaignDto)
+            .campaignRepository(campaignRepository)
+            .partnerRepository(partnerRepository)
+            .build()
+            .execute();
     }
 
 
@@ -47,10 +47,10 @@ public class CampaignServiceImpl implements CampaignService {
     @PostTrigger({CampaignActionEvent.class})
     public Campaign campaignAction(CampaignActionDTO campaignAction) throws ServiceException {
         return Approval.builder()
-                .campaignAction(campaignAction)
-                .campaignRepository(campaignRepository)
-                .build()
-                .execute();
+            .campaignAction(campaignAction)
+            .campaignRepository(campaignRepository)
+            .build()
+            .execute();
     }
 
 
@@ -64,4 +64,3 @@ public class CampaignServiceImpl implements CampaignService {
 
 
 }
-

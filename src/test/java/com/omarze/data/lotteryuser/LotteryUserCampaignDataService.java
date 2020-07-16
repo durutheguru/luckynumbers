@@ -1,7 +1,7 @@
 package com.omarze.data.lotteryuser;
 
 
-import com.omarze.data.campaign.CampaignDataService;
+import com.omarze.data.campaign.CampaignDataProvider;
 import com.omarze.api.dto.LotteryUserCampaignDTO;
 import com.omarze.entities.*;
 import com.omarze.persistence.LotteryUserCampaignRepository;
@@ -22,7 +22,7 @@ public class LotteryUserCampaignDataService {
     final ModelMapper modelMapper;
 
 
-    final CampaignDataService campaignDataService;
+    final CampaignDataProvider campaignDataProvider;
 
 
     final LotteryUserDataProvider lotteryUserDataProvider;
@@ -31,16 +31,18 @@ public class LotteryUserCampaignDataService {
     final LotteryUserCampaignRepository userCampaignRepository;
 
 
-    public LotteryUserCampaignDataService(ModelMapper modelMapper, CampaignDataService campaignDataService, LotteryUserDataProvider lotteryUserDataProvider, LotteryUserCampaignRepository userCampaignRepository) {
+    public LotteryUserCampaignDataService(ModelMapper modelMapper, CampaignDataProvider campaignDataProvider, LotteryUserDataProvider lotteryUserDataProvider, LotteryUserCampaignRepository userCampaignRepository) {
         this.modelMapper = modelMapper;
-        this.campaignDataService = campaignDataService;
+        this.campaignDataProvider = campaignDataProvider;
         this.lotteryUserDataProvider = lotteryUserDataProvider;
         this.userCampaignRepository = userCampaignRepository;
     }
 
 
     public LotteryUserCampaign newUserCampaign() {
-        Campaign campaign = campaignDataService.saveCampaign(Campaign.builder().campaignStatus(CampaignStatus.APPROVED).build());
+        Campaign campaign = new Campaign();
+        campaign.setCampaignStatus(CampaignStatus.APPROVED);
+
         return newUserCampaign(campaign);
     }
 

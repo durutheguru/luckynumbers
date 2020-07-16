@@ -2,6 +2,7 @@ package com.omarze.data.campaign;
 
 
 import com.github.javafaker.Faker;
+import com.omarze.data.TestDataProvider;
 import com.omarze.data.partner.PartnerDataProvider;
 import com.omarze.api.dto.CampaignDTO;
 import com.omarze.entities.*;
@@ -22,7 +23,8 @@ import java.util.stream.Collectors;
  * created by julian
  */
 @Component
-public class CampaignDataService {
+public class CampaignDataProvider extends TestDataProvider<Campaign, CampaignRepository> {
+
 
     final Faker faker;
 
@@ -33,37 +35,45 @@ public class CampaignDataService {
     final PartnerDataProvider partnerDataProvider;
 
 
-    final CampaignRepository campaignRepository;
+    public CampaignDataProvider(
+        Faker faker,
+        ModelMapper modelMapper,
+        PartnerDataProvider partnerDataProvider,
+        CampaignRepository campaignRepository
+    ) {
+        super(campaignRepository);
 
-
-    public CampaignDataService(Faker faker, ModelMapper modelMapper, PartnerDataProvider partnerDataProvider, CampaignRepository campaignRepository) {
         this.faker = faker;
         this.modelMapper = modelMapper;
         this.partnerDataProvider = partnerDataProvider;
-        this.campaignRepository = campaignRepository;
     }
 
 
     public CampaignDTO newCampaignDTO() {
-        Campaign campaign = newCampaign();
-        return modelMapper.map(campaign, CampaignDTO.class);
+        Campaign campaign = newEntity();
+        CampaignDTO campaignDTO = modelMapper.map(campaign, CampaignDTO.class);
+
+        return campaignDTO;
     }
 
 
-    public Campaign newCampaign() {
-        Partner partner = partnerDataProvider.savePartner();
+    @Override
+    public Campaign newEntity() {
+        List<Partner> partners = partnerDataProvider.loadPersistedEntities();
 
-        Campaign campaign = Campaign.builder()
-                .name("Party with " + faker.name().fullName())
-                .description("Come and ")
-                .startDate(LocalDate.now())
-                .endDate(LocalDate.now().plusDays(5))
-                .campaignType(CampaignType.SINGLE)
-                .stageDescriptions(campaignStageDescriptions())
-                .campaignStatus(CampaignStatus.AWAITING_APPROVAL)
-                .expectedWinnerCount(3)
-                .partner(partner)
-                .build();
+        Partner partner = partners.isEmpty() ? partnerDataProvider.saveEntity() : partners.get(0);
+
+        Campaign campaign = new Campaign();
+
+        campaign.setName("Party with " + faker.name().fullName());
+        campaign.setDescription("Come and ");
+        campaign.setStartDate(LocalDate.now());
+        campaign.setEndDate(LocalDate.now().plusDays(5));
+        campaign.setCampaignType(CampaignType.SINGLE);
+        campaign.setStageDescriptions(campaignStageDescriptions());
+        campaign.setCampaignStatus(CampaignStatus.AWAITING_APPROVAL);
+        campaign.setExpectedWinnerCount(3);
+        campaign.setPartner(partner);
 
         try {
             return campaign.initialize();
@@ -76,19 +86,19 @@ public class CampaignDataService {
 
 
     public Campaign newActiveCampaign() {
-        Partner partner = partnerDataProvider.savePartner();
+        Partner partner = partnerDataProvider.saveEntity();
 
-        Campaign campaign = Campaign.builder()
-                .name("Party with " + faker.name().fullName())
-                .description("Come and ")
-                .startDate(LocalDate.now().minusDays(5))
-                .endDate(LocalDate.now())
-                .campaignType(CampaignType.SINGLE)
-                .stageDescriptions(activeCampaignStageDescriptions())
-                .campaignStatus(CampaignStatus.ACTIVE)
-                .expectedWinnerCount(3)
-                .partner(partner)
-                .build();
+        Campaign campaign = new Campaign();
+
+        campaign.setName("Party with " + faker.name().fullName());
+        campaign.setDescription("Come and ");
+        campaign.setStartDate(LocalDate.now().minusDays(5));
+        campaign.setEndDate(LocalDate.now());
+        campaign.setCampaignType(CampaignType.SINGLE);
+        campaign.setStageDescriptions(activeCampaignStageDescriptions());
+        campaign.setCampaignStatus(CampaignStatus.ACTIVE);
+        campaign.setExpectedWinnerCount(3);
+        campaign.setPartner(partner);
 
         try {
             return campaign.initialize();
@@ -107,17 +117,19 @@ public class CampaignDataService {
 
 
     public Campaign newInvalidStartEndDateCampaign() {
-        Partner partner = partnerDataProvider.savePartner();
+        Partner partner = partnerDataProvider.saveEntity();
 
-        return Campaign.builder()
-                .name("Party with " + faker.name().fullName())
-                .description("Come and ")
-                .startDate(LocalDate.now())
-                .endDate(LocalDate.now().plusDays(5))
-                .campaignType(CampaignType.SINGLE)
-                .stageDescriptions(invalidStartEndDateStageDescriptions())
-                .partner(partner)
-                .build();
+        Campaign campaign = new Campaign();
+
+        campaign.setName("Party with " + faker.name().fullName());
+        campaign.setDescription("Come and ");
+        campaign.setStartDate(LocalDate.now());
+        campaign.setEndDate(LocalDate.now().plusDays(5));
+        campaign.setCampaignType(CampaignType.SINGLE);
+        campaign.setStageDescriptions(invalidStartEndDateStageDescriptions());
+        campaign.setPartner(partner);
+
+        return campaign;
     }
 
 
@@ -128,17 +140,19 @@ public class CampaignDataService {
 
 
     public Campaign newInvalidEvaluationTimeCampaign() {
-        Partner partner = partnerDataProvider.savePartner();
+        Partner partner = partnerDataProvider.saveEntity();
 
-        return Campaign.builder()
-                .name("Party with " + faker.name().fullName())
-                .description("Come and ")
-                .startDate(LocalDate.now())
-                .endDate(LocalDate.now().plusDays(5))
-                .campaignType(CampaignType.SINGLE)
-                .stageDescriptions(invalidEvaluationTimeStageDescriptions())
-                .partner(partner)
-                .build();
+        Campaign campaign = new Campaign();
+
+        campaign.setName("Party with " + faker.name().fullName());
+        campaign.setDescription("Come and ");
+        campaign.setStartDate(LocalDate.now());
+        campaign.setEndDate(LocalDate.now().plusDays(5));
+        campaign.setCampaignType(CampaignType.SINGLE);
+        campaign.setStageDescriptions(invalidEvaluationTimeStageDescriptions());
+        campaign.setPartner(partner);
+
+        return campaign;
     }
 
 
@@ -149,34 +163,37 @@ public class CampaignDataService {
 
 
     public Campaign newInvalidWinnerCountCampaign() {
-        Partner partner = partnerDataProvider.savePartner();
+        Partner partner = partnerDataProvider.saveEntity();
 
-        return Campaign.builder()
-                .name("Party with " + faker.name().fullName())
-                .description("Come and ")
-                .startDate(LocalDate.now())
-                .endDate(LocalDate.now().plusDays(5))
-                .campaignType(CampaignType.SINGLE)
-                .stageDescriptions(invalidWinnerCountStageDescriptions())
-                .partner(partner)
-                .build();
+        Campaign campaign = new Campaign();
+
+        campaign.setName("Party with " + faker.name().fullName());
+        campaign.setDescription("Come and ");
+        campaign.setStartDate(LocalDate.now());
+        campaign.setEndDate(LocalDate.now().plusDays(5));
+        campaign.setCampaignType(CampaignType.SINGLE);
+        campaign.setStageDescriptions(invalidWinnerCountStageDescriptions());
+        campaign.setPartner(partner);
+
+        return campaign;
     }
 
 
-    public Campaign saveCampaign() {
-        Campaign campaign = newCampaign();
-        return campaignRepository.save(campaign);
+    @Override
+    public Campaign saveEntity() {
+        Campaign campaign = newEntity();
+        return getRepository().save(campaign);
     }
 
 
     public Campaign saveActiveCampaign() {
         Campaign campaign = newActiveCampaign();
-        return campaignRepository.save(campaign);
+        return getRepository().save(campaign);
     }
 
 
-    public Campaign saveCampaign(Campaign example) {
-        Campaign campaign = newCampaign();
+    public Campaign saveEntity(Campaign example) {
+        Campaign campaign = newEntity();
         ObjectUtil.copyProperties(example, campaign);
 
         try {
@@ -186,21 +203,15 @@ public class CampaignDataService {
             AppLogger.error(e);
         }
 
-        return campaignRepository.save(campaign);
+        return getRepository().save(campaign);
     }
 
 
     public List<Campaign> saveCampaigns(List<Campaign> campaignExamples) {
         return campaignExamples
                 .stream()
-                .map(this::saveCampaign)
+                .map(this::saveEntity)
                 .collect(Collectors.toList());
-    }
-
-
-    public CampaignDTO saveCampaignDTO() {
-        Campaign campaign = saveCampaign();
-        return modelMapper.map(campaign, CampaignDTO.class);
     }
 
 

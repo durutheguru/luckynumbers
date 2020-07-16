@@ -52,7 +52,7 @@ public class UploadImagesTest extends BaseServiceIntegrationTest {
 
     @Before
     public void before() {
-        savedPartner = partnerDataProvider.savePartner();
+        savedPartner = partnerDataProvider.saveEntity();
     }
 
 

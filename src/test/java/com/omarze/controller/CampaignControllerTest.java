@@ -3,10 +3,10 @@ package com.omarze.controller;
 
 import com.omarze.Constants;
 import com.omarze.api.dto.CampaignActionDTO;
+import com.omarze.api.dto.CampaignDTO;
 import com.omarze.controller.api.CampaignApprovalController;
 import com.omarze.controller.api.CampaignController;
-import com.omarze.data.campaign.CampaignDataService;
-import com.omarze.api.dto.CampaignDTO;
+import com.omarze.data.campaign.CampaignDataProvider;
 import com.omarze.entities.BackOfficeUser;
 import com.omarze.entities.PartnerUser;
 import com.omarze.model.ApprovalAction;
@@ -29,12 +29,12 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 public class CampaignControllerTest extends BaseControllerTest {
 
 
-    CampaignDataService campaignDataService;
+    CampaignDataProvider campaignDataProvider;
 
 
     @Autowired
-    public CampaignControllerTest setCampaignDataService(CampaignDataService campaignDataService) {
-        this.campaignDataService = campaignDataService;
+    public CampaignControllerTest setCampaignDataProvider(CampaignDataProvider campaignDataProvider) {
+        this.campaignDataProvider = campaignDataProvider;
         return this;
     }
 
@@ -61,13 +61,13 @@ public class CampaignControllerTest extends BaseControllerTest {
 
 
     private void addCampaign() throws Exception {
-        CampaignDTO campaignDTO = campaignDataService.newCampaignDTO();
+        CampaignDTO campaignDTO = campaignDataProvider.newCampaignDTO();
 
         mockMvc
             .perform(
-                    post(CampaignController.PATH)
-                            .content(JSONUtil.asJsonString(campaignDTO))
-                            .contentType(MediaType.APPLICATION_JSON)
+                post(CampaignController.PATH)
+                    .content(JSONUtil.asJsonString(campaignDTO))
+                    .contentType(MediaType.APPLICATION_JSON)
             )
             .andDo(MockMvcResultHandlers.print())
             .andExpect(status().is2xxSuccessful());
@@ -76,7 +76,7 @@ public class CampaignControllerTest extends BaseControllerTest {
 
 
     private void addCampaignWithUpdate() throws Exception {
-        CampaignDTO campaignDTO = campaignDataService.newCampaignDTO();
+        CampaignDTO campaignDTO = campaignDataProvider.newCampaignDTO();
 
         mockMvc
             .perform(
@@ -99,9 +99,9 @@ public class CampaignControllerTest extends BaseControllerTest {
         CampaignActionDTO action = new CampaignActionDTO(campaignId, ApprovalAction.APPROVED);
 
         mockMvc.perform(
-                post(CampaignApprovalController.PATH)
-                        .content(JSONUtil.asJsonString(action))
-                        .contentType(MediaType.APPLICATION_JSON)
+            post(CampaignApprovalController.PATH)
+                .content(JSONUtil.asJsonString(action))
+                .contentType(MediaType.APPLICATION_JSON)
         ).andDo(MockMvcResultHandlers.print())
                 .andExpect(status().is5xxServerError());
     }
@@ -110,7 +110,7 @@ public class CampaignControllerTest extends BaseControllerTest {
     @Test
     @Ignore
     public void testUpdatingCampaign() throws Exception {
-        CampaignDTO campaignDTO = campaignDataService.newCampaignDTO();
+        CampaignDTO campaignDTO = campaignDataProvider.newCampaignDTO();
 
         String updateResponseString = mockMvc.perform(
                 post(Constants.API_BASE + "/campaign")

@@ -1,7 +1,7 @@
 package com.omarze.service.campaign;
 
 
-import com.omarze.data.campaign.CampaignDataService;
+import com.omarze.data.campaign.CampaignDataProvider;
 import com.omarze.api.dto.CampaignActionDTO;
 import com.omarze.entities.Campaign;
 import com.omarze.model.ApprovalAction;
@@ -16,7 +16,7 @@ public abstract class CampaignActionTest {
 
 
     @Autowired
-    CampaignDataService campaignDataService;
+    CampaignDataProvider campaignDataProvider;
 
 
     @Autowired
@@ -28,7 +28,7 @@ public abstract class CampaignActionTest {
 
     @Before
     public void init() {
-        campaign = campaignDataService.saveCampaign();
+        campaign = campaignDataProvider.saveEntity();
     }
 
 

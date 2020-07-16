@@ -2,7 +2,11 @@ package com.omarze.api.dto;
 
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.omarze.entities.*;
+import com.omarze.util.json.LocalDateDeserializer;
+import com.omarze.util.json.LocalDateSerializer;
 import lombok.Data;
 
 import javax.validation.Valid;
@@ -35,12 +39,16 @@ public class CampaignDTO extends BaseDTO {
     private Long partnerId;
 
 
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy")
+//    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
+    @JsonSerialize(using = LocalDateSerializer.class)
+    @JsonDeserialize(using = LocalDateDeserializer.class)
     @NotNull(message = "Campaign requires a valid Start Date")
     private LocalDate startDate;
 
 
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy")
+//    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
+    @JsonSerialize(using = LocalDateSerializer.class)
+    @JsonDeserialize(using = LocalDateDeserializer.class)
     @NotNull(message = "Campaign requires a valid End Date")
     private LocalDate endDate;
 

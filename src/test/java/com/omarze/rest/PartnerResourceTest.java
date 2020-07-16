@@ -42,10 +42,10 @@ public class PartnerResourceTest extends BaseControllerTest {
 
     @Test
     public void testSavingPartner() throws Exception {
-        Partner partner = partnerDataProvider.newPartner();
+        Partner partner = partnerDataProvider.newEntity();
 
         mockMvc.perform(
-            post(PartnerController.PATH)
+            post(API_BASE_PATH + PartnerRepository.PATH)
                 .content(JSONUtil.asJsonString(partner))
                 .contentType(MediaType.APPLICATION_JSON)
         ).andDo(print())
@@ -57,12 +57,12 @@ public class PartnerResourceTest extends BaseControllerTest {
     public void testSavingAlreadyExistingPartnerName() throws Exception {
         Partner partner = partnerRepository.findFirstBy().get();
 
-        Partner newPartner = partnerDataProvider.newPartner();
+        Partner newPartner = partnerDataProvider.newEntity();
         newPartner.setName(partner.getName());
 
 
         mockMvc.perform(
-            post(PartnerController.PATH)
+            post(API_BASE_PATH + PartnerRepository.PATH)
                 .content(JSONUtil.asJsonString(newPartner))
                 .contentType(MediaType.APPLICATION_JSON)
         ).andDo(print())
@@ -73,7 +73,16 @@ public class PartnerResourceTest extends BaseControllerTest {
     @Test
     public void testLoadingPartners() throws Exception {
         mockMvc.perform(
-            get(PartnerController.PATH)
+            get(API_BASE_PATH + PartnerRepository.PATH)
+        ).andDo(print())
+            .andExpect(status().is2xxSuccessful());
+    }
+
+
+    @Test
+    public void testLoadingPartnersMinimumData() throws Exception {
+        mockMvc.perform(
+            get(API_BASE_PATH + PartnerRepository.PATH + "/search/findBy?projection=partnerMinDetails&sort=name,asc")
         ).andDo(print())
             .andExpect(status().is2xxSuccessful());
     }
@@ -103,11 +112,11 @@ public class PartnerResourceTest extends BaseControllerTest {
 
     @Test
     public void testSavingPartnerWithLongNameCausesError() throws Exception {
-        Partner partner = partnerDataProvider.newPartner();
+        Partner partner = partnerDataProvider.newEntity();
         partner.setName(Strings.repeat("Long Arse Name", 100));
 
         mockMvc.perform(
-            post(PartnerController.PATH)
+            post(API_BASE_PATH + PartnerRepository.PATH)
                 .content(JSONUtil.asJsonString(partner))
                 .contentType(MediaType.APPLICATION_JSON)
         ).andDo(print())
@@ -117,7 +126,7 @@ public class PartnerResourceTest extends BaseControllerTest {
 
     @Test
     public void testUploadingPartnerImages() throws Exception {
-        Partner partner = partnerDataProvider.savePartner();
+        Partner partner = partnerDataProvider.saveEntity();
 
         MockMultipartFile file0 = new MockMultipartFile("files", "img0.jpg", MediaType.APPLICATION_OCTET_STREAM_VALUE, new ClassPathResource("img/img0.jpg").getInputStream());
         MockMultipartFile file2 = new MockMultipartFile("files", "img2.jpg", MediaType.APPLICATION_OCTET_STREAM_VALUE, new ClassPathResource("img/img2.jpg").getInputStream());

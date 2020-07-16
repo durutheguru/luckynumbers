@@ -1,6 +1,7 @@
 package com.omarze.entities;
 
 
+import com.omarze.security.annotation.CanWriteCampaign;
 import com.omarze.util.LocalDateTimeConverter;
 import lombok.Data;
 
@@ -15,6 +16,7 @@ import java.util.List;
  */
 @Data
 @Entity
+@CanWriteCampaign
 public class StageDescription extends BaseEntity {
 
 

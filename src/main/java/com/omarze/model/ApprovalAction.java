@@ -10,10 +10,8 @@ public enum ApprovalAction {
     APPROVED,
 
 
-    DISAPPROVED
+    DISAPPROVED,
 
 
 }
-
-
 

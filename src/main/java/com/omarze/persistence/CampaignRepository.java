@@ -2,12 +2,16 @@ package com.omarze.persistence;
 
 
 import com.omarze.entities.Campaign;
+import com.omarze.entities.CampaignStatus;
+import com.omarze.security.annotation.CanWriteCampaign;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
+import org.springframework.data.rest.core.annotation.RepositoryRestResource;
+import org.springframework.data.rest.core.annotation.RestResource;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -16,7 +20,16 @@ import java.util.List;
  * created by julian
  */
 @Repository
+@RepositoryRestResource(path = CampaignRepository.PATH)
 public interface CampaignRepository extends JpaRepository<Campaign, Long> {
+
+
+    String PATH = "/campaign";
+
+
+    @Override
+    @RestResource(exported = false)
+    Campaign save(Campaign campaign);
 
 
     @Query("SELECT CASE WHEN c.campaignStatus = 'ACTIVE' THEN TRUE ELSE FALSE END FROM Campaign c WHERE c.id = :campaignId")
@@ -46,5 +59,18 @@ public interface CampaignRepository extends JpaRepository<Campaign, Long> {
     void deactivateAllDueCampaigns();
 
 
+    @RestResource(path = "searchCampaign", rel = "searchCampaign")
+    Page<Campaign> findByNameContainingOrDescriptionContaining(
+        @Param("name") String name, @Param("desc") String description, Pageable pageable
+    );
+
+
+    @RestResource(path = "byStatus", rel = "byStatus")
+    Page<Campaign> findByCampaignStatus(
+        @Param("status") CampaignStatus status, Pageable pageable
+    );
+
 
 }
+
+

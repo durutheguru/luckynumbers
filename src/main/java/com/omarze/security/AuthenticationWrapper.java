@@ -21,8 +21,8 @@ public class AuthenticationWrapper {
     final Authentication authentication;
 
 
-    public Collection<GrantedAuthority> getAuthorities() {
-        return authentication == null ? Collections.EMPTY_LIST : ((User)authentication.getPrincipal()).getAuthorities();
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return authentication == null ? Collections.EMPTY_LIST : authentication.getAuthorities();
     }
 
 

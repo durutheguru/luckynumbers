@@ -1,12 +1,16 @@
 package com.omarze.entities;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.omarze.exception.InvalidObjectException;
 import lombok.Builder;
 import lombok.Data;
 import org.springframework.data.jpa.convert.threeten.Jsr310JpaConverters;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -20,42 +24,49 @@ public class Campaign extends BaseEntity {
 
 
     @Column(nullable = false, length = 200)
+    @NotEmpty(message = "Campaign Name must be provided")
+    @Size(max = 200, message = "Campaign Name should not exceed {max}")
     public String name;
 
 
     @Column(nullable = false, length = 250)
+    @NotEmpty(message = "Campaign Description must be provided")
+    @Size(max = 200, message = "Campaign Description should not exceed {max}")
     public String description;
-
-
-    @OneToMany(mappedBy = "campaign", cascade = {CascadeType.ALL})
-    public List<CampaignImage> campaignImages;
 
 
     @ManyToOne
     @JoinColumn(nullable = false)
+    @NotNull(message = "Campaign Partner is required")
     public Partner partner;
 
 
     @Column(nullable = false)
     @Convert(converter = Jsr310JpaConverters.LocalDateConverter.class)
+    @NotNull(message = "Campaign must have a start date")
     public LocalDate startDate;
 
 
     @Column(nullable = false)
     @Convert(converter = Jsr310JpaConverters.LocalDateConverter.class)
+    @NotNull(message = "Campaign must have an end date")
     public LocalDate endDate;
 
 
+    @JsonIgnore
     @OneToMany(mappedBy = "campaign", cascade = {CascadeType.ALL}, orphanRemoval = true)
+    @NotEmpty(message = "Stage Descriptions cannot be empty")
     public List<StageDescription> stageDescriptions;
 
 
     @Column(nullable = false)
+    @NotNull(message = "Expected number of winners must be provided")
     public Integer expectedWinnerCount;
 
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false, length = 30)
+    @NotNull(message = "Campaign Type must be provided")
     public CampaignType campaignType;
 
 
@@ -64,34 +75,7 @@ public class Campaign extends BaseEntity {
     public CampaignStatus campaignStatus;
 
 
-    public Campaign() {
-    }
-
-
-    @Builder
-    public Campaign(
-            String name,
-            String description,
-            List<CampaignImage> campaignImages,
-            Partner partner,
-            LocalDate startDate,
-            LocalDate endDate,
-            List<StageDescription> stageDescriptions,
-            Integer expectedWinnerCount,
-            CampaignType campaignType,
-            CampaignStatus campaignStatus
-    ) {
-        this.name = name;
-        this.description = description;
-        this.campaignImages = campaignImages;
-        this.partner = partner;
-        this.startDate = startDate;
-        this.endDate = endDate;
-        this.stageDescriptions = stageDescriptions;
-        this.expectedWinnerCount = expectedWinnerCount;
-        this.campaignType = campaignType;
-        this.campaignStatus = campaignStatus;
-    }
+    public Campaign() {}
 
 
     public Campaign addStageDescription(StageDescription stageDescription) {
@@ -132,6 +116,7 @@ public class Campaign extends BaseEntity {
     }
 
 
+    @JsonIgnore
     public StageDescription getFinalStageDescription() throws IllegalStateException {
         StageDescription.sort(stageDescriptions);
         return stageDescriptions.get(stageDescriptions.size() - 1);

@@ -3,6 +3,7 @@ package com.omarze.security;
 
 import com.omarze.entities.UserAuthId;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.User;
 
@@ -26,7 +27,10 @@ public class Auth {
 
 
     public static void setContext(Authentication auth) {
-        SecurityContextHolder.getContext().setAuthentication(auth);
+        SecurityContext context = SecurityContextHolder.createEmptyContext();
+        context.setAuthentication(auth);
+
+        SecurityContextHolder.setContext(context);
     }
 
 

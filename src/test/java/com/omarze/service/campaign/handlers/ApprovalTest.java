@@ -2,9 +2,7 @@ package com.omarze.service.campaign.handlers;
 
 
 import com.omarze.api.dto.CampaignActionDTO;
-import com.omarze.controller.BaseControllerTest;
-import com.omarze.data.campaign.CampaignDataService;
-import com.omarze.entities.BackOfficeUser;
+import com.omarze.data.campaign.CampaignDataProvider;
 import com.omarze.entities.Campaign;
 import com.omarze.entities.CampaignStatus;
 import com.omarze.model.ApprovalAction;
@@ -18,7 +16,6 @@ import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.test.context.support.WithMockUser;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -34,7 +31,7 @@ public class ApprovalTest extends BaseServiceIntegrationTest {
 
 
     @Autowired
-    private CampaignDataService campaignDataService;
+    private CampaignDataProvider campaignDataProvider;
 
 
     @Autowired
@@ -46,7 +43,7 @@ public class ApprovalTest extends BaseServiceIntegrationTest {
 
     @Before
     public void before() {
-        campaignList.add(campaignDataService.saveCampaign());
+        campaignList.add(campaignDataProvider.saveEntity());
     }
 
 

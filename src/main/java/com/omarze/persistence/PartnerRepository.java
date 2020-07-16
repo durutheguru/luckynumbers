@@ -2,6 +2,7 @@ package com.omarze.persistence;
 
 
 import com.omarze.entities.Partner;
+import com.omarze.security.annotation.IsBackOfficeOrPartnerUser;
 import com.omarze.security.annotation.IsBackOfficeUser;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -19,7 +20,7 @@ import java.util.Optional;
  * created by julian
  */
 @Repository
-@IsBackOfficeUser
+@IsBackOfficeOrPartnerUser
 @RepositoryRestResource(path = PartnerRepository.PATH)
 public interface PartnerRepository extends JpaRepository<Partner, Long> {
 

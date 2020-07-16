@@ -1,7 +1,7 @@
 package com.omarze.service.campaign;
 
 
-import com.omarze.data.campaign.CampaignDataService;
+import com.omarze.data.campaign.CampaignDataProvider;
 import com.omarze.entities.Campaign;
 import com.omarze.entities.CampaignStatus;
 import com.omarze.persistence.CampaignRepository;
@@ -13,6 +13,7 @@ import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -26,15 +27,15 @@ public class CampaignActivationSchedulerTest extends BaseServiceIntegrationTest 
     private CampaignActivationScheduler campaignActivationScheduler;
 
 
-    private CampaignDataService campaignDataService;
+    private CampaignDataProvider campaignDataProvider;
 
 
     private CampaignRepository campaignRepository;
 
 
     @Autowired
-    public CampaignActivationSchedulerTest setCampaignDataService(CampaignDataService campaignDataService) {
-        this.campaignDataService = campaignDataService;
+    public CampaignActivationSchedulerTest setCampaignDataProvider(CampaignDataProvider campaignDataProvider) {
+        this.campaignDataProvider = campaignDataProvider;
         return this;
     }
 
@@ -69,23 +70,25 @@ public class CampaignActivationSchedulerTest extends BaseServiceIntegrationTest 
 
     private List<Campaign> saveCampaigns() {
         List<Campaign> campaigns = Arrays.asList(
-                Campaign.builder()
-                        .campaignStatus(CampaignStatus.APPROVED)
-                        .stageDescriptions(campaignDataService.campaignStageDescriptions())
-                        .startDate(LocalDate.now().minusDays(5)).build(),
+                getApprovedCampaign(LocalDate.now().minusDays(5)),
 
-                Campaign.builder()
-                        .campaignStatus(CampaignStatus.APPROVED)
-                        .stageDescriptions(campaignDataService.campaignStageDescriptions())
-                        .startDate(LocalDate.now()).build(),
+                getApprovedCampaign(LocalDate.now()),
 
-                Campaign.builder()
-                        .campaignStatus(CampaignStatus.APPROVED)
-                        .stageDescriptions(campaignDataService.campaignStageDescriptions())
-                        .startDate(LocalDate.now().plusDays(5)).build()
+                getApprovedCampaign(LocalDate.now().plusDays(5))
         );
 
-        return campaignDataService.saveCampaigns(campaigns);
+        return campaignDataProvider.saveCampaigns(campaigns);
+    }
+
+
+    private Campaign getApprovedCampaign(LocalDate startDate) {
+        Campaign campaign = new Campaign();
+
+        campaign.setCampaignStatus(CampaignStatus.APPROVED);
+        campaign.setStartDate(startDate);
+        campaign.setStageDescriptions(campaignDataProvider.campaignStageDescriptions());
+
+        return campaign;
     }
 
 

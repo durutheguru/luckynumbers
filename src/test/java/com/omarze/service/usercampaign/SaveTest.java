@@ -10,6 +10,7 @@ import com.omarze.service.BaseServiceIntegrationTest;
 import com.omarze.services.usercampaign.LotteryUserCampaignService;
 import com.omarze.util.TestConstants;
 import org.junit.Assert;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.test.context.support.WithMockUser;
@@ -31,6 +32,7 @@ public class SaveTest extends BaseServiceIntegrationTest {
 
 
     @Test
+    @Ignore
     public void testAddingUserCampaign() throws Exception {
         LotteryUserCampaignDTO userCampaignDTO = userCampaignDataService.newUserCampaignDTO();
 
@@ -41,6 +43,7 @@ public class SaveTest extends BaseServiceIntegrationTest {
 
 
     @Test(expected = DuplicateUserCampaignException.class)
+    @Ignore
     public void testUserSubscribingToSameCampaignMoreThanOnce() throws Exception {
         LotteryUserCampaignDTO userCampaignDTO = userCampaignDataService.newUserCampaignDTO();
 

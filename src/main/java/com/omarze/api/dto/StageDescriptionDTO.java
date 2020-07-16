@@ -1,12 +1,14 @@
 package com.omarze.api.dto;
 
 
-import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.omarze.entities.Stage;
+import com.omarze.util.json.LocalDateTimeDeserializer;
+import com.omarze.util.json.LocalDateTimeSerializer;
 import lombok.Data;
 import lombok.ToString;
-import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
@@ -29,7 +31,8 @@ public class StageDescriptionDTO extends BaseDTO {
 
 
     @NotNull(message = "Evaluation Time is required")
-    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME, pattern = "dd-MM-yyyy HH:mm")
+    @JsonSerialize(using = LocalDateTimeSerializer.class)
+    @JsonDeserialize(using = LocalDateTimeDeserializer.class)
     private LocalDateTime evaluationTime;
 
 
@@ -39,3 +42,4 @@ public class StageDescriptionDTO extends BaseDTO {
 
 
 }
+
