@@ -24,7 +24,7 @@ import java.util.List;
 public interface CampaignRepository extends JpaRepository<Campaign, Long> {
 
 
-    String PATH = "/campaign";
+    String PATH = "campaign";
 
 
     @Override

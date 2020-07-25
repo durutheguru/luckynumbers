@@ -3,12 +3,11 @@ package com.omarze.aspect;
 
 import com.omarze.annotation.PostTrigger;
 import com.omarze.event.ServiceEvent;
-import com.omarze.util.AppLogger;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
-import org.aspectj.lang.annotation.Pointcut;
 import org.aspectj.lang.reflect.MethodSignature;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Component;
@@ -22,6 +21,7 @@ import java.util.stream.Collectors;
 /**
  * created by julian
  */
+@Slf4j
 @Aspect
 @Component
 @RequiredArgsConstructor
@@ -65,7 +65,7 @@ public class ServiceEventPostProcessor {
                 try {
                     return c.newInstance();
                 } catch (Exception e) {
-                    AppLogger.error(e);
+                    log.error(e.getMessage(), e);
                     return null;
                 }
             })

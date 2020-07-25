@@ -5,12 +5,12 @@ import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.exceptions.TokenExpiredException;
 import com.google.common.base.Strings;
+import com.julianduru.security.Auth;
 import com.omarze.Constants;
-import com.omarze.util.AppLogger;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
@@ -24,6 +24,7 @@ import java.io.IOException;
 /**
  * created by julian
  */
+@Slf4j
 public class JWTAuthorizationFilter extends BasicAuthenticationFilter {
 
 
@@ -52,7 +53,7 @@ public class JWTAuthorizationFilter extends BasicAuthenticationFilter {
             chain.doFilter(request, response);
         }
         catch (TokenExpiredException e) {
-            AppLogger.error(e);
+            log.error(e.getMessage(), e);
             response.sendError(HttpStatus.FORBIDDEN.value(), "Token has expired");
         }
     }

@@ -62,7 +62,7 @@ public class PartnerServiceImpl implements PartnerService {
 
     @Override
     public Page<Partner> getPartners(Integer page, Integer size) throws ServiceException {
-        return partnerRepository.findAll(PageRequest.of(page, size, new Sort(Sort.Direction.DESC, "id")));
+        return partnerRepository.findAll(PageRequest.of(page, size, Sort.by(Sort.Direction.DESC, "id")));
     }
 
 

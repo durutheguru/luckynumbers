@@ -1,7 +1,7 @@
 package com.omarze.api;
 
 
-import com.omarze.util.AppLogger;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.support.DefaultMessageSourceResolvable;
 import org.springframework.core.Ordered;
 import org.springframework.core.annotation.Order;
@@ -25,6 +25,7 @@ import java.util.stream.Collectors;
 /**
  * created by julian
  */
+@Slf4j
 @ControllerAdvice
 @Order(Ordered.HIGHEST_PRECEDENCE)
 public class ControllerExceptionAdvice extends ResponseEntityExceptionHandler{
@@ -32,14 +33,14 @@ public class ControllerExceptionAdvice extends ResponseEntityExceptionHandler{
 
     @ExceptionHandler({Exception.class})
     public ResponseEntity<ApiErrorResponse> handleAllExceptions(Exception e) {
-        AppLogger.error("Controller Exception: " + e.getMessage(), e);
+        log.error("Controller Exception: " + e.getMessage(), e);
         return new ResponseEntity<>(new ApiErrorResponse(e), HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
 
     @ExceptionHandler({AccessDeniedException.class})
     public ResponseEntity<ApiErrorResponse> handleAccessDeniedException(Exception e) {
-        AppLogger.error("Controller Exception: " + e.getMessage(), e);
+        log.error("Controller Exception: " + e.getMessage(), e);
         return new ResponseEntity<>(new ApiErrorResponse(e), HttpStatus.FORBIDDEN);
     }
 
@@ -48,7 +49,7 @@ public class ControllerExceptionAdvice extends ResponseEntityExceptionHandler{
     protected ResponseEntity<Object> handleHttpMessageNotWritable(
         HttpMessageNotWritableException ex, HttpHeaders headers, HttpStatus status, WebRequest request
     ) {
-        AppLogger.error(ex);
+        log.error(ex.getMessage(), ex);
 
         return handleExceptionInternal(ex, null, headers, status, request);
     }

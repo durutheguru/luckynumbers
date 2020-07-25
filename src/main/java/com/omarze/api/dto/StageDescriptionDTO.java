@@ -4,9 +4,9 @@ package com.omarze.api.dto;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.julianduru.util.json.LocalDateTimeDeserializer;
+import com.julianduru.util.json.LocalDateTimeSerializer;
 import com.omarze.entities.Stage;
-import com.omarze.util.json.LocalDateTimeDeserializer;
-import com.omarze.util.json.LocalDateTimeSerializer;
 import lombok.Data;
 import lombok.ToString;
 

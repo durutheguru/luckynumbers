@@ -25,7 +25,7 @@ import java.util.Optional;
 public interface PartnerRepository extends JpaRepository<Partner, Long> {
 
 
-    String PATH = "/partner";
+    String PATH = "partner";
 
 
     Optional<Partner> findByName(String name);

@@ -14,7 +14,7 @@ import org.springframework.stereotype.Repository;
 public interface StageDescriptionRepository extends JpaRepository<StageDescription, Long>  {
 
 
-    String PATH = "/stage_description";
+    String PATH = "stage_description";
 
 
 }

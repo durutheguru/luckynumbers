@@ -1,8 +1,8 @@
 package com.omarze.controller.api;
 
 
+import com.julianduru.util.MapperUtil;
 import com.omarze.exception.ServiceException;
-import com.omarze.util.MapperUtil;
 import org.springframework.data.domain.Page;
 
 import java.util.Collection;

@@ -1,16 +1,14 @@
 package com.omarze.services.lotteryuser.handlers;
 
 
+import com.julianduru.util.MapperUtil;
 import com.omarze.api.dto.LotteryUserDTO;
 import com.omarze.entities.LotteryUser;
-import com.omarze.exception.InvalidObjectException;
 import com.omarze.exception.ServiceException;
 import com.omarze.exception.UsernameAlreadyExistsException;
 import com.omarze.persistence.LotteryUserRepository;
 import com.omarze.security.UserDetailsServiceImpl;
 import com.omarze.services.CommandBase;
-import com.omarze.util.MapperUtil;
-import com.omarze.util.ValidatorUtil;
 import lombok.Builder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;

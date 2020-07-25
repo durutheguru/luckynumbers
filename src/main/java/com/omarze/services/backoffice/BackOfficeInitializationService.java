@@ -1,15 +1,14 @@
 package com.omarze.services.backoffice;
 
 
+import com.julianduru.security.Auth;
 import com.omarze.api.dto.BackOfficeUserDTO;
 import com.omarze.exception.ServiceException;
-import com.omarze.security.Auth;
 import com.omarze.security.AuthContext;
-import com.omarze.util.AppLogger;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.context.event.EventListener;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -17,6 +16,7 @@ import java.time.LocalDateTime;
 /**
  * created by julian
  */
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class BackOfficeInitializationService {
@@ -35,7 +35,7 @@ public class BackOfficeInitializationService {
             }
         }
         catch (ServiceException e) {
-            AppLogger.error(e);
+            log.error(e.getMessage(), e);
         }
     }
 

@@ -21,7 +21,7 @@ import java.util.Optional;
 @RepositoryRestResource(path = BackOfficeUserRepository.PATH)
 public interface BackOfficeUserRepository extends JpaRepository<BackOfficeUser, Long> {
 
-    String PATH = "/back_office_user";
+    String PATH = "back_office_user";
 
 
     Boolean existsByUsername(String username);

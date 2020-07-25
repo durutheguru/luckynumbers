@@ -1,16 +1,16 @@
 package com.omarze.services.campaign.handlers;
 
 
+import com.julianduru.security.Auth;
+import com.julianduru.security.entity.UserAuthId;
 import com.omarze.api.dto.CampaignActionDTO;
 import com.omarze.entities.Campaign;
 import com.omarze.entities.CampaignStatus;
-import com.omarze.entities.UserAuthId;
 import com.omarze.exception.EntityNotFoundException;
 import com.omarze.exception.InvalidUpdateException;
 import com.omarze.exception.ServiceException;
 import com.omarze.model.ApprovalAction;
 import com.omarze.persistence.CampaignRepository;
-import com.omarze.security.Auth;
 import com.omarze.services.CommandBase;
 import lombok.Builder;
 

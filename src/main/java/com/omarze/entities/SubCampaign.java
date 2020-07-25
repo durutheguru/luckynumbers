@@ -1,6 +1,8 @@
 package com.omarze.entities;
 
 
+import com.julianduru.security.entity.BaseEntity;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;

@@ -1,18 +1,19 @@
 package com.omarze.services.backoffice.handlers;
 
 
+import com.julianduru.util.MapperUtil;
 import com.omarze.api.dto.BackOfficeUserDTO;
 import com.omarze.entities.BackOfficeUser;
 import com.omarze.exception.ServiceException;
 import com.omarze.exception.UserAlreadyExistsException;
 import com.omarze.persistence.BackOfficeUserRepository;
 import com.omarze.services.CommandBase;
-import com.omarze.util.MapperUtil;
 import lombok.Builder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
+import java.time.ZonedDateTime;
 import java.util.Optional;
 
 /**
@@ -50,7 +51,7 @@ public class Save extends CommandBase<BackOfficeUser> {
         userExists();
 
         BackOfficeUser backOfficeUser = MapperUtil.map(userDTO, BackOfficeUser.class);
-        backOfficeUser.setTimeAdded(LocalDateTime.now());
+        backOfficeUser.setTimeAdded(ZonedDateTime.now());
         backOfficeUser.setPassword(passwordEncoder.encode(userDTO.getPasswordIn()));
 
         return backOfficeUserRepository.save(backOfficeUser);

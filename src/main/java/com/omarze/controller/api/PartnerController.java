@@ -2,20 +2,14 @@ package com.omarze.controller.api;
 
 
 import com.omarze.Constants;
-import com.omarze.api.dto.PartnerDTO;
 import com.omarze.api.dto.PartnerImageDTO;
-import com.omarze.entities.Partner;
 import com.omarze.entities.PartnerImage;
 import com.omarze.exception.ServiceException;
 import com.omarze.security.annotation.IsBackOfficeUser;
 import com.omarze.services.partner.PartnerService;
-import com.omarze.util.MapperUtil;
-import org.springframework.data.domain.Page;
-import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import javax.validation.Valid;
 import java.util.List;
 
 /**

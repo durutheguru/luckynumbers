@@ -1,10 +1,10 @@
 package com.omarze.services.user;
 
 
+import com.julianduru.security.Auth;
 import com.omarze.Constants;
 import com.omarze.entities.BackOfficeUser;
 import com.omarze.persistence.BackOfficeUserRepository;
-import com.omarze.security.Auth;
 import com.omarze.security.AuthContext;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;

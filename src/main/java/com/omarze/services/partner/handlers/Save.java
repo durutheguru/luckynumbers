@@ -1,16 +1,18 @@
 package com.omarze.services.partner.handlers;
 
 
+import com.julianduru.util.MapperUtil;
 import com.omarze.api.dto.PartnerDTO;
 import com.omarze.entities.Partner;
-import com.omarze.exception.*;
+import com.omarze.exception.DuplicatePartnerDescriptionException;
+import com.omarze.exception.PartnerAlreadyExistsException;
+import com.omarze.exception.ServiceException;
 import com.omarze.persistence.PartnerRepository;
 import com.omarze.services.CommandBase;
-import com.omarze.util.MapperUtil;
 import lombok.Builder;
 
 import javax.validation.constraints.NotNull;
-import java.time.LocalDateTime;
+import java.time.ZonedDateTime;
 import java.util.Optional;
 
 /**
@@ -44,7 +46,7 @@ public class Save extends CommandBase<Partner> {
     protected Partner execute_() throws ServiceException {
         Partner partner = MapperUtil.map(partnerDTO, Partner.class);
 
-        partner.setTimeAdded(LocalDateTime.now());
+        partner.setTimeAdded(ZonedDateTime.now());
 
         return partnerRepository.save(partner);
     }

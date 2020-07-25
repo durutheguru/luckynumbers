@@ -2,8 +2,8 @@ package com.omarze.services.campaign.job;
 
 
 import com.omarze.exception.ServiceException;
-import com.omarze.util.AppLogger;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.quartz.JobExecutionContext;
 import org.quartz.JobExecutionException;
 import org.springframework.scheduling.quartz.QuartzJobBean;
@@ -16,6 +16,7 @@ import org.springframework.stereotype.Component;
  * <p/>
  * created by julian
  */
+@Slf4j
 @Component
 @RequiredArgsConstructor
 public class EvaluationJobBean extends QuartzJobBean {
@@ -28,7 +29,7 @@ public class EvaluationJobBean extends QuartzJobBean {
 
     public void executeInternal(JobExecutionContext jobContext) throws JobExecutionException {
         try {
-            AppLogger.info("Running Job: " + jobContext.getMergedJobDataMap());
+            log.info("Running Job: " + jobContext.getMergedJobDataMap());
             jobDelegate.runJob(jobContext.getMergedJobDataMap());
         } catch (ServiceException e) {
             throw new JobExecutionException(e);

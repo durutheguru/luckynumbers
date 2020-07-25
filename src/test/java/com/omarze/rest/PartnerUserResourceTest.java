@@ -1,6 +1,7 @@
 package com.omarze.rest;
 
 
+import com.julianduru.util.JSONUtil;
 import com.omarze.controller.BaseControllerTest;
 import com.omarze.data.partner.PartnerUserDataProvider;
 import com.omarze.entities.BackOfficeUser;
@@ -8,12 +9,12 @@ import com.omarze.entities.Partner;
 import com.omarze.entities.PartnerUser;
 import com.omarze.persistence.PartnerRepository;
 import com.omarze.persistence.PartnerUserRepository;
-import com.omarze.util.JSONUtil;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.annotation.DirtiesContext;
+import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.jdbc.Sql;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -28,8 +29,10 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 /**
  * created by julian
  */
-@DirtiesContext(classMode = DirtiesContext.ClassMode.BEFORE_EACH_TEST_METHOD)
-@Sql({"/db/scripts/partner/init.sql"})
+//@Transactional
+//@Rollback
+@Sql(scripts = {"/db/scripts/partner/init.sql"}, executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
+@Sql(scripts = {"/db/scripts/partner/delete.sql"}, executionPhase = Sql.ExecutionPhase.AFTER_TEST_METHOD)
 @WithMockUser(username = BaseControllerTest.TEST_USER, authorities = {BackOfficeUser.ROLE_ID})
 public class PartnerUserResourceTest extends BaseControllerTest {
 

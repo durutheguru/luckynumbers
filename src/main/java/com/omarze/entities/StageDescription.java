@@ -1,8 +1,9 @@
 package com.omarze.entities;
 
 
+import com.julianduru.security.entity.BaseEntity;
+import com.julianduru.util.jpa.LocalDateTimeConverter;
 import com.omarze.security.annotation.CanWriteCampaign;
-import com.omarze.util.LocalDateTimeConverter;
 import lombok.Data;
 
 import javax.persistence.*;

@@ -1,9 +1,9 @@
 package com.omarze.services;
 
 
+import com.julianduru.util.ValidatorUtil;
 import com.omarze.exception.InvalidObjectException;
 import com.omarze.exception.ServiceException;
-import com.omarze.util.ValidatorUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

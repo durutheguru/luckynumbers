@@ -2,7 +2,7 @@ package com.omarze.exception;
 
 
 import com.google.common.base.Strings;
-import com.omarze.util.CryptoUtil;
+import com.julianduru.util.CryptoUtil;
 import org.slf4j.LoggerFactory;
 
 /**

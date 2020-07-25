@@ -1,7 +1,7 @@
 package com.omarze.api.dto;
 
 
-import com.omarze.entities.AspectRatio;
+import com.julianduru.util.entity.AspectRatio;
 import lombok.Data;
 
 /**

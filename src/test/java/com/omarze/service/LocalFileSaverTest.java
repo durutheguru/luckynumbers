@@ -2,7 +2,7 @@ package com.omarze.service;
 
 
 import com.omarze.services.LocalFileSaver;
-import com.omarze.util.AppLogger;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.io.IOUtils;
 import org.junit.Assert;
 import org.junit.Test;
@@ -17,6 +17,7 @@ import java.nio.file.Paths;
 /**
  * created by julian
  */
+@Slf4j
 public class LocalFileSaverTest extends BaseServiceIntegrationTest {
 
 
@@ -77,7 +78,7 @@ public class LocalFileSaverTest extends BaseServiceIntegrationTest {
             Files.deleteIfExists(Paths.get(fullPath));
         }
         catch (IOException e) {
-            AppLogger.error(e);
+            log.error(e.getMessage(), e);
         }
     }
 

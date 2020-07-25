@@ -1,6 +1,8 @@
 package com.omarze.entities;
 
 
+import com.julianduru.security.entity.BaseEntity;
+import com.julianduru.util.entity.AspectRatio;
 import lombok.Data;
 
 import javax.persistence.Column;

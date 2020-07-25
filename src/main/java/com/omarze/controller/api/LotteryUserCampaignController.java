@@ -1,13 +1,13 @@
 package com.omarze.controller.api;
 
 
+import com.julianduru.util.MapperUtil;
 import com.omarze.Constants;
 import com.omarze.api.dto.LotteryUserCampaignDTO;
 import com.omarze.entities.LotteryUserCampaign;
 import com.omarze.exception.ServiceException;
 import com.omarze.security.annotation.IsLotteryUser;
 import com.omarze.services.usercampaign.LotteryUserCampaignService;
-import com.omarze.util.MapperUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;

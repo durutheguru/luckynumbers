@@ -1,18 +1,20 @@
 package com.omarze.services.campaign.handlers;
 
 
+import com.julianduru.util.MapperUtil;
 import com.omarze.api.dto.CampaignDTO;
-import com.omarze.entities.*;
+import com.omarze.entities.Campaign;
+import com.omarze.entities.CampaignStatus;
+import com.omarze.entities.Partner;
 import com.omarze.exception.EntityNotFoundException;
 import com.omarze.exception.ServiceException;
 import com.omarze.persistence.CampaignRepository;
 import com.omarze.persistence.PartnerRepository;
 import com.omarze.services.CommandBase;
-import com.omarze.util.MapperUtil;
 import lombok.Builder;
 
 import javax.validation.constraints.NotNull;
-import java.time.LocalDateTime;
+import java.time.ZonedDateTime;
 
 /**
  * created by julian
@@ -46,7 +48,7 @@ public class Save extends CommandBase<Campaign> {
 
         campaign.setPartner(getPartner());
         campaign.setCampaignStatus(CampaignStatus.AWAITING_APPROVAL);
-        campaign.setTimeAdded(LocalDateTime.now());
+        campaign.setTimeAdded(ZonedDateTime.now());
 
         return campaignRepository.save(campaign.initialize());
     }

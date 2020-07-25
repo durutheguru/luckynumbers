@@ -2,14 +2,14 @@ package com.omarze.data.campaign;
 
 
 import com.github.javafaker.Faker;
+import com.julianduru.util.ObjectUtil;
 import com.omarze.data.TestDataProvider;
 import com.omarze.data.partner.PartnerDataProvider;
 import com.omarze.api.dto.CampaignDTO;
 import com.omarze.entities.*;
 import com.omarze.exception.InvalidObjectException;
 import com.omarze.persistence.CampaignRepository;
-import com.omarze.util.AppLogger;
-import com.omarze.util.ObjectUtil;
+import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Component;
 
@@ -22,6 +22,7 @@ import java.util.stream.Collectors;
 /**
  * created by julian
  */
+@Slf4j
 @Component
 public class CampaignDataProvider extends TestDataProvider<Campaign, CampaignRepository> {
 
@@ -79,7 +80,7 @@ public class CampaignDataProvider extends TestDataProvider<Campaign, CampaignRep
             return campaign.initialize();
         }
         catch (InvalidObjectException e) {
-            AppLogger.error(e);
+            log.error(e.getMessage(), e);
             return campaign;
         }
     }
@@ -104,7 +105,7 @@ public class CampaignDataProvider extends TestDataProvider<Campaign, CampaignRep
             return campaign.initialize();
         }
         catch (InvalidObjectException e) {
-            AppLogger.error(e);
+            log.error(e.getMessage(), e);
             return campaign;
         }
     }
@@ -200,7 +201,7 @@ public class CampaignDataProvider extends TestDataProvider<Campaign, CampaignRep
             campaign.initialize();
         }
         catch (InvalidObjectException e) {
-            AppLogger.error(e);
+            log.error(e.getMessage(), e);
         }
 
         return getRepository().save(campaign);

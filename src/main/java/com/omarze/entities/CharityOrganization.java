@@ -1,6 +1,7 @@
 package com.omarze.entities;
 
 
+import com.julianduru.security.entity.BaseEntity;
 import lombok.Data;
 
 import javax.persistence.*;

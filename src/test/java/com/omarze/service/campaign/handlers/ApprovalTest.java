@@ -1,13 +1,13 @@
 package com.omarze.service.campaign.handlers;
 
 
+import com.julianduru.security.Auth;
 import com.omarze.api.dto.CampaignActionDTO;
 import com.omarze.data.campaign.CampaignDataProvider;
 import com.omarze.entities.Campaign;
 import com.omarze.entities.CampaignStatus;
 import com.omarze.model.ApprovalAction;
 import com.omarze.persistence.CampaignRepository;
-import com.omarze.security.Auth;
 import com.omarze.service.BaseServiceIntegrationTest;
 import com.omarze.services.campaign.CampaignService;
 import com.omarze.services.campaign.handlers.Approval;

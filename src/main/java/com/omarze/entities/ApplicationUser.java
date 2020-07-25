@@ -1,6 +1,7 @@
 package com.omarze.entities;
 
 
+import com.julianduru.security.entity.BaseEntity;
 import com.omarze.Constants;
 import lombok.Data;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;

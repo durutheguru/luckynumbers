@@ -22,7 +22,7 @@ import java.util.Optional;
 public interface LotteryUserRepository extends JpaRepository<LotteryUser, Long> {
 
 
-    String PATH = "/lottery_user";
+    String PATH = "lottery_user";
 
 
     Optional<LotteryUser> findByUsername(String username);

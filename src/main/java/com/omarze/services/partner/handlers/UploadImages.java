@@ -1,7 +1,9 @@
 package com.omarze.services.partner.handlers;
 
 
-import com.omarze.entities.AspectRatio;
+import com.julianduru.util.FileUtil;
+import com.julianduru.util.ImageUtil;
+import com.julianduru.util.entity.AspectRatio;
 import com.omarze.entities.Partner;
 import com.omarze.entities.PartnerImage;
 import com.omarze.exception.EntityNotFoundException;
@@ -10,8 +12,6 @@ import com.omarze.persistence.PartnerImageRepository;
 import com.omarze.persistence.PartnerRepository;
 import com.omarze.services.CommandBase;
 import com.omarze.services.FileSaver;
-import com.omarze.util.FileUtil;
-import com.omarze.util.ImageUtil;
 import lombok.Builder;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -19,6 +19,7 @@ import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import java.io.IOException;
 import java.time.LocalDateTime;
+import java.time.ZonedDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -115,7 +116,7 @@ public class UploadImages extends CommandBase<List<PartnerImage>> {
         image.setPartner(partner);
         image.setSavedPath(fullPath);
         image.setFileName(fileName);
-        image.setTimeAdded(LocalDateTime.now());
+        image.setTimeAdded(ZonedDateTime.now());
         image.setImageKey(UUID.nameUUIDFromBytes(fullPath.getBytes()).toString());
         image.setAspectRatio(aspectRatio);
 

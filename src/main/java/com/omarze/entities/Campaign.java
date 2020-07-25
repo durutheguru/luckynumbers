@@ -2,6 +2,7 @@ package com.omarze.entities;
 
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.julianduru.security.entity.BaseEntity;
 import com.omarze.exception.InvalidObjectException;
 import lombok.Builder;
 import lombok.Data;

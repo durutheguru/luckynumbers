@@ -22,7 +22,7 @@ import java.util.Optional;
 public interface PartnerUserRepository extends JpaRepository<PartnerUser, Long> {
 
 
-    String PATH = "/partner_user";
+    String PATH = "partner_user";
 
 
     Optional<PartnerUser> findByUsername(String username);

@@ -1,11 +1,11 @@
 package com.omarze.data.lotteryuser;
 
 
+import com.julianduru.util.RandomGenerator;
 import com.omarze.data.campaign.CampaignDataProvider;
 import com.omarze.api.dto.LotteryUserCampaignDTO;
 import com.omarze.entities.*;
 import com.omarze.persistence.LotteryUserCampaignRepository;
-import com.omarze.util.RandomGenerator;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Component;
 

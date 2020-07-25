@@ -2,6 +2,7 @@ package com.omarze.entities;
 
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.julianduru.security.entity.BaseEntity;
 import lombok.Data;
 
 import javax.persistence.Column;
