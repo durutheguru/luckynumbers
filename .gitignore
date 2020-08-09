@@ -39,3 +39,4 @@ HELP.md
 /**/static/node_modules
 
 **/*.versionsBackup
+.dump
