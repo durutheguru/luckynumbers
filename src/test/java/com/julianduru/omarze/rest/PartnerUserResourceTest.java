@@ -1,6 +1,7 @@
 package com.julianduru.omarze.rest;
 
 
+import com.julianduru.omarze.data.partner.PartnerDataProvider;
 import com.julianduru.util.JSONUtil;
 import com.julianduru.omarze.controller.BaseControllerTest;
 import com.julianduru.omarze.data.partner.PartnerUserDataProvider;
@@ -9,11 +10,11 @@ import com.julianduru.omarze.entities.Partner;
 import com.julianduru.omarze.entities.PartnerUser;
 import com.julianduru.omarze.persistence.PartnerRepository;
 import com.julianduru.omarze.persistence.PartnerUserRepository;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.security.test.context.support.WithMockUser;
-import org.springframework.test.context.jdbc.Sql;
 import org.springframework.transaction.annotation.Transactional;
 
 import static org.hamcrest.Matchers.greaterThanOrEqualTo;
@@ -27,8 +28,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 /**
  * created by julian
  */
-@Sql(scripts = {"/db/scripts/partner/init.sql"}, executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
-@Sql(scripts = {"/db/scripts/partner/delete.sql"}, executionPhase = Sql.ExecutionPhase.AFTER_TEST_METHOD)
 @WithMockUser(username = BaseControllerTest.TEST_USER, authorities = {BackOfficeUser.ROLE_ID})
 public class PartnerUserResourceTest extends BaseControllerTest {
 
@@ -42,12 +41,18 @@ public class PartnerUserResourceTest extends BaseControllerTest {
 
 
     @Autowired
-    PartnerUserDataProvider userDataProvider;
+    PartnerDataProvider partnerDataProvider;
+
+
+    @Autowired
+    PartnerUserDataProvider partnerUserDataProvider;
 
 
 
     @Test
     public void testLoadingPartnerUsers() throws Exception {
+        partnerUserDataProvider.save(2);
+
         mockMvc.perform(
             get(API_BASE_PATH + PartnerUserRepository.PATH + "?projection=userDetails")
         ).andDo(print())
@@ -57,11 +62,15 @@ public class PartnerUserResourceTest extends BaseControllerTest {
 
 
     @Test
+    @Ignore
     @Transactional
     public void testAddingPartnerUser() throws Exception {
-        Partner partner = partnerRepository.findFirstBy().get();
+        Partner partner = partnerDataProvider.getOrSave();
 
-        PartnerUser partnerUser = userDataProvider.newEntity(partner);
+        PartnerUser sample = new PartnerUser();
+        sample.setPartner(partner);
+
+        PartnerUser partnerUser = partnerUserDataProvider.provide(sample);
 
         mockMvc.perform(
             post(API_BASE_PATH + PartnerUserRepository.PATH)
@@ -75,9 +84,9 @@ public class PartnerUserResourceTest extends BaseControllerTest {
     @Test
     @Transactional
     public void testAddingPartnerUserWhenUsernameAlreadyExists() throws Exception {
-        PartnerUser existingUser = userRepository.findFirstBy().get();
+        PartnerUser existingUser = partnerUserDataProvider.getOrSave();
 
-        PartnerUser newUser = userDataProvider.newEntity(existingUser.getPartner());
+        PartnerUser newUser = partnerUserDataProvider.newEntity(existingUser.getPartner());
         newUser.setUsername(existingUser.getUsername());
 
         mockMvc.perform(
@@ -91,7 +100,7 @@ public class PartnerUserResourceTest extends BaseControllerTest {
 
     @Test
     public void testSearchingPartnerUsers() throws Exception {
-        PartnerUser existingUser = userRepository.findFirstBy().get();
+        PartnerUser existingUser = partnerUserDataProvider.getOrSave();
 
         mockMvc.perform(
             get(API_BASE_PATH + PartnerUserRepository.PATH +

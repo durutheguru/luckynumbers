@@ -24,8 +24,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 /**
  * created by julian
  */
-@Sql(scripts = {"/db/scripts/partner/init.sql"}, executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
-@Sql(scripts = {"/db/scripts/partner/delete.sql"}, executionPhase = Sql.ExecutionPhase.AFTER_TEST_METHOD)
+//@Sql(scripts = {"/db/scripts/partner/init.sql"}, executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
+//@Sql(scripts = {"/db/scripts/partner/delete.sql"}, executionPhase = Sql.ExecutionPhase.AFTER_TEST_METHOD)
 @WithMockUser(username = BaseControllerTest.TEST_USER, authorities = {BackOfficeUser.ROLE_ID})
 public class PartnerResourceTest extends BaseControllerTest {
 
@@ -54,7 +54,7 @@ public class PartnerResourceTest extends BaseControllerTest {
 
     @Test
     public void testSavingAlreadyExistingPartnerName() throws Exception {
-        Partner partner = partnerRepository.findFirstBy().get();
+        Partner partner = partnerDataProvider.getOrSave();
 
         Partner newPartner = partnerDataProvider.provide();
         newPartner.setName(partner.getName());
@@ -71,6 +71,8 @@ public class PartnerResourceTest extends BaseControllerTest {
 
     @Test
     public void testLoadingPartners() throws Exception {
+        partnerDataProvider.save(3);
+
         mockMvc.perform(
             get(API_BASE_PATH + PartnerRepository.PATH)
         ).andDo(print())
@@ -80,6 +82,8 @@ public class PartnerResourceTest extends BaseControllerTest {
 
     @Test
     public void testLoadingPartnersMinimumData() throws Exception {
+        partnerDataProvider.save(2);
+
         mockMvc.perform(
             get(API_BASE_PATH + PartnerRepository.PATH + "/search/findBy?projection=partnerMinDetails&sort=name,asc")
         ).andDo(print())
