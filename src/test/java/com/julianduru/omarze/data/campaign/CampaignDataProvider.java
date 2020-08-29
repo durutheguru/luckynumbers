@@ -51,7 +51,7 @@ public class CampaignDataProvider extends TestDataProvider<Campaign, CampaignRep
 
 
     public CampaignDTO newCampaignDTO() {
-        Campaign campaign = newEntity();
+        Campaign campaign = provide();
         CampaignDTO campaignDTO = modelMapper.map(campaign, CampaignDTO.class);
 
         return campaignDTO;
@@ -59,10 +59,10 @@ public class CampaignDataProvider extends TestDataProvider<Campaign, CampaignRep
 
 
     @Override
-    public Campaign newEntity() {
+    public Campaign provide() {
         List<Partner> partners = partnerDataProvider.loadPersistedEntities();
 
-        Partner partner = partners.isEmpty() ? partnerDataProvider.saveEntity() : partners.get(0);
+        Partner partner = partners.isEmpty() ? partnerDataProvider.save() : partners.get(0);
 
         Campaign campaign = new Campaign();
 
@@ -85,9 +85,15 @@ public class CampaignDataProvider extends TestDataProvider<Campaign, CampaignRep
         }
     }
 
+    @Override
+    public Campaign provide(Campaign sample) {
+        Campaign campaign = provide();
+        return campaign;
+    }
+
 
     public Campaign newActiveCampaign() {
-        var partner = partnerDataProvider.saveEntity();
+        var partner = partnerDataProvider.save();
 
         var campaign = new Campaign();
 
@@ -118,7 +124,7 @@ public class CampaignDataProvider extends TestDataProvider<Campaign, CampaignRep
 
 
     public Campaign newInvalidStartEndDateCampaign() {
-        var partner = partnerDataProvider.saveEntity();
+        var partner = partnerDataProvider.save();
 
         var campaign = new Campaign();
 
@@ -141,7 +147,7 @@ public class CampaignDataProvider extends TestDataProvider<Campaign, CampaignRep
 
 
     public Campaign newInvalidEvaluationTimeCampaign() {
-        var partner = partnerDataProvider.saveEntity();
+        var partner = partnerDataProvider.save();
 
         var campaign = new Campaign();
 
@@ -164,7 +170,7 @@ public class CampaignDataProvider extends TestDataProvider<Campaign, CampaignRep
 
 
     public Campaign newInvalidWinnerCountCampaign() {
-        Partner partner = partnerDataProvider.saveEntity();
+        Partner partner = partnerDataProvider.save();
 
         Campaign campaign = new Campaign();
 
@@ -181,8 +187,8 @@ public class CampaignDataProvider extends TestDataProvider<Campaign, CampaignRep
 
 
     @Override
-    public Campaign saveEntity() {
-        Campaign campaign = newEntity();
+    public Campaign save() {
+        Campaign campaign = provide();
         return getRepository().save(campaign);
     }
 
@@ -194,7 +200,7 @@ public class CampaignDataProvider extends TestDataProvider<Campaign, CampaignRep
 
 
     public Campaign saveEntity(Campaign example) {
-        Campaign campaign = newEntity();
+        Campaign campaign = provide();
         ObjectUtil.copyProperties(example, campaign);
 
         try {

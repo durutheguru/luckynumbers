@@ -80,17 +80,21 @@ public class Evaluation extends CommandBase<CampaignStageEvaluationResult> {
 
     @Override
     protected CampaignStageEvaluationResult execute_() throws ServiceException {
-        userCampaignRepository.updateParticipatingUserCampaignsToStatus(campaignId, LotteryUserCampaignStatus.EVALUATING);
+        userCampaignRepository.updateParticipatingUserCampaignsToStatus(
+            campaignId,
+            LotteryUserCampaignStatus.EVALUATING
+        );
 
         loadCampaign();
-
         generateLuckyIndices();
         loadWinningUserCampaigns();
+
         if (campaign.isFinalStage(stage)) {
             campaign.setCampaignStatus(CampaignStatus.COMPLETED);
         }
+        campaignRepository.save(campaign);
 
-        return finalizeResult();
+        return result();
     }
 
 

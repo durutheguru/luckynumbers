@@ -11,5 +11,9 @@ public class EntityNotFoundException extends ServiceException {
         super(String.format("%s ID %d was not found.", entityName, id));
     }
 
+    public EntityNotFoundException(String entityName, String key) {
+        super(String.format("%s ID %s was not found.", entityName, key));
+    }
+
 
 }

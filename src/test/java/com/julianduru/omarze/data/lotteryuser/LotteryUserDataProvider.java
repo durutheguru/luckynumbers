@@ -5,6 +5,7 @@ import com.github.javafaker.Faker;
 import com.julianduru.omarze.api.dto.LotteryUserDTO;
 import com.julianduru.omarze.entities.LotteryUser;
 import com.julianduru.omarze.persistence.LotteryUserRepository;
+import com.julianduru.util.NullAwareBeanUtils;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
@@ -62,6 +63,16 @@ public class LotteryUserDataProvider {
     public LotteryUser saveLotteryUser() {
         LotteryUser lotteryUser = newLotteryUser();
         lotteryUser.setPassword(passwordEncoder.encode(lotteryUser.getPassword()));
+        return lotteryUserRepository.save(lotteryUser);
+    }
+
+
+    public LotteryUser saveLotteryUser(LotteryUser sample) {
+        LotteryUser lotteryUser = newLotteryUser();
+        lotteryUser.setPassword(passwordEncoder.encode(lotteryUser.getPassword()));
+
+        NullAwareBeanUtils.copy(sample, lotteryUser);
+
         return lotteryUserRepository.save(lotteryUser);
     }
 

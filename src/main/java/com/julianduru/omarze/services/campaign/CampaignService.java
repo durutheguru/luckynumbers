@@ -5,6 +5,8 @@ import com.julianduru.omarze.api.dto.CampaignActionDTO;
 import com.julianduru.omarze.api.dto.CampaignDTO;
 import com.julianduru.omarze.entities.Campaign;
 import com.julianduru.omarze.exception.ServiceException;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 
 /**
  * created by julian

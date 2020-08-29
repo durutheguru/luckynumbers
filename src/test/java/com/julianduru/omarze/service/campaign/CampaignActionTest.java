@@ -28,7 +28,7 @@ public abstract class CampaignActionTest {
 
     @Before
     public void init() {
-        campaign = campaignDataProvider.saveEntity();
+        campaign = campaignDataProvider.save();
     }
 
 

@@ -41,7 +41,7 @@ public class PartnerResourceTest extends BaseControllerTest {
 
     @Test
     public void testSavingPartner() throws Exception {
-        Partner partner = partnerDataProvider.newEntity();
+        Partner partner = partnerDataProvider.provide();
 
         mockMvc.perform(
             post(API_BASE_PATH + PartnerRepository.PATH)
@@ -56,7 +56,7 @@ public class PartnerResourceTest extends BaseControllerTest {
     public void testSavingAlreadyExistingPartnerName() throws Exception {
         Partner partner = partnerRepository.findFirstBy().get();
 
-        Partner newPartner = partnerDataProvider.newEntity();
+        Partner newPartner = partnerDataProvider.provide();
         newPartner.setName(partner.getName());
 
 
@@ -111,7 +111,7 @@ public class PartnerResourceTest extends BaseControllerTest {
 
     @Test
     public void testSavingPartnerWithLongNameCausesError() throws Exception {
-        Partner partner = partnerDataProvider.newEntity();
+        Partner partner = partnerDataProvider.provide();
         partner.setName(Strings.repeat("Long Arse Name", 100));
 
         mockMvc.perform(
@@ -125,7 +125,7 @@ public class PartnerResourceTest extends BaseControllerTest {
 
     @Test
     public void testUploadingPartnerImages() throws Exception {
-        Partner partner = partnerDataProvider.saveEntity();
+        Partner partner = partnerDataProvider.save();
 
         MockMultipartFile file0 = new MockMultipartFile("files", "img0.jpg", MediaType.APPLICATION_OCTET_STREAM_VALUE, new ClassPathResource("img/img0.jpg").getInputStream());
         MockMultipartFile file2 = new MockMultipartFile("files", "img2.jpg", MediaType.APPLICATION_OCTET_STREAM_VALUE, new ClassPathResource("img/img2.jpg").getInputStream());

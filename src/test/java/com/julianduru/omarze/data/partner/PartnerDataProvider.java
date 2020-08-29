@@ -4,6 +4,7 @@ package com.julianduru.omarze.data.partner;
 import com.julianduru.omarze.data.TestDataProvider;
 import com.julianduru.omarze.entities.Partner;
 import com.julianduru.omarze.persistence.PartnerRepository;
+import com.julianduru.util.NullAwareBeanUtils;
 import org.springframework.stereotype.Component;
 
 /**
@@ -19,12 +20,21 @@ public class PartnerDataProvider extends TestDataProvider<Partner, PartnerReposi
 
 
     @Override
-    public Partner newEntity() {
+    public Partner provide() {
         Partner partner = new Partner();
 
         partner.setName(faker.name().fullName());
         partner.setDescription(faker.company().name());
         partner.setWebsite("http://partner.com");
+
+        return partner;
+    }
+
+
+    @Override
+    public Partner provide(Partner sample) {
+        Partner partner = provide();
+        NullAwareBeanUtils.copy(sample, partner);
 
         return partner;
     }

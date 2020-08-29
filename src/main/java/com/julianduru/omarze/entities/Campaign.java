@@ -75,6 +75,10 @@ public class Campaign extends BaseEntity {
     public CampaignStatus campaignStatus;
 
 
+    @OneToMany(mappedBy = "campaign")
+    public List<CampaignStageEvaluationResult> campaignStageEvaluationResults;
+
+
     public Campaign() {}
 
 
@@ -89,7 +93,7 @@ public class Campaign extends BaseEntity {
 
 
     public Campaign initialize() throws InvalidObjectException {
-        for (StageDescription description : stageDescriptions) {
+        for (var description : stageDescriptions) {
             description.setCampaign(this);
         }
 
@@ -106,7 +110,7 @@ public class Campaign extends BaseEntity {
 
 
     private void setExpectedWinnerCount() {
-        int winnerCount = getFinalStageDescription().getWinnersCount();
+        var winnerCount = getFinalStageDescription().getWinnersCount();
         setExpectedWinnerCount(winnerCount);
     }
 
@@ -140,8 +144,8 @@ public class Campaign extends BaseEntity {
 
 
     private void validateStartEndDates() throws InvalidObjectException {
-        StageDescription firstStageDescription = stageDescriptions.get(0);
-        StageDescription lastStageDescription = stageDescriptions.get(stageDescriptions.size() - 1);
+        var firstStageDescription = stageDescriptions.get(0);
+        var lastStageDescription = stageDescriptions.get(stageDescriptions.size() - 1);
 
         boolean campaignStartError = firstStageDescription
                 .getEvaluationTime()

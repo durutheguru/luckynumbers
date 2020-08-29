@@ -43,7 +43,7 @@ public class ApprovalTest extends BaseServiceIntegrationTest {
 
     @Before
     public void before() {
-        campaignList.add(campaignDataProvider.saveEntity());
+        campaignList.add(campaignDataProvider.save());
     }
 
 

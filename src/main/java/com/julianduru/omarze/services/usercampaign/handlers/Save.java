@@ -11,6 +11,8 @@ import com.julianduru.omarze.persistence.LotteryUserCampaignRepository;
 import com.julianduru.omarze.persistence.LotteryUserRepository;
 import com.julianduru.omarze.services.CommandBase;
 import com.julianduru.omarze.services.campaign.NumberGenerator;
+import com.julianduru.security.Auth;
+import com.julianduru.security.entity.UserAuthId;
 import lombok.Builder;
 
 import javax.validation.constraints.NotNull;
@@ -66,14 +68,14 @@ public class Save extends CommandBase<LotteryUserCampaign> {
 
     private void verifyCampaignStatus() throws ServiceException {
         if (campaign.getCampaignStatus() != CampaignStatus.ACTIVE) {
-            throw new ServiceException("Campaign must be in Approved State.");
+            throw new ServiceException("Campaign is not Active");
         }
     }
 
 
     private void verifyUserCampaignDoesNotExist() throws DuplicateUserCampaignException {
         Optional<LotteryUserCampaign> existingUserCampaign = userCampaignRepository.findByLotteryUser_IdAndCampaign_Id(
-                userCampaignDTO.getLotteryUserId(), userCampaignDTO.getCampaignId()
+                lotteryUser.getId(), campaign.getId()
         );
 
         if (existingUserCampaign.isPresent()) {
@@ -101,8 +103,12 @@ public class Save extends CommandBase<LotteryUserCampaign> {
 
 
     private void loadLotteryUser() throws EntityNotFoundException {
-        Optional<LotteryUser> lotteryUserOptional = lotteryUserRepository.findById(userCampaignDTO.getLotteryUserId());
-        lotteryUser = lotteryUserOptional.orElseThrow(() -> new EntityNotFoundException("Lottery User", userCampaignDTO.getLotteryUserId()));
+        UserAuthId authId = Auth.getUserAuthId(true);
+
+        Optional<LotteryUser> lotteryUserOptional = lotteryUserRepository.findByUsername(authId.authUsername);
+        lotteryUser = lotteryUserOptional.orElseThrow(
+            () -> new EntityNotFoundException("Lottery Username", authId.authUsername)
+        );
     }
 
 
@@ -119,3 +125,5 @@ public class Save extends CommandBase<LotteryUserCampaign> {
 
 
 }
+
+

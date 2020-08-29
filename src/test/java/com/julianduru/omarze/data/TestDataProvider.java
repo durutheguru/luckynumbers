@@ -13,7 +13,7 @@ import java.util.List;
  */
 @Getter
 @RequiredArgsConstructor
-public abstract class TestDataProvider<E, R extends JpaRepository<E, ?>> implements DataProvider<E> {
+public abstract class TestDataProvider<E, R extends JpaRepository<E, Long>> implements DataProvider<E> {
 
 
     private final R repository;

@@ -13,7 +13,6 @@ import javax.validation.constraints.NotNull;
 public class LotteryUserCampaignDTO extends BaseDTO {
 
 
-    @NotNull(message = "Lottery User ID is required")
     private Long lotteryUserId;
 
 

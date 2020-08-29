@@ -1,6 +1,7 @@
 package com.julianduru.omarze.controller;
 
 
+import com.julianduru.omarze.data.lotteryuser.LotteryUserDataProvider;
 import com.julianduru.util.JSONUtil;
 import com.julianduru.Constants;
 import com.julianduru.omarze.api.dto.LotteryUserCampaignDTO;
@@ -23,18 +24,20 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @WithMockUser(username = BaseControllerTest.TEST_USER, authorities = {LotteryUser.ROLE_ID, BackOfficeUser.ROLE_ID})
 public class LotteryUserCampaignControllerTest extends BaseControllerTest {
 
-    private LotteryUserCampaignDataService userCampaignDataService;
-
+    @Autowired
+    private LotteryUserDataProvider lotteryUserDataProvider;
 
     @Autowired
-    public LotteryUserCampaignControllerTest setUserCampaignDataService(LotteryUserCampaignDataService userCampaignDataService) {
-        this.userCampaignDataService = userCampaignDataService;
-        return this;
-    }
+    private LotteryUserCampaignDataService userCampaignDataService;
+
 
 
     @Test
     public void testAddingNewLotteryUserCampaign() throws Exception {
+        LotteryUser user = new LotteryUser();
+        user.setUsername(BaseControllerTest.TEST_USER);
+        lotteryUserDataProvider.saveLotteryUser(user);
+
         LotteryUserCampaignDTO userCampaignDTO = userCampaignDataService.newUserCampaignDTO();
 
         mockMvc.perform(

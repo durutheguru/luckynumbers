@@ -13,6 +13,7 @@ import org.springframework.data.rest.core.annotation.RepositoryRestResource;
 import org.springframework.data.rest.core.annotation.RestResource;
 import org.springframework.stereotype.Repository;
 
+import java.util.Collection;
 import java.util.List;
 
 /**
@@ -65,8 +66,8 @@ public interface CampaignRepository extends JpaRepository<Campaign, Long> {
 
 
     @RestResource(path = "byStatus", rel = "byStatus")
-    Page<Campaign> findByCampaignStatus(
-        @Param("status") CampaignStatus status, Pageable pageable
+    Page<Campaign> findByCampaignStatusIn(
+        @Param("status") Collection<CampaignStatus> status, Pageable pageable
     );
 
 
