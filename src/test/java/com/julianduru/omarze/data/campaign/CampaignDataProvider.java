@@ -3,6 +3,7 @@ package com.julianduru.omarze.data.campaign;
 
 import com.github.javafaker.Faker;
 import com.julianduru.omarze.entities.*;
+import com.julianduru.util.NullAwareBeanUtils;
 import com.julianduru.util.ObjectUtil;
 import com.julianduru.omarze.data.TestDataProvider;
 import com.julianduru.omarze.data.partner.PartnerDataProvider;
@@ -88,6 +89,8 @@ public class CampaignDataProvider extends TestDataProvider<Campaign, CampaignRep
     @Override
     public Campaign provide(Campaign sample) {
         Campaign campaign = provide();
+        NullAwareBeanUtils.copy(sample, campaign);
+
         return campaign;
     }
 
@@ -189,6 +192,13 @@ public class CampaignDataProvider extends TestDataProvider<Campaign, CampaignRep
     @Override
     public Campaign save() {
         Campaign campaign = provide();
+        return getRepository().save(campaign);
+    }
+
+
+    @Override
+    public Campaign save(Campaign sample) {
+        Campaign campaign = provide(sample);
         return getRepository().save(campaign);
     }
 

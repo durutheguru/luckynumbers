@@ -12,6 +12,7 @@ import org.springframework.http.MediaType;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.jdbc.Sql;
 
+import static org.hamcrest.Matchers.greaterThanOrEqualTo;
 import static org.hamcrest.Matchers.hasSize;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
@@ -22,8 +23,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 /**
  * created by julian
  */
-@Sql(scripts = {"/db/scripts/back_office/init.sql"}, executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
-@Sql(scripts = {"/db/scripts/back_office/delete.sql"}, executionPhase = Sql.ExecutionPhase.AFTER_TEST_METHOD)
 @WithMockUser(username = BaseControllerTest.TEST_USER, authorities = {BackOfficeUser.ROLE_ID})
 public class BackOfficeUserResourceTest extends BaseControllerTest {
 
@@ -32,24 +31,21 @@ public class BackOfficeUserResourceTest extends BaseControllerTest {
     BackOfficeUserDataProvider userDataProvider;
 
 
-    @Autowired
-    BackOfficeUserRepository userRepository;
-
-
-
     @Test
     public void testLoadingBackOfficeUsers() throws Exception {
+        userDataProvider.save(3);
+
         mockMvc.perform(
             get(API_BASE_PATH + BackOfficeUserRepository.PATH + "?projection=userDetails")
         ).andDo(print())
             .andExpect(status().is2xxSuccessful())
-            .andExpect(jsonPath("$._embedded.backOfficeUsers", hasSize(3)));
+            .andExpect(jsonPath("$._embedded.backOfficeUsers", hasSize(greaterThanOrEqualTo(3))));
     }
 
 
     @Test
     public void testAddingBackOfficeUser() throws Exception {
-        BackOfficeUser user = userDataProvider.newEntity();
+        BackOfficeUser user = userDataProvider.provide();
 
         mockMvc.perform(
             post(API_BASE_PATH + BackOfficeUserRepository.PATH)
@@ -62,9 +58,9 @@ public class BackOfficeUserResourceTest extends BaseControllerTest {
 
     @Test
     public void testAddingBackOfficeUserWhenUsernameAlreadyExists() throws Exception {
-        BackOfficeUser existingUser = userRepository.findFirstBy().get();
+        BackOfficeUser existingUser = userDataProvider.getOrSave();
 
-        BackOfficeUser user = userDataProvider.newEntity();
+        BackOfficeUser user = userDataProvider.provide();
         user.setUsername(existingUser.getUsername());
 
         mockMvc.perform(
@@ -78,12 +74,20 @@ public class BackOfficeUserResourceTest extends BaseControllerTest {
 
     @Test
     public void testSearchingBackOfficeUsers() throws Exception {
+        BackOfficeUser sample1 = new BackOfficeUser();
+        sample1.setName("superbackoffice2");
+
+        BackOfficeUser sample2 = new BackOfficeUser();
+        sample2.setUsername("superbackoffice2");
+
+        userDataProvider.save(sample1, sample2);
+
         mockMvc.perform(
             get(API_BASE_PATH + BackOfficeUserRepository.PATH +
                 "/search/searchUsers?projection=userDetails&name=superbackoffice2&username=superbackoffice2")
         ).andDo(print())
             .andExpect(status().is2xxSuccessful())
-            .andExpect(jsonPath("$._embedded.backOfficeUsers", hasSize(1)));
+            .andExpect(jsonPath("$._embedded.backOfficeUsers", hasSize(2)));
     }
 
 

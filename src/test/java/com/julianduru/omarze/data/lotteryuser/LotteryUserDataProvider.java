@@ -6,6 +6,9 @@ import com.julianduru.omarze.api.dto.LotteryUserDTO;
 import com.julianduru.omarze.entities.LotteryUser;
 import com.julianduru.omarze.persistence.LotteryUserRepository;
 import com.julianduru.util.NullAwareBeanUtils;
+import com.julianduru.util.test.DataProvider;
+import lombok.RequiredArgsConstructor;
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
@@ -16,7 +19,8 @@ import java.util.List;
  * created by julian
  */
 @Component
-public class LotteryUserDataProvider {
+@RequiredArgsConstructor
+public class LotteryUserDataProvider implements DataProvider<LotteryUser> {
 
     private final Faker faker;
 
@@ -25,24 +29,8 @@ public class LotteryUserDataProvider {
     private final LotteryUserRepository lotteryUserRepository;
 
 
-    public LotteryUserDataProvider(Faker faker, PasswordEncoder passwordEncoder, LotteryUserRepository lotteryUserRepository) {
-        this.faker = faker;
-        this.passwordEncoder = passwordEncoder;
-        this.lotteryUserRepository = lotteryUserRepository;
-    }
-
-
     public LotteryUser newLotteryUser() {
-        LotteryUser user = new LotteryUser();
-
-        user.setName(faker.name().fullName());
-        user.setUsername(faker.internet().emailAddress());
-        user.setPassword(faker.internet().password());
-        user.setEmail(user.getUsername());
-        user.setPhoneNumber(faker.phoneNumber().cellPhone());
-
-
-        return user;
+        return provide();
     }
 
 
@@ -54,7 +42,6 @@ public class LotteryUserDataProvider {
         user.setPasswordIn(faker.internet().password());
         user.setEmail(user.getUsername());
         user.setPhoneNumber(faker.phoneNumber().cellPhone());
-
 
         return user;
     }
@@ -85,6 +72,35 @@ public class LotteryUserDataProvider {
         }
 
         return users;
+    }
+
+
+    @Override
+    public JpaRepository<LotteryUser, Long> getRepository() {
+        return lotteryUserRepository;
+    }
+
+
+    @Override
+    public LotteryUser provide() {
+        LotteryUser user = new LotteryUser();
+
+        user.setName(faker.name().fullName());
+        user.setUsername(faker.internet().emailAddress());
+        user.setPassword(faker.internet().password());
+        user.setEmail(user.getUsername());
+        user.setPhoneNumber(faker.phoneNumber().cellPhone());
+
+        return user;
+    }
+
+
+    @Override
+    public LotteryUser provide(LotteryUser sample) {
+        LotteryUser user = provide();
+        NullAwareBeanUtils.copy(sample, user);
+
+        return user;
     }
 
 

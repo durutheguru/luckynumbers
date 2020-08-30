@@ -24,8 +24,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 /**
  * created by julian
  */
-@Sql(scripts = {"/db/scripts/lottery/init.sql"}, executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
-@Sql(scripts = {"/db/scripts/lottery/delete.sql"}, executionPhase = Sql.ExecutionPhase.AFTER_TEST_METHOD)
 @WithMockUser(username = BaseControllerTest.TEST_USER, authorities = {BackOfficeUser.ROLE_ID})
 public class LotteryUserResourceTest extends BaseControllerTest {
 
@@ -40,6 +38,8 @@ public class LotteryUserResourceTest extends BaseControllerTest {
 
     @Test
     public void testLoadingLotteryUsers() throws Exception {
+        userDataProvider.save(2);
+
         mockMvc.perform(
             get(API_BASE_PATH + LotteryUserRepository.PATH)
         ).andDo(print())
@@ -50,7 +50,7 @@ public class LotteryUserResourceTest extends BaseControllerTest {
 
     @Test
     public void testAddingLotteryUser() throws Exception {
-        LotteryUser lotteryUser = userDataProvider.newLotteryUser();
+        LotteryUser lotteryUser = userDataProvider.provide();
 
         mockMvc.perform(
             post(API_BASE_PATH + LotteryUserRepository.PATH)
@@ -63,9 +63,9 @@ public class LotteryUserResourceTest extends BaseControllerTest {
 
     @Test
     public void testAddingLotteryUserWhenUsernameAlreadyExists() throws Exception {
-        LotteryUser lotteryUser = userRepository.findFirstBy().get();
+        LotteryUser lotteryUser = userDataProvider.getOrSave();
 
-        LotteryUser newUser = userDataProvider.newLotteryUser();
+        LotteryUser newUser = userDataProvider.provide();
         newUser.setUsername(lotteryUser.getUsername());
 
         mockMvc.perform(
@@ -79,7 +79,7 @@ public class LotteryUserResourceTest extends BaseControllerTest {
 
     @Test
     public void testSearchingLotteryUsers() throws Exception {
-        LotteryUser existingUser = userRepository.findFirstBy().get();
+        LotteryUser existingUser = userDataProvider.getOrSave();
 
         mockMvc.perform(
             get(API_BASE_PATH + LotteryUserRepository.PATH +

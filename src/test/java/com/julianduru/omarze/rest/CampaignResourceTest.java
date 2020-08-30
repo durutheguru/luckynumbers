@@ -7,6 +7,7 @@ import com.julianduru.omarze.data.campaign.CampaignStageEvaluationResultDataProv
 import com.julianduru.omarze.entities.BackOfficeUser;
 import com.julianduru.omarze.entities.Campaign;
 import com.julianduru.omarze.entities.CampaignStageEvaluationResult;
+import com.julianduru.omarze.entities.CampaignStatus;
 import com.julianduru.omarze.persistence.CampaignRepository;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,8 +24,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 /**
  * created by julian
  */
-@Sql(scripts = {"/db/scripts/campaign/init.sql"}, executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
-@Sql(scripts = {"/db/scripts/campaign/delete.sql"}, executionPhase = Sql.ExecutionPhase.AFTER_TEST_METHOD)
 @WithMockUser(username = BaseControllerTest.TEST_USER, authorities = {BackOfficeUser.ROLE_ID})
 public class CampaignResourceTest extends BaseControllerTest {
 
@@ -38,6 +37,8 @@ public class CampaignResourceTest extends BaseControllerTest {
 
     @Test
     public void testLoadingCampaigns() throws Exception {
+        campaignDataProvider.save(3);
+
         mockMvc.perform(
             get(API_BASE_PATH + CampaignRepository.PATH + "?projection=campaignDetails")
         ).andDo(print())
@@ -62,6 +63,14 @@ public class CampaignResourceTest extends BaseControllerTest {
 
     @Test
     public void testSearchingCampaigns() throws Exception {
+        Campaign sample1 = new Campaign();
+        sample1.setName("Burna");
+
+        Campaign sample2 = new Campaign();
+        sample2.setDescription("party");
+
+        campaignDataProvider.save(sample1, sample2);
+
         mockMvc.perform(
             get(API_BASE_PATH + CampaignRepository.PATH + "/search/searchCampaign?name=Burna&desc=party")
         ).andDo(print())
@@ -72,6 +81,12 @@ public class CampaignResourceTest extends BaseControllerTest {
 
     @Test
     public void testFetchingCampaignsByStatus() throws Exception {
+        Campaign sample = new Campaign();
+        sample.setDescription("party");
+        sample.setCampaignStatus(CampaignStatus.APPROVED);
+
+        campaignDataProvider.save(sample);
+
         mockMvc.perform(
             get(API_BASE_PATH + CampaignRepository.PATH + "/search/byStatus?status=APPROVED&projection=campaignDetails")
         ).andDo(print())
