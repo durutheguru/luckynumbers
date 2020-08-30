@@ -48,7 +48,7 @@ jobs:
             mvn -s settings.xml versions:set -DnewVersion=${{ steps.gitversion.outputs.majorMinorPatch }}-SNAPSHOT
         - name: Maven Package
           run: |
-            mvn package -s settings.xml -DskipTests
+            mvn package -s settings.xml -f pom.xml -DskipTests
         - name: Target Contents
           run: |
             ls target
