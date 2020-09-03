@@ -1,5 +1,4 @@
 FROM openjdk:14-jdk-alpine
-# openjdk:8-jre-alpine
 
 WORKDIR /app
 

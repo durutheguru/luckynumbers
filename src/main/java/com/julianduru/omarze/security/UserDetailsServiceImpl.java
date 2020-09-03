@@ -95,7 +95,7 @@ public class UserDetailsServiceImpl implements IUserDetailsService {
 
                 return user;
             }
-            catch (UserNotFoundException e) {
+            catch (Throwable e) {
                 logger.warn(String.format("User %s was not found as %s", username, provider.name()));
                 // fail silently if user was not found in the provider
             }
