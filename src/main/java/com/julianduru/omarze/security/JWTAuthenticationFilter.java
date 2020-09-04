@@ -80,11 +80,14 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
     }
 
 
-    private String extractUsername(Authentication authentication) {
+    private String extractUsername(Object authentication) {
         var username = "";
 
         if (authentication instanceof UserDetails) {
             username = ((UserDetails) authentication).getUsername();
+        }
+        else if (authentication instanceof UsernamePasswordAuthenticationToken) {
+            return extractUsername(((UsernamePasswordAuthenticationToken) authentication).getPrincipal());
         }
         else {
             username = authentication.toString();
