@@ -6,6 +6,7 @@ import com.julianduru.omarze.exception.NoUserProviderFoundException;
 import com.julianduru.omarze.exception.ServiceException;
 import com.julianduru.omarze.exception.UserNotFoundException;
 import com.julianduru.omarze.services.user.UserDetailsProvider;
+import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.security.core.userdetails.User;
@@ -19,11 +20,9 @@ import java.util.Optional;
 /**
  * created by julian
  */
+@Slf4j
 @Service
 public class UserDetailsServiceImpl implements IUserDetailsService {
-
-
-    Logger logger = LoggerFactory.getLogger(UserDetailsServiceImpl.class);
 
 
     final List<UserDetailsProvider<? extends ApplicationUser>> userDetailsProviders;
@@ -59,6 +58,7 @@ public class UserDetailsServiceImpl implements IUserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        log.info("Loading User by Username: {}", username);
         return loadUserByUsername(username, true);
     }
 
@@ -96,7 +96,7 @@ public class UserDetailsServiceImpl implements IUserDetailsService {
                 return user;
             }
             catch (Throwable e) {
-                logger.warn(String.format("User %s was not found as %s", username, provider.name()));
+                log.warn(String.format("User %s was not found as %s", username, provider.name()));
                 // fail silently if user was not found in the provider
             }
         }
