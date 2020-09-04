@@ -10,6 +10,7 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.util.Assert;
 
@@ -28,11 +29,9 @@ import java.util.stream.Collectors;
  */
 public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilter {
 
-    private final static String JWT_AUTH_CLAIM = "authorizations";
-
-
     private ObjectMapper objectMapper = new ObjectMapper();
 
+    private final static String JWT_AUTH_CLAIM = "authorizations";
 
     private final AuthenticationManager authenticationManager;
 
@@ -45,7 +44,7 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
     @Override
     public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response) throws AuthenticationException {
         try {
-            UserLogin userLogin = objectMapper.readValue(request.getInputStream(), UserLogin.class);
+            var userLogin = objectMapper.readValue(request.getInputStream(), UserLogin.class);
             return authenticationManager.authenticate(
                     new UsernamePasswordAuthenticationToken(userLogin.getUsername(), userLogin.getPassword())
             );
@@ -58,12 +57,13 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 
     @Override
     public void successfulAuthentication(HttpServletRequest request, HttpServletResponse response, FilterChain chain, Authentication authResult) throws IOException, ServletException {
-        List<String> authorities = extractAuthorities(authResult);
+        var username = extractUsername(authResult);
+        var authorities = extractAuthorities(authResult);
 
-        String token = JWT.create()
-                .withSubject(authResult.getPrincipal().toString())
+        var token = JWT.create()
+                .withSubject(username)
                 .withExpiresAt(new Date(System.currentTimeMillis() + Constants.Security.EXPIRATION_TIME))
-                .withArrayClaim(JWT_AUTH_CLAIM, authorities.toArray(new String[authorities.size()]))
+                .withArrayClaim(JWT_AUTH_CLAIM, authorities.toArray(new String[0]))
                 .sign(Algorithm.HMAC512(Constants.Security.SECRET.getBytes()));
         
         response.addHeader(Constants.Security.HEADER_STRING, Constants.Security.TOKEN_PREFIX + token);
@@ -77,6 +77,20 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
             .stream()
             .map(GrantedAuthority::getAuthority)
             .collect(Collectors.toList());
+    }
+
+
+    private String extractUsername(Authentication authentication) {
+        var username = "";
+
+        if (authentication instanceof UserDetails) {
+            username = ((UserDetails) authentication).getUsername();
+        }
+        else {
+            username = authentication.toString();
+        }
+
+        return username;
     }
 
 
