@@ -136,7 +136,7 @@
         <dependency>
             <groupId>com.julianduru</groupId>
             <artifactId>push-notification-lib</artifactId>
-            <version>1.0-SNAPSHOT</version>
+            <version>0.2.0-SNAPSHOT</version>
         </dependency>
 
         <dependency>
@@ -216,8 +216,6 @@
             <artifactId>json</artifactId>
             <version>20180130</version>
         </dependency>
-
-
 
         <dependency>
             <groupId>org.springframework.boot</groupId>
