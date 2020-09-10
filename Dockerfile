@@ -1,7 +1,6 @@
-FROM openjdk:8-jre-alpine
+FROM openjdk:14-jdk-alpine
 
 WORKDIR /app
-
 
 ARG release_version=${RELEASE_TAG}
 

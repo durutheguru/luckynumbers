@@ -1,50 +1,40 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-2.0.xsd">
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd
+    http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
 
-  <changeSet author="quartz.generated" id="1">
+  <property name="table_prefix" value="QRTZ_"/>
 
-    <createTable tableName="QRTZ_CALENDARS">
-      <column name="SCHED_NAME" type="NVARCHAR(100)">
-        <constraints nullable="false" primaryKey="true"/>
+  <property name="blob_type" value="BLOB" />
+
+  <changeSet id="quartz-init" author="quartz">
+
+    <createTable tableName="${table_prefix}LOCKS">
+      <column name="SCHED_NAME" type="VARCHAR(120)">
+        <constraints nullable="false"/>
       </column>
-      <column name="CALENDAR_NAME" type="NVARCHAR(200)">
-        <constraints nullable="false" primaryKey="true"/>
-      </column>
-      <column name="CALENDAR" type="BLOB">
+      <column name="LOCK_NAME" type="VARCHAR(40)">
         <constraints nullable="false"/>
       </column>
     </createTable>
+    <addPrimaryKey columnNames="SCHED_NAME, LOCK_NAME" tableName="${table_prefix}LOCKS"/>
 
-    <createTable tableName="QRTZ_CRON_TRIGGERS">
-      <column name="SCHED_NAME" type="NVARCHAR(100)">
-        <constraints nullable="false" primaryKey="true"/>
-      </column>
-      <column name="TRIGGER_NAME" type="NVARCHAR(150)">
-        <constraints nullable="false" primaryKey="true"/>
-      </column>
-      <column name="TRIGGER_GROUP" type="NVARCHAR(150)">
-        <constraints nullable="false" primaryKey="true"/>
-      </column>
-      <column name="CRON_EXPRESSION" type="NVARCHAR(120)">
+    <createTable tableName="${table_prefix}FIRED_TRIGGERS">
+      <column name="SCHED_NAME" type="VARCHAR(120)">
         <constraints nullable="false"/>
       </column>
-      <column name="TIME_ZONE_ID" type="NVARCHAR(80)"/>
-    </createTable>
-
-    <createTable tableName="QRTZ_FIRED_TRIGGERS">
-      <column name="SCHED_NAME" type="NVARCHAR(100)">
-        <constraints nullable="false" primaryKey="true"/>
-      </column>
-      <column name="ENTRY_ID" type="NVARCHAR(95)">
-        <constraints nullable="false" primaryKey="true"/>
-      </column>
-      <column name="TRIGGER_NAME" type="NVARCHAR(150)">
+      <column name="ENTRY_ID" type="VARCHAR(95)">
         <constraints nullable="false"/>
       </column>
-      <column name="TRIGGER_GROUP" type="NVARCHAR(150)">
+      <column name="TRIGGER_NAME" type="VARCHAR(200)">
         <constraints nullable="false"/>
       </column>
-      <column name="INSTANCE_NAME" type="NVARCHAR(200)">
+      <column name="TRIGGER_GROUP" type="VARCHAR(200)">
+        <constraints nullable="false"/>
+      </column>
+      <column name="INSTANCE_NAME" type="VARCHAR(200)">
         <constraints nullable="false"/>
       </column>
       <column name="FIRED_TIME" type="BIGINT">
@@ -53,34 +43,81 @@
       <column name="SCHED_TIME" type="BIGINT">
         <constraints nullable="false"/>
       </column>
-      <column name="PRIORITY" type="INT">
+      <column name="PRIORITY" type="INTEGER">
         <constraints nullable="false"/>
       </column>
-      <column name="STATE" type="NVARCHAR(16)">
+      <column name="STATE" type="VARCHAR(16)">
         <constraints nullable="false"/>
       </column>
-      <column name="JOB_NAME" type="NVARCHAR(150)"/>
-      <column name="JOB_GROUP" type="NVARCHAR(150)"/>
+      <column name="JOB_NAME" type="VARCHAR(200)"/>
+      <column name="JOB_GROUP" type="VARCHAR(200)"/>
       <column name="IS_NONCONCURRENT" type="BOOLEAN"/>
       <column name="REQUESTS_RECOVERY" type="BOOLEAN"/>
     </createTable>
+    <addPrimaryKey columnNames="SCHED_NAME, ENTRY_ID" tableName="${table_prefix}FIRED_TRIGGERS"/>
 
-    <createTable tableName="QRTZ_PAUSED_TRIGGER_GRPS">
-      <column name="SCHED_NAME" type="NVARCHAR(100)">
-        <constraints nullable="false" primaryKey="true"/>
+    <createIndex tableName="${table_prefix}FIRED_TRIGGERS" indexName="IDX_${table_prefix}FT_INST_JOB_REQ_RCVRY">
+      <column name="SCHED_NAME"/>
+      <column name="INSTANCE_NAME"/>
+      <column name="REQUESTS_RECOVERY"/>
+    </createIndex>
+
+    <createIndex tableName="${table_prefix}FIRED_TRIGGERS" indexName="IDX_${table_prefix}FT_J_G">
+      <column name="SCHED_NAME"/>
+      <column name="JOB_NAME"/>
+      <column name="JOB_GROUP"/>
+    </createIndex>
+
+    <createIndex tableName="${table_prefix}FIRED_TRIGGERS" indexName="IDX_${table_prefix}FT_JG">
+      <column name="SCHED_NAME"/>
+      <column name="JOB_GROUP"/>
+    </createIndex>
+
+    <createIndex tableName="${table_prefix}FIRED_TRIGGERS" indexName="IDX_${table_prefix}FT_T_G">
+      <column name="SCHED_NAME"/>
+      <column name="TRIGGER_NAME"/>
+      <column name="TRIGGER_GROUP"/>
+    </createIndex>
+
+    <createIndex tableName="${table_prefix}FIRED_TRIGGERS" indexName="IDX_${table_prefix}FT_TG">
+      <column name="SCHED_NAME"/>
+      <column name="TRIGGER_GROUP"/>
+    </createIndex>
+
+    <createIndex tableName="${table_prefix}FIRED_TRIGGERS" indexName="IDX_${table_prefix}FT_TRIG_INST_NAME">
+      <column name="SCHED_NAME"/>
+      <column name="INSTANCE_NAME"/>
+    </createIndex>
+
+    <createTable tableName="${table_prefix}CALENDARS">
+      <column name="SCHED_NAME" type="VARCHAR(120)">
+        <constraints nullable="false"/>
       </column>
-      <column name="TRIGGER_GROUP" type="NVARCHAR(200)">
-        <constraints nullable="false" primaryKey="true"/>
+      <column name="CALENDAR_NAME" type="VARCHAR(200)">
+        <constraints nullable="false"/>
+      </column>
+      <column name="CALENDAR" type="${blob_type}">
+        <constraints nullable="false"/>
       </column>
     </createTable>
+    <addPrimaryKey columnNames="SCHED_NAME, CALENDAR_NAME" tableName="${table_prefix}CALENDARS"/>
 
-
-    <createTable tableName="QRTZ_SCHEDULER_STATE">
-      <column name="SCHED_NAME" type="NVARCHAR(100)">
-        <constraints nullable="false" primaryKey="true"/>
+    <createTable tableName="${table_prefix}PAUSED_TRIGGER_GRPS">
+      <column name="SCHED_NAME" type="VARCHAR(120)">
+        <constraints nullable="false"/>
       </column>
-      <column name="INSTANCE_NAME" type="NVARCHAR(200)">
-        <constraints nullable="false" primaryKey="true"/>
+      <column name="TRIGGER_GROUP" type="VARCHAR(200)">
+        <constraints nullable="false"/>
+      </column>
+    </createTable>
+    <addPrimaryKey columnNames="SCHED_NAME, TRIGGER_GROUP" tableName="${table_prefix}PAUSED_TRIGGER_GRPS"/>
+
+    <createTable tableName="${table_prefix}SCHEDULER_STATE">
+      <column name="SCHED_NAME" type="VARCHAR(120)">
+        <constraints nullable="false"/>
+      </column>
+      <column name="INSTANCE_NAME" type="VARCHAR(200)">
+        <constraints nullable="false"/>
       </column>
       <column name="LAST_CHECKIN_TIME" type="BIGINT">
         <constraints nullable="false"/>
@@ -89,29 +126,20 @@
         <constraints nullable="false"/>
       </column>
     </createTable>
+    <addPrimaryKey columnNames="SCHED_NAME, INSTANCE_NAME" tableName="${table_prefix}SCHEDULER_STATE"/>
 
-    <createTable tableName="QRTZ_LOCKS">
-      <column name="SCHED_NAME" type="NVARCHAR(100)">
-        <constraints nullable="false" primaryKey="true"/>
+    <createTable tableName="${table_prefix}JOB_DETAILS">
+      <column name="SCHED_NAME" type="VARCHAR(120)">
+        <constraints nullable="false"/>
       </column>
-      <column name="LOCK_NAME" type="NVARCHAR(40)">
-        <constraints nullable="false" primaryKey="true"/>
+      <column name="JOB_NAME" type="VARCHAR(200)">
+        <constraints nullable="false"/>
       </column>
-    </createTable>
-
-
-    <createTable tableName="QRTZ_JOB_DETAILS">
-      <column name="SCHED_NAME" type="NVARCHAR(100)">
-        <constraints nullable="false" primaryKey="true"/>
+      <column name="JOB_GROUP" type="VARCHAR(200)">
+        <constraints nullable="false"/>
       </column>
-      <column name="JOB_NAME" type="NVARCHAR(150)">
-        <constraints nullable="false" primaryKey="true"/>
-      </column>
-      <column name="JOB_GROUP" type="NVARCHAR(150)">
-        <constraints nullable="false" primaryKey="true"/>
-      </column>
-      <column name="DESCRIPTION" type="NVARCHAR(250)"/>
-      <column name="JOB_CLASS_NAME" type="NVARCHAR(250)">
+      <column name="DESCRIPTION" type="VARCHAR(250)"/>
+      <column name="JOB_CLASS_NAME" type="VARCHAR(250)">
         <constraints nullable="false"/>
       </column>
       <column name="IS_DURABLE" type="BOOLEAN">
@@ -126,18 +154,184 @@
       <column name="REQUESTS_RECOVERY" type="BOOLEAN">
         <constraints nullable="false"/>
       </column>
-      <column name="JOB_DATA" type="BLOB"/>
+      <column name="JOB_DATA" type="${blob_type}"/>
     </createTable>
+    <addPrimaryKey columnNames="SCHED_NAME, JOB_NAME, JOB_GROUP" tableName="${table_prefix}JOB_DETAILS"/>
 
+    <createIndex tableName="${table_prefix}JOB_DETAILS" indexName="IDX_${table_prefix}J_GRP">
+      <column name="SCHED_NAME"/>
+      <column name="JOB_GROUP"/>
+    </createIndex>
 
-    <createTable tableName="QRTZ_SIMPLE_TRIGGERS">
-      <column name="SCHED_NAME" type="NVARCHAR(100)">
-        <constraints nullable="false" primaryKey="true"/>
-      </column>
-      <column name="TRIGGER_NAME" type="NVARCHAR(150)">
+    <createIndex tableName="${table_prefix}JOB_DETAILS" indexName="IDX_${table_prefix}J_REQ_RECOVERY">
+      <column name="SCHED_NAME"/>
+      <column name="REQUESTS_RECOVERY"/>
+    </createIndex>
+
+    <createTable tableName="${table_prefix}TRIGGERS">
+      <column name="SCHED_NAME" type="VARCHAR(120)">
         <constraints nullable="false"/>
       </column>
-      <column name="TRIGGER_GROUP" type="NVARCHAR(150)">
+      <column name="TRIGGER_NAME" type="VARCHAR(200)">
+        <constraints nullable="false"/>
+      </column>
+      <column name="TRIGGER_GROUP" type="VARCHAR(200)">
+        <constraints nullable="false"/>
+      </column>
+      <column name="JOB_NAME" type="VARCHAR(200)">
+        <constraints nullable="false"/>
+      </column>
+      <column name="JOB_GROUP" type="VARCHAR(200)">
+        <constraints nullable="false"/>
+      </column>
+      <column name="DESCRIPTION" type="VARCHAR(250)"/>
+      <column name="NEXT_FIRE_TIME" type="BIGINT"/>
+      <column name="PREV_FIRE_TIME" type="BIGINT"/>
+      <column name="PRIORITY" type="INTEGER"/>
+      <column name="TRIGGER_STATE" type="VARCHAR(16)">
+        <constraints nullable="false"/>
+      </column>
+      <column name="TRIGGER_TYPE" type="VARCHAR(8)">
+        <constraints nullable="false"/>
+      </column>
+      <column name="START_TIME" type="BIGINT">
+        <constraints nullable="false"/>
+      </column>
+      <column name="END_TIME" type="BIGINT"/>
+      <column name="CALENDAR_NAME" type="VARCHAR(200)"/>
+      <column name="MISFIRE_INSTR" type="smallint"/>
+      <column name="JOB_DATA" type="${blob_type}"/>
+    </createTable>
+    <addPrimaryKey columnNames="SCHED_NAME, TRIGGER_NAME, TRIGGER_GROUP" tableName="${table_prefix}TRIGGERS"/>
+
+    <createIndex tableName="${table_prefix}TRIGGERS" indexName="IDX_${table_prefix}T_C">
+      <column name="SCHED_NAME"/>
+      <column name="CALENDAR_NAME"/>
+    </createIndex>
+
+    <createIndex tableName="${table_prefix}TRIGGERS" indexName="IDX_${table_prefix}T_G">
+      <column name="SCHED_NAME"/>
+      <column name="TRIGGER_GROUP"/>
+    </createIndex>
+
+    <createIndex tableName="${table_prefix}TRIGGERS" indexName="IDX_${table_prefix}T_JG">
+      <column name="SCHED_NAME"/>
+      <column name="JOB_GROUP"/>
+    </createIndex>
+
+    <createIndex tableName="${table_prefix}TRIGGERS" indexName="IDX_${table_prefix}T_N_G_STATE">
+      <column name="SCHED_NAME"/>
+      <column name="TRIGGER_GROUP"/>
+      <column name="TRIGGER_STATE"/>
+    </createIndex>
+
+    <createIndex tableName="${table_prefix}TRIGGERS" indexName="IDX_${table_prefix}T_N_STATE">
+      <column name="SCHED_NAME"/>
+      <column name="TRIGGER_NAME"/>
+      <column name="TRIGGER_GROUP"/>
+      <column name="TRIGGER_STATE"/>
+    </createIndex>
+
+    <createIndex tableName="${table_prefix}TRIGGERS" indexName="IDX_${table_prefix}T_NEXT_FIRE_TIME">
+      <column name="SCHED_NAME"/>
+      <column name="NEXT_FIRE_TIME"/>
+    </createIndex>
+
+    <createIndex tableName="${table_prefix}TRIGGERS" indexName="IDX_${table_prefix}T_NFT_MISFIRE">
+      <column name="SCHED_NAME"/>
+      <column name="MISFIRE_INSTR"/>
+      <column name="NEXT_FIRE_TIME"/>
+    </createIndex>
+
+    <createIndex tableName="${table_prefix}TRIGGERS" indexName="IDX_${table_prefix}T_NFT_ST">
+      <column name="SCHED_NAME"/>
+      <column name="TRIGGER_STATE"/>
+      <column name="NEXT_FIRE_TIME"/>
+    </createIndex>
+
+    <createIndex tableName="${table_prefix}TRIGGERS" indexName="IDX_${table_prefix}T_NFT_ST_MISFIRE">
+      <column name="SCHED_NAME"/>
+      <column name="MISFIRE_INSTR"/>
+      <column name="NEXT_FIRE_TIME"/>
+      <column name="TRIGGER_STATE"/>
+    </createIndex>
+
+    <createIndex tableName="${table_prefix}TRIGGERS" indexName="IDX_${table_prefix}T_NFT_ST_MISFIRE_GRP">
+      <column name="SCHED_NAME"/>
+      <column name="MISFIRE_INSTR"/>
+      <column name="NEXT_FIRE_TIME"/>
+      <column name="TRIGGER_GROUP"/>
+      <column name="TRIGGER_STATE"/>
+    </createIndex>
+
+    <createIndex tableName="${table_prefix}TRIGGERS" indexName="IDX_${table_prefix}T_STATE">
+      <column name="SCHED_NAME"/>
+      <column name="TRIGGER_STATE"/>
+    </createIndex>
+
+    <createTable tableName="${table_prefix}BLOB_TRIGGERS">
+      <column name="SCHED_NAME" type="VARCHAR(120)">
+        <constraints nullable="false"/>
+      </column>
+      <column name="TRIGGER_NAME" type="VARCHAR(200)">
+        <constraints nullable="false"/>
+      </column>
+      <column name="TRIGGER_GROUP" type="VARCHAR(200)">
+        <constraints nullable="false"/>
+      </column>
+      <column name="BLOB_DATA" type="${blob_type}"/>
+    </createTable>
+    <addPrimaryKey columnNames="SCHED_NAME, TRIGGER_NAME, TRIGGER_GROUP" tableName="${table_prefix}BLOB_TRIGGERS"/>
+
+    <createTable tableName="${table_prefix}SIMPROP_TRIGGERS">
+      <column name="SCHED_NAME" type="VARCHAR(120)">
+        <constraints nullable="false"/>
+      </column>
+      <column name="TRIGGER_NAME" type="VARCHAR(200)">
+        <constraints nullable="false"/>
+      </column>
+      <column name="TRIGGER_GROUP" type="VARCHAR(200)">
+        <constraints nullable="false"/>
+      </column>
+      <column name="STR_PROP_1" type="VARCHAR(512)"/>
+      <column name="STR_PROP_2" type="VARCHAR(512)"/>
+      <column name="STR_PROP_3" type="VARCHAR(512)"/>
+      <column name="INT_PROP_1" type="INTEGER"/>
+      <column name="INT_PROP_2" type="INTEGER"/>
+      <column name="LONG_PROP_1" type="BIGINT"/>
+      <column name="LONG_PROP_2" type="BIGINT"/>
+      <column name="DEC_PROP_1" type="NUMERIC(13,4)"/>
+      <column name="DEC_PROP_2" type="NUMERIC(13,4)"/>
+      <column name="BOOL_PROP_1" type="BOOLEAN"/>
+      <column name="BOOL_PROP_2" type="BOOLEAN"/>
+    </createTable>
+    <addPrimaryKey columnNames="SCHED_NAME, TRIGGER_NAME, TRIGGER_GROUP" tableName="${table_prefix}SIMPROP_TRIGGERS"/>
+
+    <createTable tableName="${table_prefix}CRON_TRIGGERS">
+      <column name="SCHED_NAME" type="VARCHAR(120)">
+        <constraints nullable="false"/>
+      </column>
+      <column name="TRIGGER_NAME" type="VARCHAR(200)">
+        <constraints nullable="false"/>
+      </column>
+      <column name="TRIGGER_GROUP" type="VARCHAR(200)">
+        <constraints nullable="false"/>
+      </column>
+      <column name="CRON_EXPRESSION" type="VARCHAR(120)">
+        <constraints nullable="false"/>
+      </column>
+      <column name="TIME_ZONE_ID" type="VARCHAR(80)"/>
+    </createTable>
+    <addPrimaryKey columnNames="SCHED_NAME, TRIGGER_NAME, TRIGGER_GROUP" tableName="${table_prefix}CRON_TRIGGERS"/>
+
+    <createTable tableName="${table_prefix}SIMPLE_TRIGGERS">
+      <column name="SCHED_NAME" type="VARCHAR(120)">
+        <constraints nullable="false"/>
+      </column>
+      <column name="TRIGGER_NAME" type="VARCHAR(200)">
+        <constraints nullable="false"/>
+      </column>
+      <column name="TRIGGER_GROUP" type="VARCHAR(200)">
         <constraints nullable="false"/>
       </column>
       <column name="REPEAT_COUNT" type="BIGINT">
@@ -150,206 +344,16 @@
         <constraints nullable="false"/>
       </column>
     </createTable>
+    <addPrimaryKey columnNames="SCHED_NAME, TRIGGER_NAME, TRIGGER_GROUP" tableName="${table_prefix}SIMPLE_TRIGGERS"/>
 
-    <createTable tableName="QRTZ_SIMPROP_TRIGGERS">
-      <column name="SCHED_NAME" type="NVARCHAR(100)">
-        <constraints nullable="false" primaryKey="true"/>
-      </column>
-      <column name="TRIGGER_NAME" type="NVARCHAR(150)">
-        <constraints nullable="false" primaryKey="true"/>
-      </column>
-      <column name="TRIGGER_GROUP" type="NVARCHAR(150)">
-        <constraints nullable="false" primaryKey="true"/>
-      </column>
-      <column name="STR_PROP_1" type="NVARCHAR(512)"/>
-      <column name="STR_PROP_2" type="NVARCHAR(512)"/>
-      <column name="STR_PROP_3" type="NVARCHAR(512)"/>
-      <column name="INT_PROP_1" type="INT"/>
-      <column name="INT_PROP_2" type="INT"/>
-      <column name="LONG_PROP_1" type="BIGINT"/>
-      <column name="LONG_PROP_2" type="BIGINT"/>
-      <column name="DEC_PROP_1" type="NUMERIC(13,4)"/>
-      <column name="DEC_PROP_2" type="NUMERIC(13,4)"/>
-      <column name="BOOL_PROP_1" type="BOOLEAN"/>
-      <column name="BOOL_PROP_2" type="BOOLEAN"/>
-    </createTable>
+    <addForeignKeyConstraint baseTableName="${table_prefix}TRIGGERS" constraintName="${table_prefix}TRIGGERS_SCHED_NAME_FKEY" baseColumnNames="SCHED_NAME, JOB_NAME, JOB_GROUP" referencedTableName="${table_prefix}JOB_DETAILS" referencedColumnNames="SCHED_NAME, JOB_NAME, JOB_GROUP"/>
 
-    <createTable tableName="QRTZ_BLOB_TRIGGERS">
-      <column name="SCHED_NAME" type="NVARCHAR(100)">
-        <constraints nullable="false" primaryKey="true"/>
-      </column>
-      <column name="TRIGGER_NAME" type="NVARCHAR(150)">
-        <constraints nullable="false" primaryKey="true"/>
-      </column>
-      <column name="TRIGGER_GROUP" type="NVARCHAR(150)">
-        <constraints nullable="false" primaryKey="true"/>
-      </column>
-      <column name="JOB_DATA" type="BLOB"/>
-    </createTable>
+    <addForeignKeyConstraint baseTableName="${table_prefix}SIMPLE_TRIGGERS" constraintName="${table_prefix}SIMPLE_TRIGGERS_SCHED_NAME_FKEY" baseColumnNames="SCHED_NAME, TRIGGER_NAME, TRIGGER_GROUP" referencedTableName="${table_prefix}TRIGGERS" referencedColumnNames="SCHED_NAME, TRIGGER_NAME, TRIGGER_GROUP"/>
 
-    <createTable tableName="QRTZ_TRIGGERS">
-      <column name="SCHED_NAME" type="NVARCHAR(100)">
-        <constraints nullable="false" primaryKey="true"/>
-      </column>
-      <column name="TRIGGER_NAME" type="NVARCHAR(150)">
-        <constraints nullable="false" primaryKey="true"/>
-      </column>
-      <column name="TRIGGER_GROUP" type="NVARCHAR(150)">
-        <constraints nullable="false" primaryKey="true"/>
-      </column>
-      <column name="JOB_NAME" type="NVARCHAR(150)">
-        <constraints nullable="false"/>
-      </column>
-      <column name="JOB_GROUP" type="NVARCHAR(150)">
-        <constraints nullable="false"/>
-      </column>
-      <column name="DESCRIPTION" type="NVARCHAR(250)"/>
-      <column name="NEXT_FIRE_TIME" type="BIGINT"/>
-      <column name="PREV_FIRE_TIME" type="BIGINT"/>
-      <column name="PRIORITY" type="INT"/>
-      <column name="TRIGGER_STATE" type="NVARCHAR(16)">
-        <constraints nullable="false"/>
-      </column>
-      <column name="TRIGGER_TYPE" type="NVARCHAR(8)">
-        <constraints nullable="false"/>
-      </column>
-      <column name="START_TIME" type="BIGINT">
-        <constraints nullable="false"/>
-      </column>
-      <column name="END_TIME" type="BIGINT"/>
-      <column name="CALENDAR_NAME" type="NVARCHAR(200)"/>
-      <column name="MISFIRE_INSTR" type="SMALLINT"/>
-      <column name="JOB_DATA" type="BLOB"/>
-    </createTable>
+    <addForeignKeyConstraint baseTableName="${table_prefix}CRON_TRIGGERS" constraintName="${table_prefix}CRON_TRIGGERS_SCHED_NAME_FKEY" baseColumnNames="SCHED_NAME, TRIGGER_NAME, TRIGGER_GROUP" referencedTableName="${table_prefix}TRIGGERS" referencedColumnNames="SCHED_NAME, TRIGGER_NAME, TRIGGER_GROUP"/>
 
+    <addForeignKeyConstraint baseTableName="${table_prefix}SIMPROP_TRIGGERS" constraintName="${table_prefix}SIMPROP_TRIGGERS_SCHED_NAME_FKEY" baseColumnNames="SCHED_NAME, TRIGGER_NAME, TRIGGER_GROUP" referencedTableName="${table_prefix}TRIGGERS" referencedColumnNames="SCHED_NAME, TRIGGER_NAME, TRIGGER_GROUP"/>
+
+    <addForeignKeyConstraint baseTableName="${table_prefix}BLOB_TRIGGERS" constraintName="${table_prefix}BLOB_TRIGGERS_SCHED_NAME_FKEY" baseColumnNames="SCHED_NAME, TRIGGER_NAME, TRIGGER_GROUP" referencedTableName="${table_prefix}TRIGGERS" referencedColumnNames="SCHED_NAME, TRIGGER_NAME, TRIGGER_GROUP"/>
   </changeSet>
-
-  <changeSet author="quartz.generated" id="2">
-
-    <addForeignKeyConstraint baseColumnNames="SCHED_NAME, TRIGGER_NAME, TRIGGER_GROUP" baseTableName="QRTZ_CRON_TRIGGERS" constraintName="FK_QRTZ_CRON_TRIGGERS_QRTZ_TRIGGERS"
-                             deferrable="false" initiallyDeferred="false" onDelete="CASCADE" onUpdate="NO ACTION"
-                             referencedColumnNames="SCHED_NAME, TRIGGER_NAME, TRIGGER_GROUP" referencedTableName="QRTZ_TRIGGERS" referencesUniqueColumn="false"/>
-
-    <addForeignKeyConstraint baseColumnNames="SCHED_NAME, TRIGGER_NAME, TRIGGER_GROUP" baseTableName="QRTZ_SIMPLE_TRIGGERS" constraintName="FK_QRTZ_SIMPLE_TRIGGERS_QRTZ_TRIGGERS"
-                             deferrable="false" initiallyDeferred="false" onDelete="CASCADE" onUpdate="NO ACTION"
-                             referencedColumnNames="SCHED_NAME, TRIGGER_NAME, TRIGGER_GROUP" referencedTableName="QRTZ_TRIGGERS" referencesUniqueColumn="false"/>
-
-    <addForeignKeyConstraint baseColumnNames="SCHED_NAME, TRIGGER_NAME, TRIGGER_GROUP" baseTableName="QRTZ_SIMPROP_TRIGGERS" constraintName="FK_QRTZ_SIMPROP_TRIGGERS_QRTZ_TRIGGERS"
-                             deferrable="false" initiallyDeferred="false" onDelete="CASCADE" onUpdate="NO ACTION"
-                             referencedColumnNames="SCHED_NAME, TRIGGER_NAME, TRIGGER_GROUP" referencedTableName="QRTZ_TRIGGERS" referencesUniqueColumn="false"/>
-
-    <addForeignKeyConstraint baseColumnNames="SCHED_NAME, JOB_NAME, JOB_GROUP" baseTableName="QRTZ_TRIGGERS" constraintName="FK_QRTZ_TRIGGERS_QRTZ_JOB_DETAILS"
-                         deferrable="false" initiallyDeferred="false" onDelete="CASCADE" onUpdate="NO ACTION"
-                         referencedColumnNames="SCHED_NAME, JOB_NAME, JOB_GROUP" referencedTableName="QRTZ_JOB_DETAILS" referencesUniqueColumn="false"/>
-
-  </changeSet>
-
-  <changeSet author="quartz.generated" id="3">
-
-    <createIndex indexName="IDX_QRTZ_T_J" tableName="QRTZ_TRIGGERS">
-      <column name="SCHED_NAME" />
-      <column name="JOB_NAME" />
-      <column name="JOB_GROUP" />
-    </createIndex>
-
-    <createIndex indexName="IDX_QRTZ_T_JG" tableName="QRTZ_TRIGGERS">
-      <column name="SCHED_NAME" /> 
-      <column name="JOB_GROUP" />
-    </createIndex>
-
-    <createIndex indexName="IDX_QRTZ_T_C" tableName="QRTZ_TRIGGERS">
-      <column name="SCHED_NAME" />
-      <column name="CALENDAR_NAME" />
-    </createIndex>
-
-    <createIndex indexName="IDX_QRTZ_T_G" tableName="QRTZ_TRIGGERS">
-      <column name="SCHED_NAME" />
-      <column name="TRIGGER_GROUP" />
-    </createIndex>
-
-    <createIndex indexName="IDX_QRTZ_T_STATE" tableName="QRTZ_TRIGGERS">
-      <column name="SCHED_NAME" />
-      <column name="TRIGGER_STATE" />
-    </createIndex>
-
-    <createIndex indexName="IDX_QRTZ_T_N_STATE" tableName="QRTZ_TRIGGERS">
-      <column name="SCHED_NAME" />
-      <column name="TRIGGER_NAME" />
-      <column name="TRIGGER_GROUP" />
-      <column name="TRIGGER_STATE" />
-    </createIndex>
-
-    <createIndex indexName="IDX_QRTZ_T_N_G_STATE" tableName="QRTZ_TRIGGERS">
-      <column name="SCHED_NAME" />
-      <column name="TRIGGER_GROUP" />
-      <column name="TRIGGER_STATE" />
-    </createIndex>
-
-    <createIndex indexName="IDX_QRTZ_T_NEXT_FIRE_TIME" tableName="QRTZ_TRIGGERS">
-      <column name="SCHED_NAME" />
-      <column name="NEXT_FIRE_TIME" /> 
-    </createIndex>
-
-    <createIndex indexName="IDX_QRTZ_T_NFT_ST" tableName="QRTZ_TRIGGERS">
-      <column name="SCHED_NAME" />
-      <column name="TRIGGER_STATE" />
-      <column name="NEXT_FIRE_TIME" />
-    </createIndex>
-
-    <createIndex indexName="IDX_QRTZ_T_NFT_MISFIRE" tableName="QRTZ_TRIGGERS">
-      <column name="SCHED_NAME" />
-      <column name="MISFIRE_INSTR" />
-      <column name="NEXT_FIRE_TIME" />      
-    </createIndex>
-
-    <createIndex indexName="IDX_QRTZ_T_NFT_ST_MISFIRE" tableName="QRTZ_TRIGGERS">
-      <column name="SCHED_NAME" />
-      <column name="MISFIRE_INSTR" />
-      <column name="NEXT_FIRE_TIME" />
-      <column name="TRIGGER_STATE" />
-    </createIndex>
-    
-    <createIndex indexName="IDX_QRTZ_T_NFT_ST_MISFIRE_GRP" tableName="QRTZ_TRIGGERS">
-      <column name="SCHED_NAME" />
-      <column name="MISFIRE_INSTR" />
-      <column name="NEXT_FIRE_TIME" />
-      <column name="TRIGGER_GROUP" />
-      <column name="TRIGGER_STATE" />
-    </createIndex>
-
-    <createIndex indexName="IDX_QRTZ_FT_TRIG_INST_NAME" tableName="QRTZ_FIRED_TRIGGERS">
-      <column name="SCHED_NAME" />
-      <column name="INSTANCE_NAME" /> 
-    </createIndex>
-
-    <createIndex indexName="IDX_QRTZ_FT_INST_JOB_REQ_RCVRY" tableName="QRTZ_FIRED_TRIGGERS">
-      <column name="SCHED_NAME" />
-      <column name="INSTANCE_NAME" />
-      <column name="REQUESTS_RECOVERY"/>
-    </createIndex>
-
-    <createIndex indexName="IDX_QRTZ_FT_J_G" tableName="QRTZ_FIRED_TRIGGERS">
-      <column name="SCHED_NAME" />
-      <column name="JOB_NAME" />
-      <column name="JOB_GROUP" />
-    </createIndex>
-    
-    <createIndex indexName="IDX_QRTZ_FT_JG" tableName="QRTZ_FIRED_TRIGGERS">
-      <column name="SCHED_NAME" />
-      <column name="JOB_GROUP" />
-    </createIndex>
-    
-    <createIndex indexName="IDX_QRTZ_FT_T_G" tableName="QRTZ_FIRED_TRIGGERS">
-      <column name="SCHED_NAME" />
-      <column name="TRIGGER_NAME" />
-      <column name="TRIGGER_GROUP" />
-    </createIndex>
-    
-    <createIndex indexName="IDX_QRTZ_FT_TG" tableName="QRTZ_FIRED_TRIGGERS">
-      <column name="SCHED_NAME" />
-      <column name="TRIGGER_GROUP" />
-    </createIndex>
-    
-  </changeSet>
-
 </databaseChangeLog>
