@@ -9,7 +9,11 @@ import com.julianduru.omarze.persistence.PartnerRepository;
 import com.julianduru.omarze.service.BaseServiceIntegrationTest;
 import com.julianduru.omarze.services.FileSaver;
 import com.julianduru.omarze.services.partner.handlers.UploadImages;
-import org.junit.*;
+
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Disabled;
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.http.MediaType;
@@ -19,6 +23,8 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.IOException;
 import java.util.List;
 import java.util.Objects;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * created by julian
@@ -50,14 +56,14 @@ public class UploadImagesTest extends BaseServiceIntegrationTest {
     private Partner savedPartner;
 
 
-    @Before
+    @BeforeEach
     public void before() {
         savedPartner = partnerDataProvider.save();
     }
 
 
     @Test
-    @Ignore
+    @Disabled
     public void test_uploading_multiple_images() throws Exception {
         MultipartFile[] files = loadMultipartFiles();
 
@@ -70,14 +76,17 @@ public class UploadImagesTest extends BaseServiceIntegrationTest {
                 .build()
                 .execute();
 
-        Assert.assertTrue(partnerImages.size() == files.length);
+        assertThat(partnerImages.size()).isEqualTo(files.length);
 
-        for (PartnerImage image : partnerImages) {
-            Assert.assertTrue(Objects.equals(image.getPartner().getId(), savedPartner.getId()));
-            Assert.assertNotNull(image.getImageKey());
-            Assert.assertNotNull(image.getSavedPath());
-            Assert.assertNotNull(image.getAspectRatio());
-        }
+        assertThat(partnerImages)
+            .allSatisfy(
+                image -> {
+                    assertThat(image.getPartner().getId()).isEqualTo(savedPartner.getId());
+                    assertThat(image.getImageKey()).isNotBlank();
+                    assertThat(image.getSavedPath()).isNotBlank();
+                    assertThat(image.getAspectRatio()).isNotNull();
+                }
+            );
     }
 
 
@@ -94,7 +103,7 @@ public class UploadImagesTest extends BaseServiceIntegrationTest {
     }
 
 
-    @After
+    @AfterEach
     public void after() {
         imageRepository.deleteAll();
         partnerDataProvider.deletePartner(savedPartner);

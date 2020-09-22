@@ -9,11 +9,13 @@ import com.julianduru.omarze.exception.DuplicateUserCampaignException;
 import com.julianduru.omarze.service.BaseServiceIntegrationTest;
 import com.julianduru.omarze.services.usercampaign.LotteryUserCampaignService;
 import com.julianduru.omarze.util.TestConstants;
-import org.junit.Assert;
-import org.junit.Ignore;
-import org.junit.Test;
+import org.junit.jupiter.api.Disabled;
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.test.context.support.WithMockUser;
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 /**
  * created by julian
@@ -32,23 +34,25 @@ public class SaveTest extends BaseServiceIntegrationTest {
 
 
     @Test
-    @Ignore
+    @Disabled
     public void testAddingUserCampaign() throws Exception {
         LotteryUserCampaignDTO userCampaignDTO = userCampaignDataService.newUserCampaignDTO();
 
         LotteryUserCampaign userCampaign = userCampaignService.addUserCampaign(userCampaignDTO);
 
-        Assert.assertNotNull(userCampaign);
+        assertThat(userCampaign).isNotNull();
     }
 
 
-    @Test(expected = DuplicateUserCampaignException.class)
-    @Ignore
+    @Test
+    @Disabled
     public void testUserSubscribingToSameCampaignMoreThanOnce() throws Exception {
-        LotteryUserCampaignDTO userCampaignDTO = userCampaignDataService.newUserCampaignDTO();
+        assertThrows(DuplicateUserCampaignException.class, () -> {
+            LotteryUserCampaignDTO userCampaignDTO = userCampaignDataService.newUserCampaignDTO();
 
-        userCampaignService.addUserCampaign(userCampaignDTO);
-        userCampaignService.addUserCampaign(userCampaignDTO);
+            userCampaignService.addUserCampaign(userCampaignDTO);
+            userCampaignService.addUserCampaign(userCampaignDTO);
+        });
     }
 
 

@@ -2,20 +2,19 @@ package com.julianduru.omarze.rest;
 
 
 import com.google.common.base.Strings;
-import com.julianduru.util.JSONUtil;
 import com.julianduru.omarze.controller.BaseControllerTest;
 import com.julianduru.omarze.controller.api.PartnerController;
 import com.julianduru.omarze.data.partner.PartnerDataProvider;
 import com.julianduru.omarze.entities.BackOfficeUser;
 import com.julianduru.omarze.entities.Partner;
 import com.julianduru.omarze.persistence.PartnerRepository;
-import org.junit.Test;
+import com.julianduru.util.JSONUtil;
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.http.MediaType;
 import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.security.test.context.support.WithMockUser;
-import org.springframework.test.context.jdbc.Sql;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
