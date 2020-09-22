@@ -11,14 +11,16 @@ import com.julianduru.omarze.persistence.CampaignRepository;
 import com.julianduru.omarze.service.BaseServiceIntegrationTest;
 import com.julianduru.omarze.services.campaign.CampaignService;
 import com.julianduru.omarze.services.campaign.handlers.Approval;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Ignore;
-import org.junit.Test;
+
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Disabled;
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * created by julian
@@ -41,14 +43,14 @@ public class ApprovalTest extends BaseServiceIntegrationTest {
     private List<Campaign> campaignList = new ArrayList<>();
 
 
-    @Before
+    @BeforeEach
     public void before() {
         campaignList.add(campaignDataProvider.save());
     }
 
 
     @Test
-    @Ignore
+    @Disabled
     public void testApprovingCampaign() throws Exception {
         Auth.setContext(BACK_OFFICE_USER);
 
@@ -56,12 +58,12 @@ public class ApprovalTest extends BaseServiceIntegrationTest {
 
         Campaign campaign = campaignService.campaignAction(action);
 
-        Assert.assertEquals(CampaignStatus.APPROVED, campaign.getCampaignStatus());
+        assertThat(campaign.getCampaignStatus()).isEqualTo(CampaignStatus.APPROVED);
     }
 
 
     @Test
-    @Ignore
+    @Disabled
     public void testDisapprovingCampaign() throws Exception {
         Auth.setContext(BACK_OFFICE_USER);
 
@@ -73,7 +75,7 @@ public class ApprovalTest extends BaseServiceIntegrationTest {
                 .build()
                 .execute();
 
-        Assert.assertEquals(CampaignStatus.DISAPPROVED, campaign.getCampaignStatus());
+        assertThat(campaign.getCampaignStatus()).isEqualTo(CampaignStatus.DISAPPROVED);
     }
 
 

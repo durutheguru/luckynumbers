@@ -11,8 +11,8 @@ import com.julianduru.omarze.data.campaign.CampaignDataProvider;
 import com.julianduru.omarze.entities.BackOfficeUser;
 import com.julianduru.omarze.entities.PartnerUser;
 import com.julianduru.omarze.model.ApprovalAction;
-import org.junit.Ignore;
-import org.junit.Test;
+import org.junit.jupiter.api.Disabled;
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.security.test.context.support.WithMockUser;
@@ -108,7 +108,7 @@ public class CampaignControllerTest extends BaseControllerTest {
 
 
     @Test
-    @Ignore
+    @Disabled
     public void testUpdatingCampaign() throws Exception {
         CampaignDTO campaignDTO = campaignDataProvider.newCampaignDTO();
 

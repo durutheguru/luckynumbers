@@ -5,12 +5,13 @@ import com.julianduru.omarze.data.lotteryuser.LotteryUserCampaignDataService;
 import com.julianduru.omarze.entities.LotteryUserCampaign;
 import com.julianduru.omarze.service.BaseServiceIntegrationTest;
 import com.julianduru.omarze.services.campaign.NumberGenerator;
-import org.junit.Assert;
-import org.junit.Ignore;
-import org.junit.Test;
+
+import org.junit.jupiter.api.Disabled;
+import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.*;
 
 /**
@@ -28,7 +29,7 @@ public class NumberGeneratorTest extends BaseServiceIntegrationTest {
 
 
     @Test
-    @Ignore
+    @Disabled
     public void testGeneratingUniqueUserNumber() throws Exception {
         String luckyNumber = "7590829849";
         String nextLuckyNumber = "7408247982";
@@ -41,7 +42,7 @@ public class NumberGeneratorTest extends BaseServiceIntegrationTest {
         String numberGenerated = numberGeneratorSpy.generateUniqueUserNumber(userCampaign.getCampaign());
 
         verify(numberGeneratorSpy, times(3)).isExistingCampaignNumber(any(), anyString());
-        Assert.assertEquals(nextLuckyNumber, numberGenerated);
+        assertThat(nextLuckyNumber).isEqualTo(numberGenerated);
     }
 
 

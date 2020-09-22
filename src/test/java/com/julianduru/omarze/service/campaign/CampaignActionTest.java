@@ -6,7 +6,8 @@ import com.julianduru.omarze.api.dto.CampaignActionDTO;
 import com.julianduru.omarze.entities.Campaign;
 import com.julianduru.omarze.model.ApprovalAction;
 import com.julianduru.omarze.services.campaign.CampaignService;
-import org.junit.Before;
+
+import org.junit.jupiter.api.BeforeEach;
 import org.springframework.beans.factory.annotation.Autowired;
 
 /**
@@ -26,7 +27,7 @@ public abstract class CampaignActionTest {
     Campaign campaign;
 
 
-    @Before
+    @BeforeEach
     public void init() {
         campaign = campaignDataProvider.save();
     }

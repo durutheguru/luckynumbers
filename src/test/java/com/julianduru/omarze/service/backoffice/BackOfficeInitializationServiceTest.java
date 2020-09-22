@@ -5,10 +5,12 @@ import com.julianduru.omarze.entities.BackOfficeUser;
 import com.julianduru.omarze.service.BaseServiceIntegrationTest;
 import com.julianduru.omarze.services.backoffice.BackOfficeUserService;
 import com.julianduru.omarze.util.TestConstants;
-import org.junit.Assert;
-import org.junit.Test;
+
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.test.context.support.WithMockUser;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * created by julian
@@ -21,10 +23,9 @@ public class BackOfficeInitializationServiceTest extends BaseServiceIntegrationT
     private BackOfficeUserService backOfficeUserService;
 
 
-
     @Test
     public void testBackOfficeUserIsAlwaysCreatedOnStartup() {
-        Assert.assertTrue(backOfficeUserService.backOfficeUserExists());
+        assertThat(backOfficeUserService.backOfficeUserExists()).isTrue();
     }
 
 

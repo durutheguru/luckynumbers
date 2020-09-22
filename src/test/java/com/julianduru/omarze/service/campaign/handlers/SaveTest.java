@@ -6,9 +6,12 @@ import com.julianduru.omarze.data.campaign.CampaignDataProvider;
 import com.julianduru.omarze.exception.InvalidObjectException;
 import com.julianduru.omarze.service.BaseServiceIntegrationTest;
 import com.julianduru.omarze.services.campaign.CampaignService;
-import org.junit.Ignore;
-import org.junit.Test;
+
+import org.junit.jupiter.api.Disabled;
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 /**
  * created by julian
@@ -25,30 +28,36 @@ public class SaveTest extends BaseServiceIntegrationTest {
 
 
 
-    @Test(expected = InvalidObjectException.class)
-    @Ignore
+    @Test
+    @Disabled
     public void testAddingCampaignWithInvalidDateInterval() throws Exception {
-        CampaignDTO campaignDTO = campaignDataProvider.newInvalidStartEndDateCampaignDTO();
+        assertThrows(InvalidObjectException.class, () -> {
+            CampaignDTO campaignDTO = campaignDataProvider.newInvalidStartEndDateCampaignDTO();
 
 //        campaignService.addCampaign(campaignDTO);
+        });
     }
 
 
-    @Test(expected = InvalidObjectException.class)
-    @Ignore
+    @Test
+    @Disabled
     public void testAddingCampaignWithInvalidEvaluationTimes() throws Exception {
-        CampaignDTO campaignDTO = campaignDataProvider.newInvalidEvaluationTimeCampaignDTO();
+        assertThrows(InvalidObjectException.class, () -> {
+            CampaignDTO campaignDTO = campaignDataProvider.newInvalidEvaluationTimeCampaignDTO();
 
 //        campaignService.addCampaign(campaignDTO);
+        });
     }
 
 
-    @Test(expected = InvalidObjectException.class)
-    @Ignore
+    @Test
+    @Disabled
     public void testAddingCampaignWithInvalidWinnerCount() throws Exception {
-        CampaignDTO campaignDTO = campaignDataProvider.newInvalidWinnerCountCampaignDTO();
+        assertThrows(InvalidObjectException.class, () -> {
+            CampaignDTO campaignDTO = campaignDataProvider.newInvalidWinnerCountCampaignDTO();
 
 //        campaignService.addCampaign(campaignDTO);
+        });
     }
 
 

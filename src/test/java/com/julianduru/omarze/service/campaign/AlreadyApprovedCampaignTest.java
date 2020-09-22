@@ -4,9 +4,11 @@ package com.julianduru.omarze.service.campaign;
 import com.julianduru.omarze.entities.Campaign;
 import com.julianduru.omarze.entities.CampaignStatus;
 import com.julianduru.omarze.exception.InvalidUpdateException;
-import org.junit.Before;
-import org.junit.Ignore;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Disabled;
+import org.junit.jupiter.api.Test;
+
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 /**
  * created by julian
@@ -14,7 +16,7 @@ import org.junit.Test;
 public class AlreadyApprovedCampaignTest extends CampaignActionTest {
 
 
-    @Before
+    @BeforeEach
     @Override
     public void init() {new Campaign();
         Campaign approvedCampaign = new Campaign();
@@ -24,10 +26,10 @@ public class AlreadyApprovedCampaignTest extends CampaignActionTest {
     }
 
 
-    @Ignore
-    @Test(expected = InvalidUpdateException.class)
+    @Disabled
+    @Test
     public void testAlreadyApprovedCampaign() throws Exception {
-        super.approveCampaign();
+        assertThrows(InvalidUpdateException.class, super::approveCampaign);
     }
 
 

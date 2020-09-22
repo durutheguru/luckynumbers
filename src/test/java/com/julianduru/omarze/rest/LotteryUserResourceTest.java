@@ -7,11 +7,11 @@ import com.julianduru.omarze.data.lotteryuser.LotteryUserDataProvider;
 import com.julianduru.omarze.entities.BackOfficeUser;
 import com.julianduru.omarze.entities.LotteryUser;
 import com.julianduru.omarze.persistence.LotteryUserRepository;
-import org.junit.Test;
+
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.security.test.context.support.WithMockUser;
-import org.springframework.test.context.jdbc.Sql;
 
 import static org.hamcrest.Matchers.greaterThanOrEqualTo;
 import static org.hamcrest.Matchers.hasSize;

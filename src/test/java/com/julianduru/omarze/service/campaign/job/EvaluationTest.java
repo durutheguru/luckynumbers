@@ -8,9 +8,9 @@ import com.julianduru.omarze.persistence.CampaignRepository;
 import com.julianduru.omarze.service.BaseServiceIntegrationTest;
 import com.julianduru.omarze.services.campaign.job.EvaluationJobDelegate;
 import com.julianduru.omarze.util.TestConstants;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.test.context.support.WithMockUser;
 
@@ -18,6 +18,8 @@ import javax.persistence.EntityNotFoundException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * created by julian
@@ -45,7 +47,7 @@ public class EvaluationTest extends BaseServiceIntegrationTest {
     private Campaign campaign;
 
 
-    @Before
+    @BeforeEach
     public void before() {
         campaign = campaignDataProvider.saveActiveCampaign();
         userCampaignDataService.saveUserCampaigns(campaign, 40);
@@ -64,14 +66,14 @@ public class EvaluationTest extends BaseServiceIntegrationTest {
 
             CampaignStageEvaluationResult result = evaluationJobDelegate.runJob(jobMap);
 
-            Assert.assertNotNull(result);
-            Assert.assertEquals(sd.getWinnersCount(), result.getWinningNumbers().size());
+            assertThat(result).isNotNull();
+            assertThat(sd.getWinnersCount()).isEqualTo(result.getWinningNumbers().size());
 
             jobMap.clear();
         }
 
         Campaign finishedCampaign = campaignRepository.findById(campaign.getId()).orElseThrow(EntityNotFoundException::new);
-        Assert.assertEquals(finishedCampaign.getCampaignStatus(), CampaignStatus.COMPLETED);
+        assertThat(finishedCampaign.getCampaignStatus()).isEqualTo(CampaignStatus.COMPLETED);
     }
 
 
