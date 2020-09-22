@@ -1,16 +1,15 @@
 package com.julianduru.omarze.rest;
 
 
-import com.julianduru.util.JSONUtil;
 import com.julianduru.omarze.controller.BaseControllerTest;
 import com.julianduru.omarze.data.backoffice.BackOfficeUserDataProvider;
 import com.julianduru.omarze.entities.BackOfficeUser;
 import com.julianduru.omarze.persistence.BackOfficeUserRepository;
-import org.junit.Test;
+import com.julianduru.util.JSONUtil;
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.security.test.context.support.WithMockUser;
-import org.springframework.test.context.jdbc.Sql;
 
 import static org.hamcrest.Matchers.greaterThanOrEqualTo;
 import static org.hamcrest.Matchers.hasSize;

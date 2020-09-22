@@ -5,9 +5,11 @@ import com.julianduru.omarze.data.lotteryuser.LotteryUserDataProvider;
 import com.julianduru.omarze.entities.LotteryUser;
 import com.julianduru.omarze.service.BaseServiceIntegrationTest;
 import com.julianduru.omarze.services.lotteryuser.LotteryUserService;
-import org.junit.Assert;
-import org.junit.Test;
+
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * created by julian
@@ -26,8 +28,7 @@ public class SaveTest extends BaseServiceIntegrationTest {
     @Test
     public void testAddingNewLotteryUser() throws Exception {
         LotteryUser lotteryUser = lotteryUserService.addLotteryUser(lotteryUserDataProvider.newLotteryUserDTO());
-
-        Assert.assertNotNull(lotteryUser);
+        assertThat(lotteryUser).isNotNull();
     }
 
 
