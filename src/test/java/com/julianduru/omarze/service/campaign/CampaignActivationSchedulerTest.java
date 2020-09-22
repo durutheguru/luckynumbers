@@ -7,15 +7,17 @@ import com.julianduru.omarze.entities.CampaignStatus;
 import com.julianduru.omarze.persistence.CampaignRepository;
 import com.julianduru.omarze.service.BaseServiceIntegrationTest;
 import com.julianduru.omarze.services.campaign.CampaignActivationScheduler;
-import org.junit.Assert;
-import org.junit.Ignore;
-import org.junit.Test;
+
+import org.junit.jupiter.api.Disabled;
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * created by julian
@@ -54,16 +56,16 @@ public class CampaignActivationSchedulerTest extends BaseServiceIntegrationTest 
 
 
     @Test
-    @Ignore
+    @Disabled
     public void testActivatingAllDueCampaigns() throws Exception {
         List<Campaign> campaigns = saveCampaigns();
         campaignActivationScheduler.activateDueCampaigns();
 
         List<Campaign> savedCampaigns = campaignRepository.findAllById(campaigns.stream().map(Campaign::getId).collect(Collectors.toList()));
 
-        Assert.assertEquals(savedCampaigns.get(0).getCampaignStatus(), CampaignStatus.ACTIVE);
-        Assert.assertEquals(savedCampaigns.get(1).getCampaignStatus(), CampaignStatus.ACTIVE);
-        Assert.assertEquals(savedCampaigns.get(2).getCampaignStatus(), CampaignStatus.APPROVED);
+        assertThat(savedCampaigns.get(0).getCampaignStatus()).isEqualTo(CampaignStatus.ACTIVE);
+        assertThat(savedCampaigns.get(1).getCampaignStatus()).isEqualTo(CampaignStatus.ACTIVE);
+        assertThat(savedCampaigns.get(2).getCampaignStatus()).isEqualTo(CampaignStatus.APPROVED);
     }
 
 

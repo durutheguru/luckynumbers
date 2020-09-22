@@ -4,8 +4,8 @@ package com.julianduru.omarze.service;
 import com.julianduru.omarze.services.LocalFileSaver;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.io.IOUtils;
-import org.junit.Assert;
-import org.junit.Test;
+
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.io.ByteArrayInputStream;
@@ -13,6 +13,8 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * created by julian
@@ -60,14 +62,14 @@ public class LocalFileSaverTest extends BaseServiceIntegrationTest {
         IOUtils.read(inputStream, content);
 
         for (int i = 0, l = TEST_BYTES.length; i < l; i++) {
-            Assert.assertTrue(content[i] == TEST_BYTES[i]);
+            assertThat(content[i]).isEqualTo(TEST_BYTES[i]);
         }
     }
 
 
     private void runTests(String fullPath) {
-        Assert.assertNotNull(fullPath);
-        Assert.assertTrue(Files.exists(Paths.get(fullPath)));
+        assertThat(fullPath).isNotBlank();
+        assertThat(Files.exists(Paths.get(fullPath))).isTrue();
 
         deleteFile(fullPath);
     }
@@ -84,3 +86,4 @@ public class LocalFileSaverTest extends BaseServiceIntegrationTest {
 
 
 }
+

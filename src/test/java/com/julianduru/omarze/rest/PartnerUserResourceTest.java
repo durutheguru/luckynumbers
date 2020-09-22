@@ -10,8 +10,9 @@ import com.julianduru.omarze.entities.Partner;
 import com.julianduru.omarze.entities.PartnerUser;
 import com.julianduru.omarze.persistence.PartnerRepository;
 import com.julianduru.omarze.persistence.PartnerUserRepository;
-import org.junit.Ignore;
-import org.junit.Test;
+
+import org.junit.jupiter.api.Disabled;
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.security.test.context.support.WithMockUser;
@@ -62,7 +63,7 @@ public class PartnerUserResourceTest extends BaseControllerTest {
 
 
     @Test
-    @Ignore
+    @Disabled
     @Transactional
     public void testAddingPartnerUser() throws Exception {
         Partner partner = partnerDataProvider.getOrSave();

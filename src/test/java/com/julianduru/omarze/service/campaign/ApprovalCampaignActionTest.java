@@ -2,9 +2,10 @@ package com.julianduru.omarze.service.campaign;
 
 
 import com.julianduru.omarze.entities.CampaignStatus;
-import org.junit.Assert;
-import org.junit.Ignore;
-import org.junit.Test;
+import org.junit.jupiter.api.Disabled;
+import org.junit.jupiter.api.Test;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * created by julian
@@ -13,11 +14,11 @@ public class ApprovalCampaignActionTest extends CampaignActionTest {
 
 
     @Test
-    @Ignore
+    @Disabled
     public void testApprovingCampaign() throws Exception {
         approveCampaign();
 
-        Assert.assertEquals(campaign.getCampaignStatus(), CampaignStatus.APPROVED);
+        assertThat(campaign.getCampaignStatus()).isEqualTo(CampaignStatus.APPROVED);
     }
 
 
