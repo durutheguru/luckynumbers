@@ -2,6 +2,7 @@ package com.julianduru.omarze.service;
 
 
 import com.julianduru.omarze.config.TestConfig;
+import com.julianduru.omarze.config.TestDataSourceConfig;
 import com.julianduru.omarze.controller.BaseControllerTest;
 import com.julianduru.omarze.entities.BackOfficeUser;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -17,7 +18,10 @@ import java.util.Collections;
  * created by julian
  */
 @ExtendWith({SpringExtension.class})
-@SpringBootTest(classes = {TestConfig.class})
+@SpringBootTest(classes = {
+    TestConfig.class,
+    TestDataSourceConfig.class,
+})
 public abstract class BaseServiceIntegrationTest {
 
 

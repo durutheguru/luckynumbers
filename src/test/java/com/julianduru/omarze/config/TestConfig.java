@@ -20,11 +20,4 @@ public class TestConfig {
     }
 
 
-    @Bean
-    public MySQLContainer mySQLContainer() {
-        MySQLContainer container = new MySQLContainer<>("")
-            .withDatabaseName("");
-    }
-
-
 }
