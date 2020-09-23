@@ -4,6 +4,7 @@ package com.julianduru.omarze.config;
 import com.github.javafaker.Faker;
 import org.springframework.boot.test.context.TestConfiguration;
 import org.springframework.context.annotation.Bean;
+import org.testcontainers.containers.MySQLContainer;
 
 
 /**
