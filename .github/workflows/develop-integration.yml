@@ -19,7 +19,7 @@ jobs:
       - name: Set Commit Message
         id: commit
         run: |
-          [[ ${{ startsWith(github.head_ref, 'feature/') }} ]] && echo ::set-output name=message::"+semver: feature" \
+          ${{ startsWith(github.head_ref, 'feature/') }} && echo ::set-output name=message::"+semver: feature" \
           || echo ::set-output name=message::"+semver: patch"
       - name: Upgrading Version
         env:
