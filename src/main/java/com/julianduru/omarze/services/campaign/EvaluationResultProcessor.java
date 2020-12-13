@@ -4,6 +4,7 @@ package com.julianduru.omarze.services.campaign;
 import com.julianduru.omarze.entities.CampaignStageEvaluationResult;
 import com.julianduru.omarze.exception.StageResultProcessingException;
 
+import java.util.Comparator;
 import java.util.List;
 
 /**
@@ -18,8 +19,10 @@ public interface EvaluationResultProcessor {
     Integer order();
 
 
-    static CampaignStageEvaluationResult process(List<EvaluationResultProcessor> processorList, CampaignStageEvaluationResult result) throws StageResultProcessingException {
-        processorList.sort((p1, p2) -> p1.order().compareTo(p2.order()));
+    static CampaignStageEvaluationResult process(
+        List<EvaluationResultProcessor> processorList, CampaignStageEvaluationResult result
+    ) throws StageResultProcessingException {
+        processorList.sort(Comparator.comparing(EvaluationResultProcessor::order));
 
         for (EvaluationResultProcessor processor : processorList) {
             processor.processResult(result);

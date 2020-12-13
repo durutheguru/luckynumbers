@@ -6,7 +6,7 @@ import com.julianduru.omarze.api.dto.LotteryUserDTO;
 import com.julianduru.omarze.entities.LotteryUser;
 import com.julianduru.omarze.persistence.LotteryUserRepository;
 import com.julianduru.util.NullAwareBeanUtils;
-import com.julianduru.util.test.DataProvider;
+import com.julianduru.util.test.JpaDataProvider;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -20,7 +20,7 @@ import java.util.List;
  */
 @Component
 @RequiredArgsConstructor
-public class LotteryUserDataProvider implements DataProvider<LotteryUser> {
+public class LotteryUserDataProvider implements JpaDataProvider<LotteryUser> {
 
     private final Faker faker;
 

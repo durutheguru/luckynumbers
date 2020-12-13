@@ -10,6 +10,7 @@
     <include file="classpath:db/changelog/init.0002.quartz-changelog.xml" relativeToChangelogFile="false" />
     <include file="classpath:db/changelog/init.0003.xml" relativeToChangelogFile="false" />
     <include file="classpath:db/changelog/init.0004.shedlock.xml" relativeToChangelogFile="false" />
+    <include file="classpath:db/changelog/init.0005.xml" relativeToChangelogFile="false" />
 
     <include file="classpath:db/db.push-notif-changelog.xml" relativeToChangelogFile="false" />
 

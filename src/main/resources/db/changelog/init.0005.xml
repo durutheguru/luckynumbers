@@ -1,0 +1,69 @@
+<?xml version="1.1" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.5.xsd">
+    <changeSet author="dduru (generated)" id="1602453745316-1">
+        <createTable tableName="email">
+            <column autoIncrement="true" name="id" type="BIGINT">
+                <constraints primaryKey="true" primaryKeyName="emailPK"/>
+            </column>
+            <column name="auth_role_id" type="VARCHAR(100)"/>
+            <column name="auth_username" type="VARCHAR(100)"/>
+            <column name="time_added" type="datetime">
+                <constraints nullable="false"/>
+            </column>
+            <column name="time_updated" type="datetime"/>
+            <column name="email_status" type="VARCHAR(30)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="email_type" type="VARCHAR(50)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="message" type="TEXT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="sender" type="VARCHAR(100)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="title" type="VARCHAR(200)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="dduru (generated)" id="1602453745316-2">
+        <createTable tableName="email_ccs">
+            <column name="email_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="ccs" type="VARCHAR(255)"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="dduru (generated)" id="1602453745316-3">
+        <createTable tableName="email_recipients">
+            <column name="email_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="recipients" type="VARCHAR(255)"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="dduru (generated)" id="1602453745316-4">
+        <addForeignKeyConstraint baseColumnNames="email_id" baseTableName="email_recipients" constraintName="FK4q2dbubapfpy02m4h3b8ll3hi" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="email"/>
+    </changeSet>
+    <changeSet author="dduru (generated)" id="1602453745316-5">
+        <addForeignKeyConstraint baseColumnNames="email_id" baseTableName="email_ccs" constraintName="FKr0unqaojt1aomjgfy6os3wq34" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="email"/>
+    </changeSet>
+    <changeSet author="dduru (generated)" id="1602453745316-25">
+        <addNotNullConstraint columnDataType="varchar(50)" columnName="campaign_status" tableName="lottery_user_campaign"/>
+    </changeSet>
+
+    <changeSet author="dduru (generated)" id="1604770674802-1">
+        <addColumn tableName="email">
+            <column name="reference" type="varchar(100)">
+                <constraints nullable="false"/>
+            </column>
+        </addColumn>
+    </changeSet>
+
+    <changeSet author="dduru (generated)" id="1604770674802-2">
+        <addUniqueConstraint columnNames="reference" constraintName="UC_EMAILREFERENCE_COL" tableName="email"/>
+    </changeSet>
+
+</databaseChangeLog>

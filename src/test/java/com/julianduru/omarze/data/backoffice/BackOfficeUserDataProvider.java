@@ -6,6 +6,7 @@ import com.julianduru.omarze.entities.BackOfficeUser;
 import com.julianduru.omarze.persistence.BackOfficeUserRepository;
 import com.julianduru.util.NullAwareBeanUtils;
 import com.julianduru.util.test.DataProvider;
+import com.julianduru.util.test.JpaDataProvider;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Component;
@@ -15,7 +16,7 @@ import org.springframework.stereotype.Component;
  */
 @Component
 @RequiredArgsConstructor
-public class BackOfficeUserDataProvider implements DataProvider<BackOfficeUser> {
+public class BackOfficeUserDataProvider implements JpaDataProvider<BackOfficeUser> {
 
 
     final Faker faker;
